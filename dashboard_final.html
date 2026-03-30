@@ -150,25 +150,28 @@ input[type="file"]{display:none;}
   </div>
 </div>
 
+
 <div class="mbg" id="apiModal" style="display:none">
   <div class="modal">
     <div class="mt">Configurar APIs</div>
-    <div class="ms">Se guardan localmente. Solo hay que hacerlo una vez.</div>
+    <div class="ms">Google ya sale desde Railway. Aquí solo necesitas WaveSpeed.</div>
+
     <div class="mf">
-      <div class="fl">Google Gemini API Key</div>
-      <input type="password" id="googleKey" placeholder="AIzaSy...">
-      <div style="font-size:10px;color:var(--dm);margin-top:4px;line-height:1.6">aistudio.google.com → Get API key · O deja vacío si usas el backend local</div>
+      <div class="fl">Estado de Google</div>
+      <input type="text" id="googleBackendStatus" value="Conectado por backend Railway" readonly>
+      <div style="font-size:10px;color:var(--dm);margin-top:4px;line-height:1.6">Google Vertex AI se usa desde el backend desplegado. No hace falta meter Google API key aquí.</div>
     </div>
+
     <div class="mf">
-      <div class="fl">Google Cloud Project ID (backend local)</div>
-      <input type="text" id="gcpProject" placeholder="mi-proyecto-123456">
-      <div style="font-size:10px;color:var(--dm);margin-top:4px;line-height:1.6">Solo si usas el backend local con los $300 de Google Cloud</div>
+      <div class="fl">WaveSpeed API Key</div>
+      <input type="password" id="wsKey" placeholder="ws-xxxxxxxx">
     </div>
-    <div class="mf"><div class="fl">WaveSpeed API Key</div><input type="password" id="wsKey" placeholder="ws-xxxxxxxx"></div>
+
     <button class="mbtn" onclick="saveKeys()">Guardar →</button>
-    <div class="mskip" onclick="skipModal()">Continuar sin configurar</div>
+    <div class="mskip" onclick="skipModal()">Cerrar</div>
   </div>
 </div>
+
 
 <div class="app locked" id="appRoot">
   <div class="topbar">
@@ -413,7 +416,7 @@ input[type="file"]{display:none;}
 <div class="notif" id="notif"></div>
 
 <script>
-const CONFIG={loginUser:"admin",loginPassword:"mill0nar1osbet365",defaultGoogleProjectId:"",defaultGoogleLocation:"us-central1",defaultGoogleKey:"",defaultWaveSpeedKey:""};
+const CONFIG={loginUser:"admin",loginPassword:"mill0nar1osbet365",defaultWaveSpeedKey:""};
 let masterData=null,refData=null,resultData=null,wanData=null,klingData=null,editData=null,seedMasterData=null,seedRefData=null;
 let openTab=null;
 const DEFAULT_PROMPT=`Image 1: portrait of the subject (identity reference).
@@ -423,16 +426,12 @@ Replace the person in Image 2 completely with the woman from Image 1. Keep face,
 
 REALISM: Natural skin pores, real hair texture, remove plastic AI look. Shot on Sony A7R 85mm f/1.8, natural imperfections, DSLR quality, not AI generated.`;
 
-window.onload=()=>{
+window.onload=async()=>{
   if(sessionStorage.getItem('authOk')==='1') unlockApp();
-  const gk=localStorage.getItem('googleKey')||CONFIG.defaultGoogleKey;
   const wk=localStorage.getItem('wsKey')||CONFIG.defaultWaveSpeedKey;
-  const gcp=localStorage.getItem('gcpProject')||'';
-  if(gk) document.getElementById('googleKey').value=gk;
   if(wk) document.getElementById('wsKey').value=wk;
-  if(gcp) document.getElementById('gcpProject').value=gcp;
-  if(gk||wk||gcp) setApiOn();
-  checkBackend();
+  await checkBackend();
+  if(wk || backendAvailable) setApiOn();
   loadDP();
   loadTemplatePrompts();
   showPanel('p-gen');
@@ -448,14 +447,10 @@ function unlockApp(){document.getElementById('authModal').style.display='none';d
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('authModal').style.display!=='none')login();});
 
 function saveKeys(){
-  const gk=document.getElementById('googleKey').value.trim();
   const wk=document.getElementById('wsKey').value.trim();
-  const gcp=document.getElementById('gcpProject').value.trim();
-  if(gk)localStorage.setItem('googleKey',gk);else localStorage.removeItem('googleKey');
   if(wk)localStorage.setItem('wsKey',wk);else localStorage.removeItem('wsKey');
-  if(gcp)localStorage.setItem('gcpProject',gcp);else localStorage.removeItem('gcpProject');
   document.getElementById('apiModal').style.display='none';
-  if(gk||wk||gcp)setApiOn();
+  if(wk || backendAvailable) setApiOn();
   notify('✓ Configuración guardada');
 }
 function skipModal(){document.getElementById('apiModal').style.display='none';}
@@ -509,17 +504,12 @@ function loadImg(input,zid,key){
 }
 
 function detectModel(){
-  const ov=document.getElementById('mover').value;const lbl=document.getElementById('amlbl');
-  if(ov==='pro'){lbl.textContent='Gemini Pro';return;}
-  if(ov==='flash'){lbl.textContent='Gemini Flash';return;}
-  lbl.textContent=(masterData&&refData)?'Gemini Pro':'Gemini Flash';
+  const lbl=document.getElementById('amlbl');
+  if(lbl) lbl.textContent='Gemini 2.5 Flash Image';
 }
 function onModelChange(){detectModel();}
 function getGoogleModel(){
-  const v=document.getElementById('mover').value;
-  if(v==='flash')return 'gemini-2.0-flash-preview-image-generation';
-  if(v==='pro')return 'gemini-2.0-flash-exp';
-  return (masterData&&refData)?'gemini-2.0-flash-exp':'gemini-2.0-flash-preview-image-generation';
+  return 'gemini-2.5-flash-image';
 }
 
 function loadDP(){const t=document.getElementById('pta');if(t)t.value=DEFAULT_PROMPT;}
@@ -538,35 +528,40 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','
 let backendAvailable=false;
 async function checkBackend(){
   try{
-    const r=await fetch('http://localhost:3000/ping',{signal:AbortSignal.timeout(1500)});
-    backendAvailable=r.ok;
+    const r=await fetch('/api/google/check',{signal:AbortSignal.timeout(3000)});
+    const data=await r.json();
+    backendAvailable=Boolean(r.ok && data?.ok);
     if(backendAvailable){
-      document.getElementById('apilbl').textContent='Backend local activo';
+      document.getElementById('apilbl').textContent='Google por Railway';
       document.getElementById('led').classList.add('on');
+      const status=document.getElementById('googleBackendStatus');
+      if(status) status.value='Google conectado por Railway';
+    }else{
+      const status=document.getElementById('googleBackendStatus');
+      if(status) status.value='Google no configurado';
     }
-  }catch(e){backendAvailable=false;}
-}
-async function callGemini(parts,_p,_l,gKey,ratio,quality){
-  const model=getGoogleModel();
-  const payload={contents:[{parts}],generationConfig:{responseModalities:["TEXT","IMAGE"],imageConfig:{aspectRatio:ratio,imageSize:quality.toUpperCase()}}};
-  if(backendAvailable){
-    const gcpProject=localStorage.getItem('gcpProject')||'';
-    const res=await fetch('http://localhost:3000/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,payload,project:gcpProject})});
-    const data=await res.json();
-    if(data.error)throw new Error(data.error);
-    return data;
+  }catch(e){
+    backendAvailable=false;
+    const status=document.getElementById('googleBackendStatus');
+    if(status) status.value='Google no disponible';
   }
-  if(!gKey)throw new Error('Configura tu Gemini API key o arranca el backend local');
-  const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent?key='+gKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+}
+async function callGemini(parts,_p,_l,_gKey,ratio,quality){
+  const model=getGoogleModel();
+  if(!backendAvailable) throw new Error('Google no está configurado en Railway.');
+  const res=await fetch('/api/google/generate',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model,parts,ratio,quality})
+  });
   const data=await res.json();
-  if(!res.ok)throw new Error(data?.error?.message||'Error en Gemini API');
+  if(!res.ok || data?.ok===false) throw new Error(data?.error||'Error en Google backend');
   return data;
 }
 
 async function generate(){
-  const gKey=(localStorage.getItem('googleKey')||'').trim();
-  if(!gKey){notify('⚠ Configura tu Gemini API Key');document.getElementById('apiModal').style.display='flex';return;}
   if(!masterData||!refData){notify('⚠ Sube las dos fotos');return;}
+  if(!backendAvailable){notify('⚠ Google no está configurado en Railway');document.getElementById('apiModal').style.display='flex';return;}
   const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='Generando...';
   const out=document.getElementById('z-out');
   out.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">Generando con Google Cloud...</div></div><div class="oacts"><div class="oact">Esperando...</div></div>';
@@ -577,10 +572,10 @@ async function generate(){
     const ratio=document.getElementById('ratioSel').value;
     const quality=document.getElementById('qualSel').value;
     const parts=[{text:`${prompt}\n\nStrength: ${strength}%.\nNegative: ${neg}`},dataUriPart(masterData),dataUriPart(refData)];
-    const data=await callGemini(parts,null,null,gKey,ratio,quality);
-    const part=findInlineDataPart(data);
-    if(!part?.data)throw new Error('No llegó ninguna imagen en la respuesta');
-    resultData='data:'+(part.mimeType||'image/png')+';base64,'+part.data;
+    const data=await callGemini(parts,null,null,null,ratio,quality);
+    const imageUrl=data?.images?.[0];
+    if(!imageUrl)throw new Error(data?.text||'No llegó ninguna imagen en la respuesta');
+    resultData=imageUrl;
     out.innerHTML='<img src="'+resultData+'" alt="resultado" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult()">↓ Guardar</div><div class="oact" onclick="toEdit()">→ Editar</div><div class="oact" onclick="toCarousel()">▦ Carrusel</div></div>';
     notify('✓ Imagen generada');
   }catch(err){
@@ -590,12 +585,10 @@ async function generate(){
 }
 
 async function generateEdit(){
-  const gKey=(localStorage.getItem('googleKey')||'').trim();
   const editEl=document.getElementById('z-ed');const editImg=editEl.querySelector('img');
-  if(!gKey){notify('⚠ Configura tu Gemini API key');document.getElementById('apiModal').style.display='flex';return;}
+  if(!backendAvailable){notify('⚠ Google no está configurado en Railway');document.getElementById('apiModal').style.display='flex';return;}
   if(!editImg?.src){notify('⚠ Sube la foto a editar');return;}
-  const prompt=document.getElementById('epta').value.trim();
-  if(!prompt){notify('⚠ Describe qué quieres corregir');return;}
+  const prompt=document.getElementById('epta').value.trim();if(!prompt){notify('⚠ Describe qué quieres corregir');return;}
   const out=document.getElementById('editOut');
   out.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">Editando foto...</div></div>';
   try{
