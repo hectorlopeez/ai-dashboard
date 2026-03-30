@@ -2,9 +2,9 @@
   "name": "dashboard-google-vertex-local",
   "version": "1.0.0",
   "private": true,
-  "main": "server_google_vertex.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server_google_vertex.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
