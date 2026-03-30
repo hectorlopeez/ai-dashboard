@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080810;--gl:rgba(255,255,255,0.04);--gl2:rgba(255,255,255,0.07);--bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.16);--a:#a78bfa;--a2:#60a5fa;--a3:#34d399;--tx:#f1f0ff;--dm:rgba(241,240,255,0.38);--md:rgba(241,240,255,0.62);--r:13px;--rs:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 65% 45% at 10% 5%,rgba(167,139,250,0.07) 0%,transparent 60%),radial-gradient(ellipse 45% 35% at 90% 90%,rgba(96,165,250,0.05) 0%,transparent 50%);}
+.app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 26px;border-bottom:1px solid var(--bd);background:rgba(8,8,16,0.85);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;gap:16px;}
+.logo{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--a);white-space:nowrap;}
+.tabrow{display:flex;gap:6px;align-items:center;}
+.tdw{position:relative;}
+.tbtn{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:var(--gl);border:1px solid var(--bd);color:var(--md);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.16s;white-space:nowrap;}
+.tbtn:hover{background:var(--gl2);border-color:var(--bd2);color:var(--tx);}
+.tbtn.t1.active{border-color:rgba(167,139,250,0.5);color:var(--a);background:rgba(167,139,250,0.08);}
+.tbtn.t2.active{border-color:rgba(96,165,250,0.5);color:var(--a2);background:rgba(96,165,250,0.08);}
+.tbtn.t3.active{border-color:rgba(52,211,153,0.5);color:var(--a3);background:rgba(52,211,153,0.08);}
+.tbtn .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.t1 .tdot{background:var(--a);}.t2 .tdot{background:var(--a2);}.t3 .tdot{background:var(--a3);}
+.tarr{font-size:9px;opacity:0.45;transition:transform 0.15s;margin-left:2px;}
+.tbtn.open .tarr{transform:rotate(180deg);}
+.tdrop{position:absolute;top:calc(100% + 7px);left:0;background:rgba(10,10,20,0.97);border:1px solid var(--bd);border-radius:var(--r);padding:5px;min-width:200px;backdrop-filter:blur(20px);opacity:0;pointer-events:none;transition:all 0.16s;z-index:200;box-shadow:0 18px 45px rgba(0,0,0,0.55);transform:translateY(-4px);}
+.tdrop.show{opacity:1;pointer-events:all;transform:translateY(0);}
+.tmi{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--md);transition:all 0.12s;}
+.tmi:hover{background:var(--gl2);color:var(--tx);}
+.tmi.s1{background:rgba(167,139,250,0.1);color:var(--a);}.tmi.s2{background:rgba(96,165,250,0.1);color:var(--a2);}.tmi.s3{background:rgba(52,211,153,0.1);color:var(--a3);}
+.tmi-ic{font-size:14px;width:18px;text-align:center;}.tmi-lb{flex:1;}
+.tmi-tg{font-size:10px;padding:1px 7px;border-radius:20px;background:rgba(255,255,255,0.06);color:var(--dm);}
+.tdiv{height:1px;background:var(--bd);margin:4px 6px;}
+.apill{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--gl);font-size:11px;color:var(--dm);cursor:pointer;transition:all 0.14s;white-space:nowrap;}
+.apill:hover{border-color:var(--bd2);color:var(--md);}
+.led{width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0;}
+.led.on{background:var(--a3);box-shadow:0 0 6px var(--a3);animation:lp 2s ease-in-out infinite;}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:0.5}}
+.content{padding:22px 26px;max-width:880px;margin:0 auto;width:100%;}
+.panel{display:none;}.panel.active{display:block;animation:fi 0.18s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--gl);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:12px;}
+.ch{padding:14px 17px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.ct{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dm);}
+.cb{padding:0 17px 17px;}
+.ugrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+.uz{aspect-ratio:4/5;border:1px dashed var(--bd);border-radius:var(--rs);background:rgba(255,255,255,0.02);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;}
+.uz:hover{border-color:rgba(167,139,250,0.4);background:rgba(167,139,250,0.04);}
+.uz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:var(--rs);}
+.uzlb{font-size:9px;color:var(--dm);text-align:center;letter-spacing:0.8px;text-transform:uppercase;line-height:1.6;}
+.uic{font-size:20px;margin-bottom:7px;opacity:0.18;}
+.zb{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);border:1px solid var(--bd);font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;z-index:2;color:var(--a);}
+.zb.b{color:var(--a2);}
+.oz{aspect-ratio:4/5;border:1px solid var(--bd);border-radius:var(--rs);background:rgba(167,139,250,0.02);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.oph{text-align:center;color:var(--dm);font-size:10px;line-height:1.8;}
+.oph span{font-size:24px;opacity:0.07;display:block;margin-bottom:5px;}
+.oacts{position:absolute;bottom:8px;left:8px;right:8px;display:flex;gap:5px;opacity:0;transition:opacity 0.15s;z-index:3;}
+.oz:hover .oacts{opacity:1;}
+.oact{flex:1;background:rgba(0,0,0,0.82);backdrop-filter:blur(6px);border:1px solid var(--bd);color:var(--md);font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;padding:6px 3px;border-radius:7px;cursor:pointer;text-align:center;transition:all 0.12s;}
+.oact:hover{background:var(--a);color:#000;border-color:var(--a);}
+.crow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.crow2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.crow4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.cg{display:flex;flex-direction:column;gap:5px;}
+.cl{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dm);}
+select{background:var(--gl);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%;appearance:none;cursor:pointer;transition:border-color 0.13s;}
+select:focus{outline:none;border-color:rgba(167,139,250,0.5);}
+.rw{display:flex;align-items:center;gap:8px;margin-top:5px;}
+input[type="range"]{flex:1;appearance:none;height:3px;background:var(--bd);border-radius:2px;outline:none;cursor:pointer;}
+input[type="range"]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:var(--a);border:2px solid var(--bg);cursor:pointer;}
+.amod{display:flex;align-items:center;gap:8px;padding:9px 13px;background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.16);border-radius:var(--rs);margin-bottom:12px;font-size:11px;color:var(--md);}
+.amod strong{color:var(--a);}
+.adot{width:5px;height:5px;border-radius:50%;background:var(--a);animation:lp 2s ease-in-out infinite;flex-shrink:0;}
+textarea{background:var(--gl);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:11px;line-height:1.65;padding:11px 13px;border-radius:var(--rs);width:100%;resize:vertical;transition:border-color 0.13s;}
+textarea:focus{outline:none;border-color:rgba(167,139,250,0.4);}
+textarea::placeholder{color:var(--dm);}
+.prh{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.pacts{display:flex;gap:5px;}
+.gbtn{background:var(--gl);border:1px solid var(--bd);color:var(--dm);font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;padding:4px 11px;border-radius:20px;cursor:pointer;transition:all 0.13s;}
+.gbtn:hover{border-color:var(--bd2);color:var(--md);}
+.btnrow{display:flex;gap:10px;margin-top:14px;}
+.big{flex:1;padding:13px 16px;background:linear-gradient(135deg,rgba(167,139,250,0.16),rgba(96,165,250,0.1));border:1px solid rgba(167,139,250,0.26);border-radius:var(--rs);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.16s;}
+.big:hover{box-shadow:0 0 24px rgba(167,139,250,0.16);transform:translateY(-1px);}
+.big:active{transform:translateY(0);}
+.big:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
+.big.b{background:linear-gradient(135deg,rgba(96,165,250,0.16),rgba(52,211,153,0.08));border-color:rgba(96,165,250,0.26);}
+.big.b:hover{box-shadow:0 0 24px rgba(96,165,250,0.14);}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.spin{width:28px;height:28px;border:2px solid var(--bd);border-top-color:var(--a);border-radius:50%;animation:spin 0.8s linear infinite;}
+.gst{font-size:10px;color:var(--dm);animation:blink 1.5s ease-in-out infinite;margin-top:6px;}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px;}
+.cs{aspect-ratio:4/5;border-radius:var(--rs);background:var(--gl);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
+.cs img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.sup{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+.suz{width:64px;height:80px;flex-shrink:0;border:1px dashed var(--bd);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.14s;position:relative;overflow:hidden;background:rgba(255,255,255,0.02);}
+.suz:hover{border-color:rgba(167,139,250,0.4);}
+.suz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.vuz{width:70px;height:88px;flex-shrink:0;border:1px dashed var(--bd);border-radius:var(--rs);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.14s;position:relative;overflow:hidden;background:rgba(255,255,255,0.02);}
+.vuz:hover{border-color:rgba(167,139,250,0.4);}
+.vuz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.lcard{background:var(--gl);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all 0.15s;}
+.lcard:hover{border-color:rgba(167,139,250,0.3);background:var(--gl2);}
+.lcard.empty{border-style:dashed;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:var(--dm);font-size:11px;min-height:80px;}
+.ln{font-size:12px;font-weight:600;margin-bottom:2px;}
+.lm{font-size:10px;color:var(--dm);line-height:1.6;}
+.ls{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:600;padding:2px 7px;border-radius:20px;margin-top:6px;}
+.ls.none{background:var(--gl);color:var(--dm);}
+.authbg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(900px 550px at 18% 8%,rgba(167,139,250,0.16),transparent 55%),radial-gradient(800px 500px at 82% 92%,rgba(96,165,250,0.12),transparent 52%),linear-gradient(180deg,rgba(4,6,12,0.97),rgba(7,9,16,0.99));z-index:1200;}
+.authcard{width:min(380px,92vw);background:linear-gradient(180deg,rgba(16,18,28,0.98),rgba(9,11,18,0.99));border:1px solid rgba(167,139,250,0.2);border-radius:24px;padding:32px;box-shadow:0 28px 70px rgba(0,0,0,0.6);}
+.authpill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;border:1px solid rgba(167,139,250,0.22);background:rgba(167,139,250,0.07);color:#d8ccff;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+.authdot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 0 10px rgba(167,139,250,0.7);}
+.authcard h2{margin:0 0 6px;font-size:22px;font-weight:700;}
+.authcard p{margin:0 0 20px;color:var(--dm);font-size:11px;line-height:1.7;}
+.authrow{display:grid;gap:11px;}
+.autherr{display:none;margin-top:8px;color:#fca5a5;font-size:11px;}
+.autherr.show{display:block;}
+.app.locked{filter:blur(8px);pointer-events:none;user-select:none;}
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:300;display:flex;align-items:center;justify-content:center;}
+.modal{background:rgba(10,10,20,0.98);border:1px solid var(--bd);border-radius:18px;padding:28px;width:400px;max-width:90vw;box-shadow:0 40px 80px rgba(0,0,0,0.6);}
+.mt{font-size:17px;font-weight:700;margin-bottom:4px;}
+.ms{font-size:11px;color:var(--dm);margin-bottom:20px;line-height:1.7;}
+.mf{margin-bottom:11px;}
+.fl{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dm);margin-bottom:5px;}
+input[type="password"],input[type="text"]{background:rgba(255,255,255,0.04);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%;transition:border-color 0.13s;}
+input:focus{outline:none;border-color:rgba(167,139,250,0.5);}
+.mbtn{width:100%;margin-top:16px;padding:11px;background:linear-gradient(135deg,rgba(167,139,250,0.26),rgba(96,165,250,0.16));border:1px solid rgba(167,139,250,0.33);border-radius:var(--rs);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
+.mbtn:hover{box-shadow:0 0 20px rgba(167,139,250,0.18);}
+.mskip{text-align:center;margin-top:10px;font-size:11px;color:var(--dm);cursor:pointer;transition:color 0.13s;}
+.mskip:hover{color:var(--md);}
+.notif{position:fixed;bottom:20px;right:20px;background:rgba(10,10,20,0.96);border:1px solid var(--bd);border-radius:var(--rs);padding:9px 16px;font-size:12px;z-index:400;transform:translateY(10px);opacity:0;transition:all 0.22s;backdrop-filter:blur(12px);box-shadow:0 8px 28px rgba(0,0,0,0.4);}
+.notif.show{transform:translateY(0);opacity:1;}
+input[type="file"]{display:none;}
+</style>
+</head>
+<body>
+<div class="authbg" id="authModal">
+  <div class="authcard">
+    <div class="authpill"><span class="authdot"></span>Acceso privado</div>
+    <h2>AI Dashboard</h2>
+    <p>Introduce tus credenciales para acceder al panel.</p>
+    <div class="authrow">
+      <div><div class="fl">Usuario</div><input type="text" id="authUser" placeholder="usuario" autocomplete="username"></div>
+      <div><div class="fl">Contraseña</div><input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
+    </div>
+    <button class="mbtn" onclick="login()">Entrar →</button>
+    <div class="autherr" id="authErr">Credenciales incorrectas.</div>
+  </div>
+</div>
+
+<div class="mbg" id="apiModal" style="display:none">
+  <div class="modal">
+    <div class="mt">Configurar APIs</div>
+    <div class="ms">Se guardan localmente. Solo hay que hacerlo una vez.</div>
+    <div class="mf">
+      <div class="fl">Google Gemini API Key</div>
+      <input type="password" id="googleKey" placeholder="AIzaSy...">
+      <div style="font-size:10px;color:var(--dm);margin-top:4px;line-height:1.6">aistudio.google.com → Get API key · O deja vacío si usas el backend local</div>
+    </div>
+    <div class="mf">
+      <div class="fl">Google Cloud Project ID (backend local)</div>
+      <input type="text" id="gcpProject" placeholder="mi-proyecto-123456">
+      <div style="font-size:10px;color:var(--dm);margin-top:4px;line-height:1.6">Solo si usas el backend local con los $300 de Google Cloud</div>
+    </div>
+    <div class="mf"><div class="fl">WaveSpeed API Key</div><input type="password" id="wsKey" placeholder="ws-xxxxxxxx"></div>
+    <button class="mbtn" onclick="saveKeys()">Guardar →</button>
+    <div class="mskip" onclick="skipModal()">Continuar sin configurar</div>
+  </div>
+</div>
+
+<div class="app locked" id="appRoot">
+  <div class="topbar">
+    <div class="logo">AI Dashboard</div>
+    <div class="tabrow">
+      <div class="tdw">
+        <button class="tbtn t1 active" id="tb1" onclick="toggleTab(1,event)"><span class="tdot"></span><span id="tl1">Studio</span><span class="tarr">▾</span></button>
+        <div class="tdrop" id="td1">
+          <div class="tmi s1" onclick="goTo(1,'Studio','p-gen',event)"><span class="tmi-ic">⚡</span><span class="tmi-lb">Generación</span><span class="tmi-tg">principal</span></div>
+          <div class="tmi" onclick="goTo(1,'Edición','p-edit',event)"><span class="tmi-ic">✦</span><span class="tmi-lb">Edición</span></div>
+          <div class="tdiv"></div>
+          <div class="tmi" onclick="goTo(1,'Carrusel clásico','p-cold',event)"><span class="tmi-ic">◫</span><span class="tmi-lb">Carrusel clásico</span></div>
+          <div class="tmi" onclick="goTo(1,'Carrusel nuevo','p-cnew',event)"><span class="tmi-ic">▦</span><span class="tmi-lb">Carrusel nuevo</span></div>
+        </div>
+      </div>
+      <div class="tdw">
+        <button class="tbtn t2" id="tb2" onclick="toggleTab(2,event)"><span class="tdot"></span><span id="tl2">WaveSpeed</span><span class="tarr">▾</span></button>
+        <div class="tdrop" id="td2">
+          <div class="tmi" onclick="goTo(2,'Seedream 4.5','p-seedream',event)"><span class="tmi-ic">◈</span><span class="tmi-lb">Seedream 4.5</span></div>
+          <div class="tmi" onclick="goTo(2,'Wan 2.6','p-wan',event)"><span class="tmi-ic">◉</span><span class="tmi-lb">Wan 2.6</span><span class="tmi-tg">vídeo</span></div>
+          <div class="tmi" onclick="goTo(2,'Kling 2.5','p-kling',event)"><span class="tmi-ic">▶</span><span class="tmi-lb">Kling 2.5</span><span class="tmi-tg">vídeo</span></div>
+          <div class="tmi" onclick="goTo(2,'Z Image','p-zimage',event)"><span class="tmi-ic">◐</span><span class="tmi-lb">Z Image</span></div>
+        </div>
+      </div>
+      <div class="tdw">
+        <button class="tbtn t3" id="tb3" onclick="toggleTab(3,event)"><span class="tdot"></span><span id="tl3">LoRA</span><span class="tarr">▾</span></button>
+        <div class="tdrop" id="td3">
+          <div class="tmi" onclick="goTo(3,'Entrenar','p-lora-train',event)"><span class="tmi-ic">⬆</span><span class="tmi-lb">Entrenar</span></div>
+          <div class="tmi" onclick="goTo(3,'Mis LoRAs','p-lora-manage',event)"><span class="tmi-ic">☰</span><span class="tmi-lb">Mis LoRAs</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="apill" onclick="document.getElementById('apiModal').style.display='flex'"><div class="led" id="led"></div><span id="apilbl">Configurar API</span></div>
+  </div>
+
+  <div class="content">
+
+    <div class="panel active" id="p-gen">
+      <div class="card"><div class="ch"><div class="ct">Imágenes de entrada</div></div><div class="cb">
+        <div class="ugrid">
+          <div><div class="cl" style="margin-bottom:6px">Foto maestra</div>
+            <div class="uz" onclick="document.getElementById('fi-m').click()" id="z-m"><div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
+            <input type="file" id="fi-m" accept="image/*" onchange="loadImg(this,'z-m','master')">
+          </div>
+          <div><div class="cl" style="margin-bottom:6px">Foto referencia</div>
+            <div class="uz" onclick="document.getElementById('fi-r').click()" id="z-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div></div>
+            <input type="file" id="fi-r" accept="image/*" onchange="loadImg(this,'z-r','ref')">
+          </div>
+          <div><div class="cl" style="margin-bottom:6px">Resultado</div>
+            <div class="oz" id="z-out"><div class="oph" id="out-ph"><span>◎</span>Resultado aquí</div>
+              <div class="oacts"><div class="oact" onclick="dlResult()">↓ Guardar</div><div class="oact" onclick="toEdit()">→ Editar</div><div class="oact" onclick="toCarousel()">▦ Carrusel</div></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div class="amod"><div class="adot"></div>Modelo: <strong id="amlbl">Gemini Pro</strong>
+          <select id="mover" style="margin-left:auto;width:auto;padding:5px 10px;font-size:11px;border-radius:20px" onchange="onModelChange()">
+            <option value="auto" selected>Auto</option>
+            <option value="pro">Gemini Pro (mejor calidad)</option>
+            <option value="flash">Gemini Flash (más rápido)</option>
+          </select>
+        </div>
+        <div class="crow4">
+          <div class="cg"><div class="cl">Ratio</div><select id="ratioSel"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select id="qualSel"><option value="1k">1K</option><option value="2k" selected>2K</option><option value="4k">4K</option></select></div>
+          <div class="cg"><div class="cl">Cantidad</div><select id="countSel"><option selected>1</option><option>2</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span id="sv" style="color:var(--a);font-family:'Space Mono'">35%</span></div><div class="rw"><input type="range" id="strR" min="10" max="90" value="35" oninput="document.getElementById('sv').textContent=this.value+'%'"></div></div>
+        </div>
+      </div></div>
+      <div class="card"><div class="ch"><div class="ct">Prompt</div><div class="pacts"><button class="gbtn" onclick="loadDP()">↺ Default</button><button class="gbtn" onclick="document.getElementById('pta').value=''">✕ Limpiar</button></div></div>
+        <div class="cb"><textarea id="pta" rows="5" style="margin-bottom:10px"></textarea><div class="cl" style="margin-bottom:6px">Negative prompt</div><textarea id="nta" rows="2">airbrushed, studio lighting, perfect skin, overly smooth, plastic, CGI, cartoon, blurry, deformed, watermark</textarea></div>
+      </div>
+      <div class="btnrow"><button class="big" id="genBtn" onclick="generate()">⚡ &nbsp; Generar</button></div>
+    </div>
+
+    <div class="panel" id="p-edit">
+      <div class="card"><div class="ch"><div class="ct">Edición rápida</div></div><div class="cb">
+        <div class="crow2" style="margin-bottom:14px">
+          <div><div class="cl" style="margin-bottom:6px">Foto a editar</div><div class="uz" onclick="document.getElementById('fi-ed').click()" id="z-ed"><div class="uic">🖼</div><div class="uzlb">Foto generada</div></div><input type="file" id="fi-ed" accept="image/*" onchange="loadImg(this,'z-ed',null)"></div>
+          <div><div class="cl" style="margin-bottom:6px">Resultado</div><div class="oz" id="editOut"><div class="oph"><span>◎</span>Resultado</div></div></div>
+        </div>
+        <div class="crow4" style="margin-bottom:14px">
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span id="esv" style="color:var(--a);font-family:'Space Mono'">25%</span></div><div class="rw"><input type="range" min="5" max="60" value="25" oninput="document.getElementById('esv').textContent=this.value+'%'"></div></div>
+        </div>
+        <div class="prh"><div class="cl">Qué corregir</div><div class="pacts"><button class="gbtn" onclick="setP('face')">Cara</button><button class="gbtn" onclick="setP('skin')">Piel</button><button class="gbtn" onclick="setP('realism')">Realismo</button></div></div>
+        <textarea id="epta" rows="3" placeholder="Ej: fix the eyes, make them more natural, enhance skin texture"></textarea>
+      </div></div>
+      <div class="btnrow"><button class="big b" onclick="generateEdit()">✦ &nbsp; Editar foto</button></div>
+    </div>
+
+    <div class="panel" id="p-cold">
+      <div class="card"><div class="ch"><div class="ct">Carrusel clásico</div></div><div class="cb">
+        <div class="sup">
+          <div class="suz" onclick="document.getElementById('fi-co').click()" id="z-co"><div style="font-size:16px;opacity:0.15">+</div></div>
+          <input type="file" id="fi-co" accept="image/*" onchange="loadImg(this,'z-co',null)">
+          <div style="flex:1"><div class="cl" style="margin-bottom:6px">Prompt (opcional)</div><textarea rows="3" placeholder="Describe variaciones... o deja vacío"></textarea></div>
+        </div>
+        <div class="crow4" style="margin-bottom:14px">
+          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
+        </div>
+        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
+      </div></div>
+      <div class="btnrow"><button class="big b" onclick="notify('Conecta tu Google API key para generar')">◫ &nbsp; Generar carrusel</button></div>
+    </div>
+
+    <div class="panel" id="p-cnew">
+      <div class="card"><div class="ch"><div class="ct">Carrusel nuevo</div></div><div class="cb">
+        <div class="sup">
+          <div class="suz" onclick="document.getElementById('fi-cn').click()" id="z-cn"><div style="font-size:16px;opacity:0.15">+</div></div>
+          <input type="file" id="fi-cn" accept="image/*" onchange="loadImg(this,'z-cn',null)">
+          <div style="font-size:11px;color:var(--dm);line-height:1.85;padding-top:4px">Sube la foto generada. El sistema crea <strong style="color:var(--md)">variaciones automáticas</strong> — misma persona, misma escena, pequeños cambios de pose, encuadre o luz. Sin prompt.</div>
+        </div>
+        <div class="crow4" style="margin-bottom:14px">
+          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option><option>6 fotos</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
+        </div>
+        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
+      </div></div>
+      <div class="btnrow"><button class="big" onclick="notify('Conecta tu Google API key para generar')">▦ &nbsp; Generar carrusel</button></div>
+    </div>
+
+    <div class="panel" id="p-seedream">
+      <div class="card"><div class="ch"><div class="ct">Seedream 4.5 — Image to Image</div></div><div class="cb">
+        <div class="ugrid">
+          <div>
+            <div class="cl" style="margin-bottom:6px">Foto maestra</div>
+            <div class="uz" onclick="document.getElementById('fi-seed-m').click()" id="z-seed-m">
+              <div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div>
+            </div>
+            <input type="file" id="fi-seed-m" accept="image/*" onchange="loadImg(this,'z-seed-m','seedMaster')">
+          </div>
+          <div>
+            <div class="cl" style="margin-bottom:6px">Foto referencia</div>
+            <div class="uz" onclick="document.getElementById('fi-seed-r').click()" id="z-seed-r">
+              <div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div>
+            </div>
+            <input type="file" id="fi-seed-r" accept="image/*" onchange="loadImg(this,'z-seed-r','seedRef')">
+          </div>
+          <div>
+            <div class="cl" style="margin-bottom:6px">Resultado</div>
+            <div class="oz" id="seedOut1"><div class="oph"><span>◎</span>Resultado aquí</div></div>
+          </div>
+        </div>
+        <div class="crow4" style="margin-bottom:12px">
+          <div class="cg"><div class="cl">Ratio</div><select id="seedRatio"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select id="seedQuality"><option value="1K">1K</option><option value="2K" selected>2K</option><option value="4K">4K</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span id="seedStr" style="color:var(--a);font-family:'Space Mono'">35%</span></div><div class="rw"><input type="range" id="seedStrR" min="10" max="90" value="35" oninput="document.getElementById('seedStr').textContent=this.value+'%'"></div></div>
+        </div>
+        <div class="cl" style="margin-bottom:6px">Prompt (opcional)</div>
+        <textarea id="seedPrompt" rows="3" style="margin-bottom:10px" placeholder="Pose, ropa y entorno. Sin rasgos físicos. Deja vacío para usar el prompt por defecto..."></textarea>
+        <div class="cl" style="margin-bottom:6px">Negative prompt</div>
+        <textarea id="seedNegative" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
+      </div></div>
+      <div class="btnrow"><button class="big b" id="seedBtn" onclick="generateSeedream()">◈ &nbsp; Generar con Seedream 4.5</button></div>
+    </div>
+
+    <div class="panel" id="p-wan">
+      <div class="card"><div class="ch"><div class="ct">Wan 2.6 — Image to Video</div></div><div class="cb">
+        <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
+          <div class="vuz" onclick="document.getElementById('fi-wan').click()" id="z-wan"><div style="font-size:16px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:4px">Foto base</div></div>
+          <input type="file" id="fi-wan" accept="image/*" onchange="loadImg(this,'z-wan','wan')">
+          <div style="flex:1">
+            <div class="crow4">
+              <div class="cg"><div class="cl">Duración</div><select id="wanDuration"><option>3s</option><option selected>5s</option><option>8s</option></select></div>
+              <div class="cg"><div class="cl">Resolución</div><select id="wanResolution"><option>720p</option><option selected>1080p</option></select></div>
+              <div class="cg"><div class="cl">Calidad</div><select><option selected>Standard</option><option>High</option></select></div>
+            </div>
+            <div class="cl" style="margin-bottom:6px;margin-top:10px">Motion prompt</div>
+            <textarea id="wanPrompt" rows="3" placeholder="Ej: subtle hair movement, gentle smile, soft breeze"></textarea>
+          </div>
+        </div>
+      </div></div>
+      <div class="card" style="margin-top:0"><div class="cb"><div class="oz" style="aspect-ratio:16/9" id="wanOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div></div></div>
+      <div class="btnrow"><button class="big b" id="wanBtn" onclick="generateWan()">◉ &nbsp; Generar vídeo con Wan 2.6</button></div>
+    </div>
+
+    <div class="panel" id="p-kling">
+      <div class="card"><div class="ch"><div class="ct">Kling 2.5 — Foto a vídeo</div></div><div class="cb">
+        <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
+          <div class="vuz" onclick="document.getElementById('fi-kling').click()" id="z-kling"><div style="font-size:16px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:4px">Foto base</div></div>
+          <input type="file" id="fi-kling" accept="image/*" onchange="loadImg(this,'z-kling','kling')">
+          <div style="flex:1">
+            <div class="crow4">
+              <div class="cg"><div class="cl">Duración</div><select id="klingDuration"><option>5s</option><option selected>10s</option></select></div>
+              <div class="cg"><div class="cl">Modo</div><select id="klingMode"><option selected>Standard</option><option>Pro</option></select></div>
+              <div class="cg"><div class="cl">Calidad</div><select><option selected>Standard</option><option>High</option></select></div>
+            </div>
+            <div class="cl" style="margin-bottom:6px;margin-top:10px">Prompt</div>
+            <textarea id="klingPrompt" rows="3" placeholder="Describe el movimiento y la acción..."></textarea>
+          </div>
+        </div>
+      </div></div>
+      <div class="card" style="margin-top:0"><div class="cb"><div class="oz" style="aspect-ratio:16/9" id="klingOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div></div></div>
+      <div class="btnrow"><button class="big b" id="klingBtn" onclick="generateKling()">▶ &nbsp; Generar con Kling 2.5</button></div>
+    </div>
+
+    <div class="panel" id="p-zimage">
+      <div class="card"><div class="ch"><div class="ct">Z Image</div></div><div class="cb">
+        <div class="crow4" style="margin-bottom:12px">
+          <div class="cg"><div class="cl">Ratio</div><select><option selected>4:5</option><option>9:16</option><option>1:1</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
+          <div class="cg"><div class="cl">Cantidad</div><select><option selected>1</option><option>2</option><option>4</option></select></div>
+        </div>
+        <div class="cl" style="margin-bottom:6px">Prompt</div>
+        <textarea rows="4" style="margin-bottom:10px" placeholder="Describe la escena..."></textarea>
+        <div class="cl" style="margin-bottom:6px">Negative prompt</div>
+        <textarea rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
+      </div></div>
+      <div class="btnrow"><button class="big b" onclick="notify('Conecta tu WaveSpeed API key')">◐ &nbsp; Generar con Z Image</button></div>
+    </div>
+
+    <div class="panel" id="p-lora-train">
+      <div class="card"><div class="ch"><div class="ct">Entrenar LoRA</div></div><div class="cb">
+        <div class="crow" style="margin-bottom:14px">
+          <div class="cg"><div class="cl">Nombre</div><input type="text" placeholder="ej. lucia-v1" style="background:var(--gl);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%"></div>
+          <div class="cg"><div class="cl">Plataforma</div><select><option selected>Google Vertex AI</option><option>Fal.ai</option></select></div>
+          <div class="cg"><div class="cl">Steps</div><select><option>1000</option><option selected>1500</option><option>2000</option></select></div>
+        </div>
+        <div style="border:1px dashed var(--bd);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='rgba(167,139,250,0.4)'" onmouseout="this.style.borderColor='var(--bd)'">
+          <div style="font-size:22px;opacity:0.1;margin-bottom:7px">📁</div>
+          <div style="font-size:11px;color:var(--dm)">Arrastra las fotos de entrenamiento<br><span style="font-size:10px">20–30 fotos · variedad de ángulos y expresiones</span></div>
+        </div>
+      </div></div>
+      <div class="btnrow"><button class="big" onclick="notify('Configura tu Google API key para entrenar')">⬆ &nbsp; Iniciar entrenamiento</button></div>
+    </div>
+
+    <div class="panel" id="p-lora-manage">
+      <div class="card"><div class="ch"><div class="ct">Mis LoRAs</div></div><div class="cb">
+        <div class="lgrid">
+          <div class="lcard"><div class="ln">LoRA — v1</div><div class="lm">Google Vertex AI · 1500 steps</div><div class="ls none">Sin entrenar</div></div>
+          <div class="lcard empty"><div style="font-size:18px;opacity:0.1">+</div><div>Nuevo LoRA</div></div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const CONFIG={loginUser:"admin",loginPassword:"mill0nar1osbet365",defaultGoogleProjectId:"",defaultGoogleLocation:"us-central1",defaultGoogleKey:"",defaultWaveSpeedKey:""};
+let masterData=null,refData=null,resultData=null,wanData=null,klingData=null,editData=null,seedMasterData=null,seedRefData=null;
+let openTab=null;
+const DEFAULT_PROMPT=`Image 1: portrait of the subject (identity reference).
+Image 2: target photo (pose, outfit and setting reference).
+
+Replace the person in Image 2 completely with the woman from Image 1. Keep face, hair and identity of Image 1 100% identical. Keep outfit, pose, background and lighting of Image 2 exactly.
+
+REALISM: Natural skin pores, real hair texture, remove plastic AI look. Shot on Sony A7R 85mm f/1.8, natural imperfections, DSLR quality, not AI generated.`;
+
+window.onload=()=>{
+  if(sessionStorage.getItem('authOk')==='1') unlockApp();
+  const gk=localStorage.getItem('googleKey')||CONFIG.defaultGoogleKey;
+  const wk=localStorage.getItem('wsKey')||CONFIG.defaultWaveSpeedKey;
+  const gcp=localStorage.getItem('gcpProject')||'';
+  if(gk) document.getElementById('googleKey').value=gk;
+  if(wk) document.getElementById('wsKey').value=wk;
+  if(gcp) document.getElementById('gcpProject').value=gcp;
+  if(gk||wk||gcp) setApiOn();
+  checkBackend();
+  loadDP();
+  loadTemplatePrompts();
+  showPanel('p-gen');
+};
+
+function login(){
+  const u=document.getElementById('authUser').value.trim();
+  const p=document.getElementById('authPass').value;
+  if(u===CONFIG.loginUser&&p===CONFIG.loginPassword){sessionStorage.setItem('authOk','1');unlockApp();}
+  else{document.getElementById('authErr').classList.add('show');document.getElementById('authPass').value='';}
+}
+function unlockApp(){document.getElementById('authModal').style.display='none';document.getElementById('appRoot').classList.remove('locked');}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('authModal').style.display!=='none')login();});
+
+function saveKeys(){
+  const gk=document.getElementById('googleKey').value.trim();
+  const wk=document.getElementById('wsKey').value.trim();
+  const gcp=document.getElementById('gcpProject').value.trim();
+  if(gk)localStorage.setItem('googleKey',gk);else localStorage.removeItem('googleKey');
+  if(wk)localStorage.setItem('wsKey',wk);else localStorage.removeItem('wsKey');
+  if(gcp)localStorage.setItem('gcpProject',gcp);else localStorage.removeItem('gcpProject');
+  document.getElementById('apiModal').style.display='none';
+  if(gk||wk||gcp)setApiOn();
+  notify('✓ Configuración guardada');
+}
+function skipModal(){document.getElementById('apiModal').style.display='none';}
+function setApiOn(){document.getElementById('led').classList.add('on');document.getElementById('apilbl').textContent='APIs conectadas';}
+
+function loadTemplatePrompts(){
+  const s=document.getElementById('seedPrompt');const w=document.getElementById('wanPrompt');const k=document.getElementById('klingPrompt');
+  if(s&&!s.value.trim())s.value='Hyperrealistic editorial portrait, clean composition, premium fashion photography, natural skin texture, soft contrast, realistic lighting.';
+  if(w&&!w.value.trim())w.value='subtle body movement, natural walking motion, slight breeze in hair and clothes, cinematic realism';
+  if(k&&!k.value.trim())k.value='cinematic motion, realistic camera move, natural body movement, premium fashion shot';
+}
+
+function toggleTab(n,e){
+  e.stopPropagation();
+  const drop=document.getElementById('td'+n);const btn=document.getElementById('tb'+n);
+  const isOpen=drop.classList.contains('show');
+  closeAllTabs();
+  if(!isOpen){drop.classList.add('show');btn.classList.add('open');openTab=n;}
+}
+function closeAllTabs(){[1,2,3].forEach(n=>{document.getElementById('td'+n).classList.remove('show');document.getElementById('tb'+n).classList.remove('open');});openTab=null;}
+document.addEventListener('click',()=>closeAllTabs());
+
+function goTo(tabN,label,panelId,e){
+  e.stopPropagation();
+  document.getElementById('tl'+tabN).textContent=label;
+  [1,2,3].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
+  document.getElementById('tb'+tabN).classList.add('active');
+  document.querySelectorAll('#td'+tabN+' .tmi').forEach(m=>m.classList.remove('s1','s2','s3'));
+  const sel=tabN===1?'s1':tabN===2?'s2':'s3';
+  event.target.closest('.tmi').classList.add(sel);
+  closeAllTabs();showPanel(panelId);
+}
+function showPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const p=document.getElementById(id);if(p)p.classList.add('active');}
+
+function loadImg(input,zid,key){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const z=document.getElementById(zid);let img=z.querySelector('img');
+    if(!img){img=document.createElement('img');z.appendChild(img);}
+    img.src=e.target.result;
+    z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
+    if(key==='master'){masterData=e.target.result;detectModel();}
+    if(key==='ref'){refData=e.target.result;detectModel();}
+    if(key==='wan')wanData=e.target.result;
+    if(key==='kling')klingData=e.target.result;
+    if(key==='seedMaster')seedMasterData=e.target.result;
+    if(key==='seedRef')seedRefData=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function detectModel(){
+  const ov=document.getElementById('mover').value;const lbl=document.getElementById('amlbl');
+  if(ov==='pro'){lbl.textContent='Gemini Pro';return;}
+  if(ov==='flash'){lbl.textContent='Gemini Flash';return;}
+  lbl.textContent=(masterData&&refData)?'Gemini Pro':'Gemini Flash';
+}
+function onModelChange(){detectModel();}
+function getGoogleModel(){
+  const v=document.getElementById('mover').value;
+  if(v==='flash')return 'gemini-2.0-flash-preview-image-generation';
+  if(v==='pro')return 'gemini-2.0-flash-exp';
+  return (masterData&&refData)?'gemini-2.0-flash-exp':'gemini-2.0-flash-preview-image-generation';
+}
+
+function loadDP(){const t=document.getElementById('pta');if(t)t.value=DEFAULT_PROMPT;}
+function setP(type){
+  const p={face:'Fix the face and eyes. Make them more natural. Correct any asymmetry. Keep everything else identical.',skin:'Enhance skin realism. Add natural pores and imperfections. Remove plastic look. Keep face structure identical.',realism:'Make the image more photorealistic. Remove AI look. Natural skin texture, real hair strands. Shot on Sony A7R 85mm f/1.8.'};
+  document.getElementById('epta').value=p[type];
+}
+
+function dataUriPart(uri){
+  const m=(uri||'').match(/^data:(.*?);base64,(.*)$/);if(!m)throw new Error('Imagen no válida');
+  return{inlineData:{mimeType:m[1],data:m[2]}};
+}
+function findInlineDataPart(data){return(data?.candidates?.[0]?.content?.parts||[]).find(p=>p.inlineData)||null;}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+let backendAvailable=false;
+async function checkBackend(){
+  try{
+    const r=await fetch('http://localhost:3000/ping',{signal:AbortSignal.timeout(1500)});
+    backendAvailable=r.ok;
+    if(backendAvailable){
+      document.getElementById('apilbl').textContent='Backend local activo';
+      document.getElementById('led').classList.add('on');
+    }
+  }catch(e){backendAvailable=false;}
+}
+async function callGemini(parts,_p,_l,gKey,ratio,quality){
+  const model=getGoogleModel();
+  const payload={contents:[{parts}],generationConfig:{responseModalities:["TEXT","IMAGE"],imageConfig:{aspectRatio:ratio,imageSize:quality.toUpperCase()}}};
+  if(backendAvailable){
+    const gcpProject=localStorage.getItem('gcpProject')||'';
+    const res=await fetch('http://localhost:3000/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,payload,project:gcpProject})});
+    const data=await res.json();
+    if(data.error)throw new Error(data.error);
+    return data;
+  }
+  if(!gKey)throw new Error('Configura tu Gemini API key o arranca el backend local');
+  const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent?key='+gKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data=await res.json();
+  if(!res.ok)throw new Error(data?.error?.message||'Error en Gemini API');
+  return data;
+}
+
+async function generate(){
+  const gKey=(localStorage.getItem('googleKey')||'').trim();
+  if(!gKey){notify('⚠ Configura tu Gemini API Key');document.getElementById('apiModal').style.display='flex';return;}
+  if(!masterData||!refData){notify('⚠ Sube las dos fotos');return;}
+  const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='Generando...';
+  const out=document.getElementById('z-out');
+  out.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">Generando con Google Cloud...</div></div><div class="oacts"><div class="oact">Esperando...</div></div>';
+  try{
+    const prompt=document.getElementById('pta').value.trim();
+    const neg=document.getElementById('nta').value.trim();
+    const strength=document.getElementById('strR').value;
+    const ratio=document.getElementById('ratioSel').value;
+    const quality=document.getElementById('qualSel').value;
+    const parts=[{text:`${prompt}\n\nStrength: ${strength}%.\nNegative: ${neg}`},dataUriPart(masterData),dataUriPart(refData)];
+    const data=await callGemini(parts,null,null,gKey,ratio,quality);
+    const part=findInlineDataPart(data);
+    if(!part?.data)throw new Error('No llegó ninguna imagen en la respuesta');
+    resultData='data:'+(part.mimeType||'image/png')+';base64,'+part.data;
+    out.innerHTML='<img src="'+resultData+'" alt="resultado" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult()">↓ Guardar</div><div class="oact" onclick="toEdit()">→ Editar</div><div class="oact" onclick="toCarousel()">▦ Carrusel</div></div>';
+    notify('✓ Imagen generada');
+  }catch(err){
+    out.innerHTML='<div style="padding:14px;text-align:center;font-size:11px;line-height:1.9;color:#fca5a5">'+esc(err.message||String(err))+'</div><div class="oacts"><div class="oact" onclick="generate()">↺ Reintentar</div></div>';
+    notify('Error: '+err.message);
+  }finally{btn.disabled=false;btn.innerHTML='⚡ &nbsp; Generar';}
+}
+
+async function generateEdit(){
+  const gKey=(localStorage.getItem('googleKey')||'').trim();
+  const editEl=document.getElementById('z-ed');const editImg=editEl.querySelector('img');
+  if(!gKey){notify('⚠ Configura tu Gemini API key');document.getElementById('apiModal').style.display='flex';return;}
+  if(!editImg?.src){notify('⚠ Sube la foto a editar');return;}
+  const prompt=document.getElementById('epta').value.trim();
+  if(!prompt){notify('⚠ Describe qué quieres corregir');return;}
+  const out=document.getElementById('editOut');
+  out.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">Editando foto...</div></div>';
+  try{
+    const parts=[{text:prompt},dataUriPart(editImg.src)];
+    const data=await callGemini(parts,null,null,gKey,'4:5','2k');
+    const part=findInlineDataPart(data);
+    if(!part?.data)throw new Error('No llegó imagen editada');
+    const url='data:'+(part.mimeType||'image/png')+';base64,'+part.data;
+    out.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)">';
+    notify('✓ Edición completada');
+  }catch(err){
+    out.innerHTML='<div style="padding:14px;text-align:center;font-size:11px;color:#fca5a5">'+esc(err.message)+'</div>';
+    notify('Error edición: '+err.message);
+  }
+}
+
+function toEdit(){
+  if(!resultData)return;
+  const z=document.getElementById('z-ed');let img=z.querySelector('img');
+  if(!img){img=document.createElement('img');z.appendChild(img);}
+  img.src=resultData;z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
+  document.getElementById('tl1').textContent='Edición';
+  [1,2,3].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
+  document.getElementById('tb1').classList.add('active');showPanel('p-edit');notify('Foto enviada a Edición');
+}
+function toCarousel(){
+  if(!resultData)return;
+  ['z-co','z-cn'].forEach(id=>{const z=document.getElementById(id);let img=z.querySelector('img');if(!img){img=document.createElement('img');z.appendChild(img);}img.src=resultData;z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');});
+  document.getElementById('tl1').textContent='Carrusel nuevo';
+  [1,2,3].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
+  document.getElementById('tb1').classList.add('active');showPanel('p-cnew');notify('Foto enviada a Carrusel');
+}
+
+async function pollWS(taskId,apiKey,max=120){
+  for(let i=0;i<max;i++){
+    const res=await fetch('https://api.wavespeed.ai/api/v3/predictions/'+taskId+'/result',{headers:{'Authorization':'Bearer '+apiKey}});
+    const data=await res.json();if(!res.ok)throw new Error(data?.message||'Error consultando WaveSpeed');
+    const st=data?.data?.status;if(st==='completed')return data.data;if(st==='failed')throw new Error(data?.data?.error||'Tarea fallida');
+    await new Promise(r=>setTimeout(r,3000));
+  }throw new Error('Timeout esperando WaveSpeed');
+}
+function mapSeedSize(ratio,quality){const m={'4:5':{'1K':'1024*1280','2K':'2048*2560','4K':'4096*5120'},'9:16':{'1K':'1024*1820','2K':'2048*3640','4K':'4096*7280'},'1:1':{'1K':'1024*1024','2K':'2048*2048','4K':'4096*4096'}};return m[ratio]?.[quality]||'2048*2560';}
+function setLoading(id,txt){const el=document.getElementById(id);if(el)el.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">'+txt+'</div></div>';}
+function setImg(id,url){const el=document.getElementById(id);if(el)el.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)">';}
+function setVideo(id,url){const el=document.getElementById(id);if(el)el.innerHTML='<video src="'+url+'" controls autoplay loop muted style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"></video>';}
+function setErr(id,msg){const el=document.getElementById(id);if(el)el.innerHTML='<div style="padding:16px;text-align:center;font-size:11px;line-height:1.8;color:#fca5a5">'+esc(msg)+'</div>';}
+
+async function generateSeedream(){
+  const wk=(localStorage.getItem('wsKey')||'').trim();
+  if(!wk){notify('⚠ Configura tu WaveSpeed API key');document.getElementById('apiModal').style.display='flex';return;}
+  const seedMasterEl=document.getElementById('z-seed-m');const seedRefEl=document.getElementById('z-seed-r');
+  const seedMasterImg=seedMasterEl.querySelector('img');const seedRefImg=seedRefEl.querySelector('img');
+  if(!seedMasterImg?.src||!seedRefImg?.src){notify('⚠ Sube la foto maestra y la referencia');return;}
+  const btn=document.getElementById('seedBtn');btn.disabled=true;btn.textContent='Generando...';
+  setLoading('seedOut1','Generando con Seedream i2i...');
+  try{
+    const size=mapSeedSize(document.getElementById('seedRatio').value,document.getElementById('seedQuality').value);
+    const neg=document.getElementById('seedNegative').value.trim();
+    const strength=parseInt(document.getElementById('seedStrR').value,10)/100;
+    const userPrompt=document.getElementById('seedPrompt').value.trim();
+    const prompt=userPrompt||'Replace the person in the reference image with the identity from the master image. Keep pose, outfit, background and lighting from the reference exactly. Photorealistic, DSLR quality.';
+    const body={prompt:prompt+'\nNegative prompt: '+neg,image_url:seedRefImg.src,control_image_url:seedMasterImg.src,size,strength,enable_sync_mode:false};
+    const res=await fetch('https://api.wavespeed.ai/api/v3/bytedance/seedream-v4.5-i2i',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},body:JSON.stringify(body)});
+    const data=await res.json();
+    if(!data?.data?.id)throw new Error(data?.message||'Error lanzando Seedream i2i');
+    const result=await pollWS(data.data.id,wk);
+    const url=result?.outputs?.[0];if(!url)throw new Error('Sin resultado');
+    setImg('seedOut1',url);notify('✓ Seedream i2i completado');
+  }catch(err){setErr('seedOut1',err.message);notify('Error Seedream: '+err.message);}
+  finally{btn.disabled=false;btn.innerHTML='◈ &nbsp; Generar con Seedream 4.5';}
+}
+
+async function generateWan(){
+  const wk=(localStorage.getItem('wsKey')||'').trim();
+  if(!wk){notify('⚠ Configura tu WaveSpeed API key');document.getElementById('apiModal').style.display='flex';return;}
+  if(!wanData){notify('⚠ Sube la foto base');return;}
+  const prompt=document.getElementById('wanPrompt').value.trim();if(!prompt){notify('⚠ Escribe el motion prompt');return;}
+  const btn=document.getElementById('wanBtn');btn.disabled=true;btn.textContent='Generando...';setLoading('wanOut','Generando vídeo con Wan 2.6...');
+  try{
+    const duration=parseInt(document.getElementById('wanDuration').value,10);
+    const resolution=document.getElementById('wanResolution').value;
+    const res=await fetch('https://api.wavespeed.ai/api/v3/wavespeed-ai/wan-2.6/image-to-video',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},body:JSON.stringify({image:wanData,prompt,resolution,duration,negative_prompt:'text, watermark, distortion, flicker, blur',seed:-1,enhance_prompt:true})});
+    const data=await res.json();if(!res.ok)throw new Error(data?.message||'Error lanzando Wan 2.6');
+    const result=await pollWS(data.data.id,wk);const url=result?.outputs?.[0];if(!url)throw new Error('Wan no devolvió vídeo');
+    setVideo('wanOut',url);notify('✓ Vídeo Wan 2.6 listo');
+  }catch(err){setErr('wanOut',err.message);notify('Error Wan 2.6: '+err.message);}
+  finally{btn.disabled=false;btn.innerHTML='◉ &nbsp; Generar vídeo con Wan 2.6';}
+}
+
+async function generateKling(){
+  const wk=(localStorage.getItem('wsKey')||'').trim();
+  if(!wk){notify('⚠ Configura tu WaveSpeed API key');document.getElementById('apiModal').style.display='flex';return;}
+  if(!klingData){notify('⚠ Sube la foto base');return;}
+  const prompt=document.getElementById('klingPrompt').value.trim();if(!prompt){notify('⚠ Escribe el prompt de movimiento');return;}
+  const btn=document.getElementById('klingBtn');btn.disabled=true;btn.textContent='Generando...';setLoading('klingOut','Generando vídeo con Kling...');
+  try{
+    const duration=parseInt(document.getElementById('klingDuration').value,10);
+    const guidance=document.getElementById('klingMode').value==='Pro'?0.75:0.5;
+    const res=await fetch('https://api.wavespeed.ai/api/v3/kwaivgi/kling-v2.5-turbo-pro/image-to-video',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},body:JSON.stringify({image:klingData,prompt,duration,guidance_scale:guidance,negative_prompt:'text, watermark, distortion, jitter'})});
+    const data=await res.json();if(!res.ok)throw new Error(data?.message||'Error lanzando Kling');
+    const result=await pollWS(data.data.id,wk);const url=result?.outputs?.[0];if(!url)throw new Error('Kling no devolvió vídeo');
+    setVideo('klingOut',url);notify('✓ Vídeo Kling listo');
+  }catch(err){setErr('klingOut',err.message);notify('Error Kling: '+err.message);}
+  finally{btn.disabled=false;btn.innerHTML='▶ &nbsp; Generar con Kling 2.5';}
+}
+
+function dlResult(){if(!resultData)return;const a=document.createElement('a');a.href=resultData;a.download='result_'+Date.now()+'.jpg';a.click();}
+function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3200);}
+</script>
+</body>
+</html>
