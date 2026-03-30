@@ -39,7 +39,13 @@ app.get("/api/google/check", (_req, res) => {
 app.post("/api/google/generate", async (req, res) => {
   try {
     const cfg = getGoogleConfig();
-    const { prompt, model = "gemini-2.5-flash-image-preview" } = req.body || {};
+    const {
+      prompt = "",
+      model = "gemini-2.5-flash-image",
+      parts = [],
+      ratio = "4:5",
+      quality = "2K",
+    } = req.body || {};
 
     if (!cfg.projectId || !cfg.location || !cfg.apiKey) {
       return res.status(400).json({
@@ -48,10 +54,14 @@ app.post("/api/google/generate", async (req, res) => {
       });
     }
 
-    if (!prompt || !prompt.trim()) {
+    const finalParts = Array.isArray(parts) && parts.length
+      ? parts
+      : [{ text: prompt }];
+
+    if (!finalParts.length) {
       return res.status(400).json({
         ok: false,
-        error: "Falta el prompt.",
+        error: "Faltan datos para generar.",
       });
     }
 
@@ -64,11 +74,15 @@ app.post("/api/google/generate", async (req, res) => {
       contents: [
         {
           role: "user",
-          parts: [{ text: prompt }],
+          parts: finalParts,
         },
       ],
       generationConfig: {
         responseModalities: ["TEXT", "IMAGE"],
+        imageConfig: {
+          aspectRatio: ratio,
+          imageSize: String(quality).toUpperCase(),
+        },
       },
     };
 
