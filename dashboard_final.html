@@ -3,411 +3,849 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>AI Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080810;--gl:rgba(255,255,255,0.04);--gl2:rgba(255,255,255,0.07);--bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.16);--a:#a78bfa;--a2:#60a5fa;--a3:#34d399;--tx:#f1f0ff;--dm:rgba(241,240,255,0.38);--md:rgba(241,240,255,0.62);--r:13px;--rs:8px;}
+:root{
+  --bg:#05080f;--s1:#090d17;--s2:#0d1220;
+  --bd:#1a2235;--bd2:#243050;
+  --a:#4d9fff;--a2:#7b6fff;--a3:#3dd6a3;--aw:#ff9f4d;
+  --tx:#e8eeff;--dm:rgba(232,238,255,0.35);--md:rgba(232,238,255,0.62);
+  --r:12px;--rs:7px;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 65% 45% at 10% 5%,rgba(167,139,250,0.07) 0%,transparent 60%),radial-gradient(ellipse 45% 35% at 90% 90%,rgba(96,165,250,0.05) 0%,transparent 50%);}
-.app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 26px;border-bottom:1px solid var(--bd);background:rgba(8,8,16,0.85);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;gap:16px;}
-.logo{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--a);white-space:nowrap;}
-.tabrow{display:flex;gap:6px;align-items:center;}
+body{background:var(--bg);color:var(--tx);font-family:'Geist Mono',monospace;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 60% 50% at 5% 0%,rgba(77,159,255,0.07) 0%,transparent 55%),
+  radial-gradient(ellipse 40% 35% at 95% 100%,rgba(123,111,255,0.06) 0%,transparent 50%);}
+.app{position:relative;z-index:1;}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;
+  border-bottom:1px solid var(--bd);background:rgba(5,8,15,0.92);
+  backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;gap:12px;flex-wrap:wrap;}
+.logo{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;
+  letter-spacing:3px;text-transform:uppercase;color:var(--a);white-space:nowrap;}
+
+/* TABS */
+.tabrow{display:flex;gap:4px;flex-wrap:wrap;}
 .tdw{position:relative;}
-.tbtn{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:var(--gl);border:1px solid var(--bd);color:var(--md);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.16s;white-space:nowrap;}
-.tbtn:hover{background:var(--gl2);border-color:var(--bd2);color:var(--tx);}
-.tbtn.t1.active{border-color:rgba(167,139,250,0.5);color:var(--a);background:rgba(167,139,250,0.08);}
-.tbtn.t2.active{border-color:rgba(96,165,250,0.5);color:var(--a2);background:rgba(96,165,250,0.08);}
-.tbtn.t3.active{border-color:rgba(52,211,153,0.5);color:var(--a3);background:rgba(52,211,153,0.08);}
-.tbtn .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.t1 .tdot{background:var(--a);}.t2 .tdot{background:var(--a2);}.t3 .tdot{background:var(--a3);}
-.tarr{font-size:9px;opacity:0.45;transition:transform 0.15s;margin-left:2px;}
+.tbtn{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:50px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--bd);
+  color:var(--md);font-family:'Syne',sans-serif;font-size:11px;font-weight:600;
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.tbtn:hover{background:var(--s2);border-color:var(--bd2);color:var(--tx);}
+.tbtn.t1.active{border-color:rgba(77,159,255,0.5);color:var(--a);background:rgba(77,159,255,0.08);}
+.tbtn.t2.active{border-color:rgba(123,111,255,0.5);color:var(--a2);background:rgba(123,111,255,0.08);}
+.tbtn.t3.active{border-color:rgba(255,159,77,0.5);color:var(--aw);background:rgba(255,159,77,0.08);}
+.tbtn.t4.active{border-color:rgba(61,214,163,0.5);color:var(--a3);background:rgba(61,214,163,0.08);}
+.tbtn.t5.active{border-color:rgba(232,238,255,0.3);color:var(--md);background:rgba(232,238,255,0.05);}
+.tdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.t1 .tdot{background:var(--a);}
+.t2 .tdot{background:var(--a2);}
+.t3 .tdot{background:var(--aw);}
+.t4 .tdot{background:var(--a3);}
+.t5 .tdot{background:var(--md);}
+.tarr{font-size:9px;opacity:0.4;transition:transform 0.15s;}
 .tbtn.open .tarr{transform:rotate(180deg);}
-.tdrop{position:absolute;top:calc(100% + 7px);left:0;background:rgba(10,10,20,0.97);border:1px solid var(--bd);border-radius:var(--r);padding:5px;min-width:200px;backdrop-filter:blur(20px);opacity:0;pointer-events:none;transition:all 0.16s;z-index:200;box-shadow:0 18px 45px rgba(0,0,0,0.55);transform:translateY(-4px);}
+.tdrop{position:absolute;top:calc(100% + 7px);left:0;
+  background:rgba(7,11,20,0.98);border:1px solid var(--bd);border-radius:var(--r);
+  padding:5px;min-width:195px;backdrop-filter:blur(20px);
+  opacity:0;pointer-events:none;transition:all 0.15s;z-index:200;
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);transform:translateY(-4px);}
 .tdrop.show{opacity:1;pointer-events:all;transform:translateY(0);}
-.tmi{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--md);transition:all 0.12s;}
-.tmi:hover{background:var(--gl2);color:var(--tx);}
-.tmi.s1{background:rgba(167,139,250,0.1);color:var(--a);}.tmi.s2{background:rgba(96,165,250,0.1);color:var(--a2);}.tmi.s3{background:rgba(52,211,153,0.1);color:var(--a3);}
-.tmi-ic{font-size:14px;width:18px;text-align:center;}.tmi-lb{flex:1;}
-.tmi-tg{font-size:10px;padding:1px 7px;border-radius:20px;background:rgba(255,255,255,0.06);color:var(--dm);}
-.tdiv{height:1px;background:var(--bd);margin:4px 6px;}
-.apill{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--gl);font-size:11px;color:var(--dm);cursor:pointer;transition:all 0.14s;white-space:nowrap;}
-.apill:hover{border-color:var(--bd2);color:var(--md);}
-.led{width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0;}
-.led.on{background:var(--a3);box-shadow:0 0 6px var(--a3);animation:lp 2s ease-in-out infinite;}
+.tmi{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:7px;
+  cursor:pointer;font-size:12px;color:var(--md);transition:all 0.12s;font-family:'Syne',sans-serif;}
+.tmi:hover{background:var(--s2);color:var(--tx);}
+.tmi.s1{background:rgba(77,159,255,0.1);color:var(--a);}
+.tmi.s2{background:rgba(123,111,255,0.1);color:var(--a2);}
+.tmi.s3{background:rgba(255,159,77,0.1);color:var(--aw);}
+.tmi.s4{background:rgba(61,214,163,0.1);color:var(--a3);}
+.tmi.s5{background:rgba(232,238,255,0.06);color:var(--md);}
+.tmi-ic{font-size:13px;width:17px;text-align:center;}
+.tmi-lb{flex:1;}
+.tmi-tg{font-size:9px;padding:1px 6px;border-radius:20px;background:rgba(255,255,255,0.05);color:var(--dm);}
+.tdiv{height:1px;background:var(--bd);margin:3px 5px;}
+
+.status-pill{display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;
+  border:1px solid var(--bd);background:rgba(255,255,255,0.02);
+  font-size:10px;color:var(--dm);cursor:pointer;white-space:nowrap;}
+.led{width:5px;height:5px;border-radius:50%;background:#333;flex-shrink:0;}
+.led.on{background:var(--a3);box-shadow:0 0 7px var(--a3);animation:lp 2s ease-in-out infinite;}
 @keyframes lp{0%,100%{opacity:1}50%{opacity:0.5}}
-.content{padding:22px 26px;max-width:880px;margin:0 auto;width:100%;}
+
+/* ── CONTENT ── */
+.content{padding:22px 24px;max-width:900px;margin:0 auto;}
 .panel{display:none;}.panel.active{display:block;animation:fi 0.18s ease;}
 @keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--gl);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:12px;}
-.ch{padding:14px 17px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.ct{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dm);}
-.cb{padding:0 17px 17px;}
-.ugrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
-.uz{aspect-ratio:4/5;border:1px dashed var(--bd);border-radius:var(--rs);background:rgba(255,255,255,0.02);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;}
-.uz:hover{border-color:rgba(167,139,250,0.4);background:rgba(167,139,250,0.04);}
+
+/* PAGE HEADER */
+.ph{margin-bottom:18px;}
+.ph-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.3px;}
+.ph-sub{font-size:9px;color:var(--dm);margin-top:3px;letter-spacing:1px;text-transform:uppercase;}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:10px;}
+.ch{padding:13px 16px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
+.ct{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dm);}
+.cb{padding:0 16px 16px;}
+
+/* ── UPLOAD ZONES — responsive ── */
+.ugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.5vw,14px);margin-bottom:14px;}
+.uz{
+  aspect-ratio:4/5;
+  border:1px dashed var(--bd);border-radius:var(--rs);
+  background:rgba(77,159,255,0.02);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;
+  width:100%;
+}
+.uz:hover{border-color:rgba(77,159,255,0.45);background:rgba(77,159,255,0.05);}
 .uz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:var(--rs);}
-.uzlb{font-size:9px;color:var(--dm);text-align:center;letter-spacing:0.8px;text-transform:uppercase;line-height:1.6;}
-.uic{font-size:20px;margin-bottom:7px;opacity:0.18;}
-.zb{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);border:1px solid var(--bd);font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;z-index:2;color:var(--a);}
+.uzlb{font-size:clamp(8px,1vw,10px);color:var(--dm);text-align:center;letter-spacing:0.8px;text-transform:uppercase;line-height:1.6;}
+.uic{font-size:clamp(16px,2.5vw,22px);margin-bottom:clamp(4px,0.8vw,8px);opacity:0.15;}
+.zb{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);
+  border:1px solid var(--bd);font-size:9px;font-weight:500;padding:2px 8px;border-radius:20px;
+  letter-spacing:1.5px;text-transform:uppercase;z-index:2;color:var(--a);}
 .zb.b{color:var(--a2);}
-.oz{aspect-ratio:4/5;border:1px solid var(--bd);border-radius:var(--rs);background:rgba(167,139,250,0.02);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.zb.w{color:var(--aw);}
+.oz{
+  aspect-ratio:4/5;
+  border:1px solid var(--bd);border-radius:var(--rs);
+  background:rgba(77,159,255,0.02);display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;width:100%;
+}
 .oph{text-align:center;color:var(--dm);font-size:10px;line-height:1.8;}
-.oph span{font-size:24px;opacity:0.07;display:block;margin-bottom:5px;}
-.oacts{position:absolute;bottom:8px;left:8px;right:8px;display:flex;gap:5px;opacity:0;transition:opacity 0.15s;z-index:3;}
+.oph span{font-size:clamp(18px,3vw,26px);opacity:0.07;display:block;margin-bottom:5px;}
+.oacts{position:absolute;bottom:8px;left:8px;right:8px;display:flex;gap:5px;
+  opacity:0;transition:opacity 0.15s;z-index:3;}
 .oz:hover .oacts{opacity:1;}
-.oact{flex:1;background:rgba(0,0,0,0.82);backdrop-filter:blur(6px);border:1px solid var(--bd);color:var(--md);font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;padding:6px 3px;border-radius:7px;cursor:pointer;text-align:center;transition:all 0.12s;}
+.oact{flex:1;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);
+  border:1px solid var(--bd);color:var(--md);
+  font-family:'Geist Mono',monospace;font-size:10px;
+  padding:6px 2px;border-radius:6px;cursor:pointer;text-align:center;transition:all 0.12s;}
 .oact:hover{background:var(--a);color:#000;border-color:var(--a);}
-.crow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
-.crow2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-.crow4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.oact.w:hover{background:var(--aw);border-color:var(--aw);}
+
+/* ── CONTROLS ── */
+.crow4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:11px;}
+.crow3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:11px;}
+.crow2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:11px;}
+@media(max-width:600px){.crow4{grid-template-columns:repeat(2,1fr);}.crow3{grid-template-columns:repeat(2,1fr);}}
 .cg{display:flex;flex-direction:column;gap:5px;}
-.cl{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dm);}
-select{background:var(--gl);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%;appearance:none;cursor:pointer;transition:border-color 0.13s;}
-select:focus{outline:none;border-color:rgba(167,139,250,0.5);}
+.cl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dm);}
+select{background:var(--s2);border:1px solid var(--bd);color:var(--tx);
+  font-family:'Geist Mono',monospace;font-size:12px;padding:8px 10px;
+  border-radius:var(--rs);width:100%;appearance:none;cursor:pointer;transition:border-color 0.13s;}
+select:focus{outline:none;border-color:rgba(77,159,255,0.5);}
 .rw{display:flex;align-items:center;gap:8px;margin-top:5px;}
 input[type="range"]{flex:1;appearance:none;height:3px;background:var(--bd);border-radius:2px;outline:none;cursor:pointer;}
-input[type="range"]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:var(--a);border:2px solid var(--bg);cursor:pointer;}
-.amod{display:flex;align-items:center;gap:8px;padding:9px 13px;background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.16);border-radius:var(--rs);margin-bottom:12px;font-size:11px;color:var(--md);}
+input[type="range"]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:50%;background:var(--a);border:2px solid var(--bg);cursor:pointer;box-shadow:0 0 7px rgba(77,159,255,0.5);}
+input[type="range"].w::-webkit-slider-thumb{background:var(--aw);box-shadow:0 0 7px rgba(255,159,77,0.5);}
+
+.amod{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:rgba(77,159,255,0.05);border:1px solid rgba(77,159,255,0.15);
+  border-radius:var(--rs);margin-bottom:11px;font-size:11px;color:var(--md);}
 .amod strong{color:var(--a);}
+.amod.w{background:rgba(255,159,77,0.05);border-color:rgba(255,159,77,0.15);}
+.amod.w strong{color:var(--aw);}
 .adot{width:5px;height:5px;border-radius:50%;background:var(--a);animation:lp 2s ease-in-out infinite;flex-shrink:0;}
-textarea{background:var(--gl);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:11px;line-height:1.65;padding:11px 13px;border-radius:var(--rs);width:100%;resize:vertical;transition:border-color 0.13s;}
-textarea:focus{outline:none;border-color:rgba(167,139,250,0.4);}
+.adot.w{background:var(--aw);}
+
+/* ── COLLAPSIBLE PROMPT ── */
+.prompt-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;cursor:pointer;
+  background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);
+  margin-bottom:0;transition:all 0.13s;user-select:none;
+}
+.prompt-toggle:hover{border-color:var(--bd2);}
+.prompt-toggle.open{border-radius:var(--rs) var(--rs) 0 0;border-bottom-color:transparent;}
+.pt-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dm);flex:1;}
+.pt-arr{font-size:9px;color:var(--dm);transition:transform 0.15s;}
+.prompt-toggle.open .pt-arr{transform:rotate(180deg);}
+.pt-hint{font-size:9px;color:var(--dm);opacity:0.6;}
+
+.prompt-body{
+  background:var(--s2);border:1px solid var(--bd);border-top:none;
+  border-radius:0 0 var(--rs) var(--rs);
+  padding:12px;
+  display:none;margin-bottom:0;
+}
+.prompt-body.open{display:block;}
+
+textarea{background:var(--s1);border:1px solid var(--bd);color:var(--tx);
+  font-family:'Geist Mono',monospace;font-size:11px;line-height:1.65;
+  padding:10px 12px;border-radius:var(--rs);width:100%;resize:vertical;transition:border-color 0.13s;}
+textarea:focus{outline:none;border-color:rgba(77,159,255,0.4);}
 textarea::placeholder{color:var(--dm);}
 .prh{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
-.pacts{display:flex;gap:5px;}
-.gbtn{background:var(--gl);border:1px solid var(--bd);color:var(--dm);font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;padding:4px 11px;border-radius:20px;cursor:pointer;transition:all 0.13s;}
+.pacts{display:flex;gap:4px;}
+.gbtn{background:var(--s2);border:1px solid var(--bd);color:var(--dm);
+  font-family:'Geist Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;cursor:pointer;transition:all 0.13s;}
 .gbtn:hover{border-color:var(--bd2);color:var(--md);}
-.btnrow{display:flex;gap:10px;margin-top:14px;}
-.big{flex:1;padding:13px 16px;background:linear-gradient(135deg,rgba(167,139,250,0.16),rgba(96,165,250,0.1));border:1px solid rgba(167,139,250,0.26);border-radius:var(--rs);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.16s;}
-.big:hover{box-shadow:0 0 24px rgba(167,139,250,0.16);transform:translateY(-1px);}
+
+/* ── BIG BTN ── */
+.btnrow{display:flex;gap:10px;margin-top:12px;}
+.big{flex:1;padding:12px 16px;
+  background:linear-gradient(135deg,rgba(77,159,255,0.18),rgba(77,159,255,0.07));
+  border:1px solid rgba(77,159,255,0.32);border-radius:var(--rs);
+  color:var(--a);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
+.big:hover{box-shadow:0 0 22px rgba(77,159,255,0.18);transform:translateY(-1px);}
 .big:active{transform:translateY(0);}
 .big:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
-.big.b{background:linear-gradient(135deg,rgba(96,165,250,0.16),rgba(52,211,153,0.08));border-color:rgba(96,165,250,0.26);}
-.big.b:hover{box-shadow:0 0 24px rgba(96,165,250,0.14);}
+.big.p{background:linear-gradient(135deg,rgba(123,111,255,0.18),rgba(123,111,255,0.07));border-color:rgba(123,111,255,0.32);color:var(--a2);}
+.big.p:hover{box-shadow:0 0 22px rgba(123,111,255,0.18);}
+.big.w{background:linear-gradient(135deg,rgba(255,159,77,0.18),rgba(255,159,77,0.07));border-color:rgba(255,159,77,0.32);color:var(--aw);}
+.big.w:hover{box-shadow:0 0 22px rgba(255,159,77,0.15);}
+.big.g{background:linear-gradient(135deg,rgba(61,214,163,0.18),rgba(61,214,163,0.07));border-color:rgba(61,214,163,0.32);color:var(--a3);}
+.big.g:hover{box-shadow:0 0 22px rgba(61,214,163,0.15);}
+
+/* SPINNER */
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.spin{width:28px;height:28px;border:2px solid var(--bd);border-top-color:var(--a);border-radius:50%;animation:spin 0.8s linear infinite;}
+.spin{width:26px;height:26px;border:2px solid var(--bd);border-top-color:var(--a);border-radius:50%;animation:spin 0.8s linear infinite;}
 .gst{font-size:10px;color:var(--dm);animation:blink 1.5s ease-in-out infinite;margin-top:6px;}
-.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px;}
-.cs{aspect-ratio:4/5;border-radius:var(--rs);background:var(--gl);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
+
+/* CAROUSEL */
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1.2vw,10px);margin-bottom:13px;}
+.cs{aspect-ratio:4/5;border-radius:var(--rs);background:var(--s2);border:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:clamp(12px,2vw,18px);font-weight:800;color:rgba(255,255,255,0.03);
+  position:relative;overflow:hidden;}
 .cs img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-.sup{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
-.suz{width:64px;height:80px;flex-shrink:0;border:1px dashed var(--bd);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.14s;position:relative;overflow:hidden;background:rgba(255,255,255,0.02);}
-.suz:hover{border-color:rgba(167,139,250,0.4);}
+
+/* SMALL UPLOAD */
+.sup{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px;}
+.suz{width:clamp(50px,7vw,68px);height:clamp(62px,8.8vw,85px);flex-shrink:0;
+  border:1px dashed var(--bd);border-radius:var(--rs);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:rgba(77,159,255,0.02);transition:border-color 0.13s;position:relative;overflow:hidden;}
+.suz:hover{border-color:rgba(77,159,255,0.4);}
 .suz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-.vuz{width:70px;height:88px;flex-shrink:0;border:1px dashed var(--bd);border-radius:var(--rs);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.14s;position:relative;overflow:hidden;background:rgba(255,255,255,0.02);}
-.vuz:hover{border-color:rgba(167,139,250,0.4);}
+.vuz{width:clamp(56px,7.5vw,72px);height:clamp(70px,9.5vw,90px);flex-shrink:0;
+  border:1px dashed var(--bd);border-radius:var(--rs);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;background:rgba(77,159,255,0.02);transition:border-color 0.13s;
+  position:relative;overflow:hidden;}
+.vuz:hover{border-color:rgba(77,159,255,0.4);}
 .vuz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.lcard{background:var(--gl);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all 0.15s;}
-.lcard:hover{border-color:rgba(167,139,250,0.3);background:var(--gl2);}
-.lcard.empty{border-style:dashed;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:var(--dm);font-size:11px;min-height:80px;}
-.ln{font-size:12px;font-weight:600;margin-bottom:2px;}
+
+/* LORA */
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:13px;}
+.lcard{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:13px;cursor:pointer;transition:all 0.15s;}
+.lcard:hover{border-color:rgba(77,159,255,0.3);background:var(--s2);}
+.lcard.empty{border-style:dashed;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:var(--dm);font-size:11px;min-height:78px;}
+.ln{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;margin-bottom:3px;}
 .lm{font-size:10px;color:var(--dm);line-height:1.6;}
-.ls{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:600;padding:2px 7px;border-radius:20px;margin-top:6px;}
-.ls.none{background:var(--gl);color:var(--dm);}
-.authbg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(900px 550px at 18% 8%,rgba(167,139,250,0.16),transparent 55%),radial-gradient(800px 500px at 82% 92%,rgba(96,165,250,0.12),transparent 52%),linear-gradient(180deg,rgba(4,6,12,0.97),rgba(7,9,16,0.99));z-index:1200;}
-.authcard{width:min(380px,92vw);background:linear-gradient(180deg,rgba(16,18,28,0.98),rgba(9,11,18,0.99));border:1px solid rgba(167,139,250,0.2);border-radius:24px;padding:32px;box-shadow:0 28px 70px rgba(0,0,0,0.6);}
-.authpill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;border:1px solid rgba(167,139,250,0.22);background:rgba(167,139,250,0.07);color:#d8ccff;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
-.authdot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));box-shadow:0 0 10px rgba(167,139,250,0.7);}
-.authcard h2{margin:0 0 6px;font-size:22px;font-weight:700;}
-.authcard p{margin:0 0 20px;color:var(--dm);font-size:11px;line-height:1.7;}
+.ls{display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:2px 7px;border-radius:20px;margin-top:5px;}
+.ls.none{background:var(--s2);color:var(--dm);}
+
+/* ── HISTORIAL ── */
+.hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(100px,15vw,140px),1fr));gap:10px;margin-bottom:16px;}
+.hist-item{aspect-ratio:4/5;border-radius:var(--rs);background:var(--s2);border:1px solid var(--bd);
+  position:relative;overflow:hidden;cursor:pointer;transition:all 0.15s;}
+.hist-item:hover{border-color:rgba(77,159,255,0.4);transform:translateY(-2px);}
+.hist-item img{width:100%;height:100%;object-fit:cover;}
+.hist-meta{position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,0.75));
+  padding:20px 8px 8px;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:0.5px;}
+.hist-tag{position:absolute;top:6px;left:6px;background:rgba(0,0,0,0.75);
+  border:1px solid rgba(255,255,255,0.1);font-size:8px;padding:2px 6px;
+  border-radius:20px;color:var(--dm);}
+.hist-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 20px;text-align:center;color:var(--dm);}
+.hist-empty .icon{font-size:36px;opacity:0.15;margin-bottom:12px;}
+.hist-empty p{font-size:11px;line-height:1.7;}
+.hist-filters{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.hf{padding:5px 12px;border-radius:20px;border:1px solid var(--bd);background:var(--s2);
+  font-size:10px;color:var(--dm);cursor:pointer;transition:all 0.13s;font-family:'Syne',sans-serif;}
+.hf:hover{border-color:var(--bd2);color:var(--md);}
+.hf.active{border-color:var(--a);color:var(--a);background:rgba(77,159,255,0.08);}
+.hist-count{font-size:10px;color:var(--dm);margin-bottom:14px;}
+
+/* MODAL HIST */
+.hist-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);
+  z-index:300;display:none;align-items:center;justify-content:center;}
+.hist-modal-bg.show{display:flex;}
+.hist-modal{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+  padding:0;width:min(480px,92vw);overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.6);}
+.hist-modal-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.hist-modal-body{padding:16px;}
+.hist-modal-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px;}
+.hist-modal-meta{font-size:10px;color:var(--dm);margin-bottom:12px;line-height:1.7;}
+.hist-modal-actions{display:flex;gap:8px;}
+
+/* MODAL API */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:300;
+  display:none;align-items:center;justify-content:center;}
+.mbg.show{display:flex;}
+.modal{background:rgba(7,11,20,0.99);border:1px solid var(--bd);border-radius:18px;
+  padding:28px;width:min(400px,92vw);box-shadow:0 40px 80px rgba(0,0,0,0.7);}
+.mt{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;}
+.ms{font-size:11px;color:var(--dm);margin-bottom:20px;line-height:1.7;}
+.mf{margin-bottom:11px;}
+.fl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dm);margin-bottom:5px;}
+input[type="password"],input[type="text"]{background:rgba(255,255,255,0.04);border:1px solid var(--bd);
+  color:var(--tx);font-family:'Geist Mono',monospace;font-size:12px;padding:9px 12px;
+  border-radius:var(--rs);width:100%;transition:border-color 0.13s;}
+input:focus{outline:none;border-color:rgba(77,159,255,0.5);}
+.mbtn{width:100%;margin-top:16px;padding:11px;
+  background:linear-gradient(135deg,rgba(77,159,255,0.24),rgba(77,159,255,0.1));
+  border:1px solid rgba(77,159,255,0.35);border-radius:var(--rs);color:var(--a);
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
+.mbtn:hover{box-shadow:0 0 20px rgba(77,159,255,0.2);}
+.mskip{text-align:center;margin-top:10px;font-size:11px;color:var(--dm);cursor:pointer;}
+.mskip:hover{color:var(--md);}
+
+/* AUTH */
+.authbg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 20% 10%,rgba(77,159,255,0.15),transparent 55%),
+  radial-gradient(ellipse at 80% 90%,rgba(123,111,255,0.12),transparent 50%),
+  linear-gradient(180deg,rgba(3,6,13,0.97),rgba(5,8,15,0.99));z-index:1200;}
+.authcard{width:min(360px,92vw);background:rgba(9,13,23,0.98);
+  border:1px solid rgba(77,159,255,0.18);border-radius:22px;padding:30px;
+  box-shadow:0 28px 70px rgba(0,0,0,0.6);}
+.apill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;
+  border:1px solid rgba(77,159,255,0.22);background:rgba(77,159,255,0.07);
+  color:#a8d4ff;font-size:9px;font-weight:600;letter-spacing:1px;
+  font-family:'Syne',sans-serif;text-transform:uppercase;margin-bottom:16px;}
+.apill-dot{width:6px;height:6px;border-radius:50%;background:var(--a);box-shadow:0 0 10px var(--a);}
+.authcard h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin:0 0 5px;}
+.authcard p{font-size:11px;color:var(--dm);margin:0 0 20px;line-height:1.7;}
 .authrow{display:grid;gap:11px;}
 .autherr{display:none;margin-top:8px;color:#fca5a5;font-size:11px;}
 .autherr.show{display:block;}
 .app.locked{filter:blur(8px);pointer-events:none;user-select:none;}
-.mbg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:300;display:flex;align-items:center;justify-content:center;}
-.modal{background:rgba(10,10,20,0.98);border:1px solid var(--bd);border-radius:18px;padding:28px;width:400px;max-width:90vw;box-shadow:0 40px 80px rgba(0,0,0,0.6);}
-.mt{font-size:17px;font-weight:700;margin-bottom:4px;}
-.ms{font-size:11px;color:var(--dm);margin-bottom:20px;line-height:1.7;}
-.mf{margin-bottom:11px;}
-.fl{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dm);margin-bottom:5px;}
-input[type="password"],input[type="text"]{background:rgba(255,255,255,0.04);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%;transition:border-color 0.13s;}
-input:focus{outline:none;border-color:rgba(167,139,250,0.5);}
-.mbtn{width:100%;margin-top:16px;padding:11px;background:linear-gradient(135deg,rgba(167,139,250,0.26),rgba(96,165,250,0.16));border:1px solid rgba(167,139,250,0.33);border-radius:var(--rs);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
-.mbtn:hover{box-shadow:0 0 20px rgba(167,139,250,0.18);}
-.mskip{text-align:center;margin-top:10px;font-size:11px;color:var(--dm);cursor:pointer;transition:color 0.13s;}
-.mskip:hover{color:var(--md);}
-.notif{position:fixed;bottom:20px;right:20px;background:rgba(10,10,20,0.96);border:1px solid var(--bd);border-radius:var(--rs);padding:9px 16px;font-size:12px;z-index:400;transform:translateY(10px);opacity:0;transition:all 0.22s;backdrop-filter:blur(12px);box-shadow:0 8px 28px rgba(0,0,0,0.4);}
-.notif.show{transform:translateY(0);opacity:1;}
+
 input[type="file"]{display:none;}
+.notif{position:fixed;bottom:20px;right:20px;background:var(--s1);border:1px solid var(--bd);
+  border-radius:var(--rs);padding:9px 16px;font-size:12px;z-index:400;
+  transform:translateY(10px);opacity:0;transition:all 0.22s;box-shadow:0 8px 28px rgba(0,0,0,0.5);}
+.notif.show{transform:translateY(0);opacity:1;}
 </style>
 </head>
 <body>
+
+<!-- AUTH -->
 <div class="authbg" id="authModal">
   <div class="authcard">
-    <div class="authpill"><span class="authdot"></span>Acceso privado</div>
-    <h2>AI Dashboard</h2>
-    <p>Introduce tus credenciales para acceder al panel.</p>
+    <div class="apill"><span class="apill-dot"></span>Acceso privado</div>
+    <h2>AI Studio</h2>
+    <p>Introduce tus credenciales para acceder.</p>
     <div class="authrow">
       <div><div class="fl">Usuario</div><input type="text" id="authUser" placeholder="usuario" autocomplete="username"></div>
-      <div><div class="fl">Contraseña</div><input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
+      <div><div class="fl">Contraseña</div><input type="password" id="authPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
     </div>
     <button class="mbtn" onclick="login()">Entrar →</button>
     <div class="autherr" id="authErr">Credenciales incorrectas.</div>
   </div>
 </div>
 
-
-<div class="mbg" id="apiModal" style="display:none">
+<!-- API MODAL -->
+<div class="mbg" id="apiModal">
   <div class="modal">
     <div class="mt">Configurar APIs</div>
-    <div class="ms">Google ya sale desde Railway. Aquí solo necesitas WaveSpeed.</div>
-
-    <div class="mf">
-      <div class="fl">Estado de Google</div>
-      <input type="text" id="googleBackendStatus" value="Conectado por backend Railway" readonly>
-      <div style="font-size:10px;color:var(--dm);margin-top:4px;line-height:1.6">Google Vertex AI se usa desde el backend desplegado. No hace falta meter Google API key aquí.</div>
-    </div>
-
-    <div class="mf">
-      <div class="fl">WaveSpeed API Key</div>
-      <input type="password" id="wsKey" placeholder="ws-xxxxxxxx">
-    </div>
-
+    <div class="ms">Se guardan localmente. Solo hay que hacerlo una vez.</div>
+    <div class="mf"><div class="fl">Google Gemini API Key</div><input type="password" id="googleKey" placeholder="AIzaSy...">
+      <div style="font-size:9px;color:var(--dm);margin-top:4px">aistudio.google.com → Get API key</div></div>
+    <div class="mf"><div class="fl">WaveSpeed API Key</div><input type="password" id="wsKey" placeholder="ws-xxxxxxxx"></div>
+    <div class="mf"><div class="fl">Google Cloud Project ID (opcional)</div><input type="text" id="gcpProject" placeholder="mi-proyecto-123456">
+      <div style="font-size:9px;color:var(--dm);margin-top:4px">Solo para backend local con Vertex AI</div></div>
     <button class="mbtn" onclick="saveKeys()">Guardar →</button>
-    <div class="mskip" onclick="skipModal()">Cerrar</div>
+    <div class="mskip" onclick="skipModal()">Continuar sin configurar</div>
   </div>
 </div>
 
+<!-- HIST DETAIL MODAL -->
+<div class="hist-modal-bg" id="histModal">
+  <div class="hist-modal">
+    <img id="histModalImg" src="" alt="" class="hist-modal-img">
+    <div class="hist-modal-body">
+      <div class="hist-modal-title" id="histModalTitle">—</div>
+      <div class="hist-modal-meta" id="histModalMeta">—</div>
+      <div class="hist-modal-actions">
+        <button class="big" style="font-size:10px;padding:9px" onclick="dlHistItem()">↓ Guardar</button>
+        <button class="big p" style="font-size:10px;padding:9px" onclick="document.getElementById('histModal').classList.remove('show')">✕ Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="app locked" id="appRoot">
   <div class="topbar">
-    <div class="logo">AI Dashboard</div>
+    <div class="logo">AI Studio</div>
     <div class="tabrow">
+
+      <!-- TAB 1: STUDIO (Gemini) -->
       <div class="tdw">
-        <button class="tbtn t1 active" id="tb1" onclick="toggleTab(1,event)"><span class="tdot"></span><span id="tl1">Studio</span><span class="tarr">▾</span></button>
+        <button class="tbtn t1 active" id="tb1" onclick="toggleTab(1,event)">
+          <span class="tdot"></span><span id="tl1">Studio</span><span class="tarr">▾</span>
+        </button>
         <div class="tdrop" id="td1">
-          <div class="tmi s1" onclick="goTo(1,'Studio','p-gen',event)"><span class="tmi-ic">⚡</span><span class="tmi-lb">Generación</span><span class="tmi-tg">principal</span></div>
+          <div class="tmi s1" onclick="goTo(1,'Studio','p-gen',event)"><span class="tmi-ic">⚡</span><span class="tmi-lb">Generación</span><span class="tmi-tg">gemini</span></div>
           <div class="tmi" onclick="goTo(1,'Edición','p-edit',event)"><span class="tmi-ic">✦</span><span class="tmi-lb">Edición</span></div>
           <div class="tdiv"></div>
           <div class="tmi" onclick="goTo(1,'Carrusel clásico','p-cold',event)"><span class="tmi-ic">◫</span><span class="tmi-lb">Carrusel clásico</span></div>
           <div class="tmi" onclick="goTo(1,'Carrusel nuevo','p-cnew',event)"><span class="tmi-ic">▦</span><span class="tmi-lb">Carrusel nuevo</span></div>
         </div>
       </div>
+
+      <!-- TAB 2: WAVESPEED IMAGE -->
       <div class="tdw">
-        <button class="tbtn t2" id="tb2" onclick="toggleTab(2,event)"><span class="tdot"></span><span id="tl2">WaveSpeed</span><span class="tarr">▾</span></button>
+        <button class="tbtn t2" id="tb2" onclick="toggleTab(2,event)">
+          <span class="tdot"></span><span id="tl2">WaveSpeed</span><span class="tarr">▾</span>
+        </button>
         <div class="tdrop" id="td2">
-          <div class="tmi" onclick="goTo(2,'Seedream 4.5','p-seedream',event)"><span class="tmi-ic">◈</span><span class="tmi-lb">Seedream 4.5</span></div>
+          <div class="tmi" onclick="goTo(2,'Nano Banana Pro','p-nbp',event)"><span class="tmi-ic">🍌</span><span class="tmi-lb">Nano Banana Pro</span><span class="tmi-tg">i2i</span></div>
+          <div class="tmi" onclick="goTo(2,'Edición WS','p-ws-edit',event)"><span class="tmi-ic">✦</span><span class="tmi-lb">Edición</span></div>
+          <div class="tdiv"></div>
+          <div class="tmi" onclick="goTo(2,'Carrusel clásico WS','p-ws-cold',event)"><span class="tmi-ic">◫</span><span class="tmi-lb">Carrusel clásico</span></div>
+          <div class="tmi" onclick="goTo(2,'Carrusel nuevo WS','p-ws-cnew',event)"><span class="tmi-ic">▦</span><span class="tmi-lb">Carrusel nuevo</span></div>
+          <div class="tdiv"></div>
+          <div class="tmi" onclick="goTo(2,'Seedream 4.5','p-seedream',event)"><span class="tmi-ic">◈</span><span class="tmi-lb">Seedream 4.5</span><span class="tmi-tg">i2i</span></div>
           <div class="tmi" onclick="goTo(2,'Wan 2.6','p-wan',event)"><span class="tmi-ic">◉</span><span class="tmi-lb">Wan 2.6</span><span class="tmi-tg">vídeo</span></div>
           <div class="tmi" onclick="goTo(2,'Kling 2.5','p-kling',event)"><span class="tmi-ic">▶</span><span class="tmi-lb">Kling 2.5</span><span class="tmi-tg">vídeo</span></div>
           <div class="tmi" onclick="goTo(2,'Z Image','p-zimage',event)"><span class="tmi-ic">◐</span><span class="tmi-lb">Z Image</span></div>
         </div>
       </div>
+
+      <!-- TAB 3: HISTORIAL -->
       <div class="tdw">
-        <button class="tbtn t3" id="tb3" onclick="toggleTab(3,event)"><span class="tdot"></span><span id="tl3">LoRA</span><span class="tarr">▾</span></button>
-        <div class="tdrop" id="td3">
-          <div class="tmi" onclick="goTo(3,'Entrenar','p-lora-train',event)"><span class="tmi-ic">⬆</span><span class="tmi-lb">Entrenar</span></div>
-          <div class="tmi" onclick="goTo(3,'Mis LoRAs','p-lora-manage',event)"><span class="tmi-ic">☰</span><span class="tmi-lb">Mis LoRAs</span></div>
+        <button class="tbtn t3" id="tb3" onclick="goTo(3,'Historial','p-history',null);toggleTab(3,event||{stopPropagation:()=>{}})">
+          <span class="tdot"></span><span id="tl3">Historial</span>
+        </button>
+      </div>
+
+      <!-- TAB 4: LORA -->
+      <div class="tdw">
+        <button class="tbtn t4" id="tb4" onclick="toggleTab(4,event)">
+          <span class="tdot"></span><span id="tl4">LoRA</span><span class="tarr">▾</span>
+        </button>
+        <div class="tdrop" id="td4">
+          <div class="tmi" onclick="goTo(4,'Entrenar','p-lora-train',event)"><span class="tmi-ic">⬆</span><span class="tmi-lb">Entrenar</span></div>
+          <div class="tmi" onclick="goTo(4,'Mis LoRAs','p-lora-manage',event)"><span class="tmi-ic">☰</span><span class="tmi-lb">Mis LoRAs</span></div>
         </div>
       </div>
+
     </div>
-    <div class="apill" onclick="document.getElementById('apiModal').style.display='flex'"><div class="led" id="led"></div><span id="apilbl">Configurar API</span></div>
+    <div class="status-pill" onclick="document.getElementById('apiModal').classList.add('show')">
+      <div class="led" id="led"></div><span id="apilbl">Configurar API</span>
+    </div>
   </div>
 
   <div class="content">
 
+    <!-- ═══════════════ STUDIO — GENERACIÓN (GEMINI) ═══════════════ -->
     <div class="panel active" id="p-gen">
+      <div class="ph"><div class="ph-title">Generación</div><div class="ph-sub">Gemini · Foto maestra + referencia → imagen final</div></div>
       <div class="card"><div class="ch"><div class="ct">Imágenes de entrada</div></div><div class="cb">
         <div class="ugrid">
-          <div><div class="cl" style="margin-bottom:6px">Foto maestra</div>
-            <div class="uz" onclick="document.getElementById('fi-m').click()" id="z-m"><div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
-            <input type="file" id="fi-m" accept="image/*" onchange="loadImg(this,'z-m','master')">
-          </div>
-          <div><div class="cl" style="margin-bottom:6px">Foto referencia</div>
-            <div class="uz" onclick="document.getElementById('fi-r').click()" id="z-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div></div>
-            <input type="file" id="fi-r" accept="image/*" onchange="loadImg(this,'z-r','ref')">
-          </div>
-          <div><div class="cl" style="margin-bottom:6px">Resultado</div>
-            <div class="oz" id="z-out"><div class="oph" id="out-ph"><span>◎</span>Resultado aquí</div>
-              <div class="oacts"><div class="oact" onclick="dlResult()">↓ Guardar</div><div class="oact" onclick="toEdit()">→ Editar</div><div class="oact" onclick="toCarousel()">▦ Carrusel</div></div>
-            </div>
-          </div>
+          <div><div class="cl" style="margin-bottom:5px">Foto maestra</div>
+            <div class="uz" onclick="fi('fi-gen-m')" id="z-gen-m"><div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
+            <input type="file" id="fi-gen-m" accept="image/*" onchange="loadImg(this,'z-gen-m','genMaster')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Foto referencia</div>
+            <div class="uz" onclick="fi('fi-gen-r')" id="z-gen-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div></div>
+            <input type="file" id="fi-gen-r" accept="image/*" onchange="loadImg(this,'z-gen-r','genRef')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
+            <div class="oz" id="z-gen-out"><div class="oph" id="gen-out-ph"><span>◎</span>Resultado aquí</div>
+              <div class="oacts"><div class="oact" onclick="dlResult('genResult')">↓ Guardar</div><div class="oact" onclick="sendToEdit('gen')">→ Editar</div><div class="oact" onclick="sendToCarousel('gen')">▦ Carrusel</div></div>
+            </div></div>
         </div>
       </div></div>
       <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="amod"><div class="adot"></div>Modelo: <strong id="amlbl">Gemini Pro</strong>
-          <select id="mover" style="margin-left:auto;width:auto;padding:5px 10px;font-size:11px;border-radius:20px" onchange="onModelChange()">
-            <option value="auto" selected>Auto</option>
-            <option value="pro">Gemini Pro (mejor calidad)</option>
-            <option value="flash">Gemini Flash (más rápido)</option>
+        <div class="amod">
+          <div class="adot"></div>Modelo: <strong id="genModelLbl">Gemini Pro</strong>
+          <select id="genModel" style="margin-left:auto;width:auto;padding:5px 9px;font-size:11px;border-radius:20px" onchange="updateModelLbl()">
+            <option value="auto">Auto</option><option value="pro">Gemini Pro</option><option value="flash">Gemini Flash</option>
           </select>
         </div>
         <div class="crow4">
-          <div class="cg"><div class="cl">Ratio</div><select id="ratioSel"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select id="qualSel"><option value="1k">1K</option><option value="2k" selected>2K</option><option value="4k">4K</option></select></div>
-          <div class="cg"><div class="cl">Cantidad</div><select id="countSel"><option selected>1</option><option>2</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span id="sv" style="color:var(--a);font-family:'Space Mono'">35%</span></div><div class="rw"><input type="range" id="strR" min="10" max="90" value="35" oninput="document.getElementById('sv').textContent=this.value+'%'"></div></div>
+          <div class="cg"><div class="cl">Ratio</div><select id="genRatio"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select id="genQual"><option value="1k">1K</option><option value="2k" selected>2K</option><option value="4k">4K</option></select></div>
+          <div class="cg"><div class="cl">Cantidad</div><select id="genCount"><option selected>1</option><option>2</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span id="genStrV" style="color:var(--a)">35%</span></div>
+            <div class="rw"><input type="range" id="genStr" min="10" max="90" value="35" oninput="document.getElementById('genStrV').textContent=this.value+'%'"></div></div>
         </div>
       </div></div>
-      <div class="card"><div class="ch"><div class="ct">Prompt</div><div class="pacts"><button class="gbtn" onclick="loadDP()">↺ Default</button><button class="gbtn" onclick="document.getElementById('pta').value=''">✕ Limpiar</button></div></div>
-        <div class="cb"><textarea id="pta" rows="5" style="margin-bottom:10px"></textarea><div class="cl" style="margin-bottom:6px">Negative prompt</div><textarea id="nta" rows="2">airbrushed, studio lighting, perfect skin, overly smooth, plastic, CGI, cartoon, blurry, deformed, watermark</textarea></div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="prompt-toggle" id="pt-gen" onclick="togglePrompt('gen')">
+          <span class="pt-label">Prompt</span>
+          <span class="pt-hint" id="ph-gen">Toca para ver</span>
+          <span class="pt-arr">▾</span>
+        </div>
+        <div class="prompt-body" id="pb-gen">
+          <div class="prh"><div class="cl">Prompt principal</div>
+            <div class="pacts"><button class="gbtn" onclick="loadDP('gen-pta')">↺ Default</button><button class="gbtn" onclick="clearTA('gen-pta')">✕</button></div>
+          </div>
+          <textarea id="gen-pta" rows="5" style="margin-bottom:9px"></textarea>
+          <div class="cl" style="margin-bottom:5px">Negative prompt</div>
+          <textarea id="gen-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed, watermark</textarea>
+        </div>
       </div>
-      <div class="btnrow"><button class="big" id="genBtn" onclick="generate()">⚡ &nbsp; Generar</button></div>
+      <div class="btnrow"><button class="big" id="genBtn" onclick="generateGemini()">⚡ &nbsp; Generar con Gemini</button></div>
     </div>
 
+    <!-- ═══════════════ STUDIO — EDICIÓN (GEMINI) ═══════════════ -->
     <div class="panel" id="p-edit">
-      <div class="card"><div class="ch"><div class="ct">Edición rápida</div></div><div class="cb">
-        <div class="crow2" style="margin-bottom:14px">
-          <div><div class="cl" style="margin-bottom:6px">Foto a editar</div><div class="uz" onclick="document.getElementById('fi-ed').click()" id="z-ed"><div class="uic">🖼</div><div class="uzlb">Foto generada</div></div><input type="file" id="fi-ed" accept="image/*" onchange="loadImg(this,'z-ed',null)"></div>
-          <div><div class="cl" style="margin-bottom:6px">Resultado</div><div class="oz" id="editOut"><div class="oph"><span>◎</span>Resultado</div></div></div>
+      <div class="ph"><div class="ph-title">Edición</div><div class="ph-sub">Gemini · Corrige detalles de la foto generada</div></div>
+      <div class="card"><div class="ch"><div class="ct">Imágenes</div></div><div class="cb">
+        <div class="ugrid" style="grid-template-columns:1fr 1fr">
+          <div><div class="cl" style="margin-bottom:5px">Foto a editar</div>
+            <div class="uz" onclick="fi('fi-edit')" id="z-edit"><div class="uic">🖼</div><div class="uzlb">Foto generada</div></div>
+            <input type="file" id="fi-edit" accept="image/*" onchange="loadImg(this,'z-edit','editImg')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
+            <div class="oz" id="z-edit-out"><div class="oph"><span>◎</span>Resultado</div>
+              <div class="oacts"><div class="oact" onclick="dlResult('editResult')">↓ Guardar</div></div>
+            </div></div>
         </div>
-        <div class="crow4" style="margin-bottom:14px">
+        <div class="crow4" style="margin-bottom:11px">
           <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span id="esv" style="color:var(--a);font-family:'Space Mono'">25%</span></div><div class="rw"><input type="range" min="5" max="60" value="25" oninput="document.getElementById('esv').textContent=this.value+'%'"></div></div>
+          <div class="cg"><div class="cl">Fuerza: <span style="color:var(--a)">25%</span></div><div class="rw"><input type="range" min="5" max="60" value="25"></div></div>
         </div>
-        <div class="prh"><div class="cl">Qué corregir</div><div class="pacts"><button class="gbtn" onclick="setP('face')">Cara</button><button class="gbtn" onclick="setP('skin')">Piel</button><button class="gbtn" onclick="setP('realism')">Realismo</button></div></div>
-        <textarea id="epta" rows="3" placeholder="Ej: fix the eyes, make them more natural, enhance skin texture"></textarea>
       </div></div>
-      <div class="btnrow"><button class="big b" onclick="generateEdit()">✦ &nbsp; Editar foto</button></div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="prompt-toggle" id="pt-edit" onclick="togglePrompt('edit')">
+          <span class="pt-label">Prompt de edición</span>
+          <span class="pt-hint" id="ph-edit">Toca para ver</span>
+          <span class="pt-arr">▾</span>
+        </div>
+        <div class="prompt-body" id="pb-edit">
+          <div class="prh"><div class="cl">Qué corregir</div>
+            <div class="pacts"><button class="gbtn" onclick="setPreset('face','edit-pta')">Cara</button><button class="gbtn" onclick="setPreset('skin','edit-pta')">Piel</button><button class="gbtn" onclick="setPreset('realism','edit-pta')">Realismo</button></div>
+          </div>
+          <textarea id="edit-pta" rows="3" placeholder="Ej: fix the eyes, make them more natural..."></textarea>
+        </div>
+      </div>
+      <div class="btnrow"><button class="big p" onclick="generateEdit()">✦ &nbsp; Editar con Gemini</button></div>
     </div>
 
+    <!-- ═══════════════ STUDIO — CARRUSEL CLÁSICO ═══════════════ -->
     <div class="panel" id="p-cold">
-      <div class="card"><div class="ch"><div class="ct">Carrusel clásico</div></div><div class="cb">
+      <div class="ph"><div class="ph-title">Carrusel clásico</div><div class="ph-sub">Gemini · Variaciones con prompt</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
         <div class="sup">
-          <div class="suz" onclick="document.getElementById('fi-co').click()" id="z-co"><div style="font-size:16px;opacity:0.15">+</div></div>
-          <input type="file" id="fi-co" accept="image/*" onchange="loadImg(this,'z-co',null)">
-          <div style="flex:1"><div class="cl" style="margin-bottom:6px">Prompt (opcional)</div><textarea rows="3" placeholder="Describe variaciones... o deja vacío"></textarea></div>
+          <div class="suz" onclick="fi('fi-cold')" id="z-cold"><div style="font-size:14px;opacity:0.15">+</div></div>
+          <input type="file" id="fi-cold" accept="image/*" onchange="loadImg(this,'z-cold',null)">
+          <div style="flex:1">
+            <div class="card" style="margin-bottom:0">
+              <div class="prompt-toggle" id="pt-cold" onclick="togglePrompt('cold')">
+                <span class="pt-label">Prompt (opcional)</span><span class="pt-arr">▾</span>
+              </div>
+              <div class="prompt-body" id="pb-cold">
+                <textarea id="cold-pta" rows="3" placeholder="Describe variaciones... o deja vacío"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="crow4" style="margin-bottom:14px">
+        <div class="crow4" style="margin-bottom:12px">
           <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option></select></div>
           <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
         </div>
         <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
       </div></div>
-      <div class="btnrow"><button class="big b" onclick="notify('Conecta tu Google API key para generar')">◫ &nbsp; Generar carrusel</button></div>
+      <div class="btnrow"><button class="big p">◫ &nbsp; Generar carrusel</button></div>
     </div>
 
+    <!-- ═══════════════ STUDIO — CARRUSEL NUEVO ═══════════════ -->
     <div class="panel" id="p-cnew">
-      <div class="card"><div class="ch"><div class="ct">Carrusel nuevo</div></div><div class="cb">
+      <div class="ph"><div class="ph-title">Carrusel nuevo</div><div class="ph-sub">Gemini · Variaciones automáticas sin prompt</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
         <div class="sup">
-          <div class="suz" onclick="document.getElementById('fi-cn').click()" id="z-cn"><div style="font-size:16px;opacity:0.15">+</div></div>
-          <input type="file" id="fi-cn" accept="image/*" onchange="loadImg(this,'z-cn',null)">
-          <div style="font-size:11px;color:var(--dm);line-height:1.85;padding-top:4px">Sube la foto generada. El sistema crea <strong style="color:var(--md)">variaciones automáticas</strong> — misma persona, misma escena, pequeños cambios de pose, encuadre o luz. Sin prompt.</div>
+          <div class="suz" onclick="fi('fi-cnew')" id="z-cnew"><div style="font-size:14px;opacity:0.15">+</div></div>
+          <input type="file" id="fi-cnew" accept="image/*" onchange="loadImg(this,'z-cnew',null)">
+          <div style="font-size:11px;color:var(--dm);line-height:1.85;padding-top:4px">
+            Sube la foto generada. El sistema crea <strong style="color:var(--md)">variaciones automáticas</strong> — misma persona, pequeños cambios de pose, encuadre o luz.</div>
         </div>
-        <div class="crow4" style="margin-bottom:14px">
+        <div class="crow4" style="margin-bottom:12px">
           <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option><option>6 fotos</option></select></div>
           <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
         </div>
         <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
       </div></div>
-      <div class="btnrow"><button class="big" onclick="notify('Conecta tu Google API key para generar')">▦ &nbsp; Generar carrusel</button></div>
+      <div class="btnrow"><button class="big">▦ &nbsp; Generar carrusel</button></div>
     </div>
 
-    <div class="panel" id="p-seedream">
-      <div class="card"><div class="ch"><div class="ct">Seedream 4.5 — Image to Image</div></div><div class="cb">
+    <!-- ═══════════════ WAVESPEED — NANO BANANA PRO ═══════════════ -->
+    <div class="panel" id="p-nbp">
+      <div class="ph"><div class="ph-title">Nano Banana Pro</div><div class="ph-sub">WaveSpeed · Image to image</div></div>
+      <div class="card"><div class="ch"><div class="ct">Imágenes de entrada</div></div><div class="cb">
         <div class="ugrid">
-          <div>
-            <div class="cl" style="margin-bottom:6px">Foto maestra</div>
-            <div class="uz" onclick="document.getElementById('fi-seed-m').click()" id="z-seed-m">
-              <div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div>
-            </div>
-            <input type="file" id="fi-seed-m" accept="image/*" onchange="loadImg(this,'z-seed-m','seedMaster')">
+          <div><div class="cl" style="margin-bottom:5px">Foto maestra</div>
+            <div class="uz" onclick="fi('fi-nbp-m')" id="z-nbp-m"><div class="zb w">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
+            <input type="file" id="fi-nbp-m" accept="image/*" onchange="loadImg(this,'z-nbp-m','nbpMaster')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Foto referencia</div>
+            <div class="uz" onclick="fi('fi-nbp-r')" id="z-nbp-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div></div>
+            <input type="file" id="fi-nbp-r" accept="image/*" onchange="loadImg(this,'z-nbp-r','nbpRef')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
+            <div class="oz" id="z-nbp-out"><div class="oph"><span>◎</span>Resultado aquí</div>
+              <div class="oacts"><div class="oact w" onclick="dlResult('nbpResult')">↓ Guardar</div><div class="oact w" onclick="sendToEdit('nbp')">→ Editar</div><div class="oact w" onclick="sendToCarousel('nbp')">▦ Carrusel</div></div>
+            </div></div>
+        </div>
+      </div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div class="amod w"><div class="adot w"></div>Modelo: <strong>Nano Banana Pro</strong>
+          <select style="margin-left:auto;width:auto;padding:5px 9px;font-size:11px;border-radius:20px">
+            <option>Nano Banana Pro</option><option>Nano Banana 2</option>
+          </select>
+        </div>
+        <div class="crow4">
+          <div class="cg"><div class="cl">Ratio</div><select id="nbpRatio"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select id="nbpQual"><option value="1K">1K</option><option value="2K" selected>2K</option><option value="4K">4K</option></select></div>
+          <div class="cg"><div class="cl">Cantidad</div><select><option selected>1</option><option>2</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span id="nbpStrV" style="color:var(--aw)">35%</span></div>
+            <div class="rw"><input type="range" class="w" id="nbpStr" min="10" max="90" value="35" oninput="document.getElementById('nbpStrV').textContent=this.value+'%'"></div></div>
+        </div>
+      </div></div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="prompt-toggle" id="pt-nbp" onclick="togglePrompt('nbp')">
+          <span class="pt-label">Prompt</span>
+          <span class="pt-hint" id="ph-nbp">Toca para ver</span>
+          <span class="pt-arr">▾</span>
+        </div>
+        <div class="prompt-body" id="pb-nbp">
+          <div class="prh"><div class="cl">Prompt principal</div>
+            <div class="pacts"><button class="gbtn" onclick="loadDP('nbp-pta')">↺ Default</button><button class="gbtn" onclick="clearTA('nbp-pta')">✕</button></div>
           </div>
-          <div>
-            <div class="cl" style="margin-bottom:6px">Foto referencia</div>
-            <div class="uz" onclick="document.getElementById('fi-seed-r').click()" id="z-seed-r">
-              <div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div>
-            </div>
-            <input type="file" id="fi-seed-r" accept="image/*" onchange="loadImg(this,'z-seed-r','seedRef')">
+          <textarea id="nbp-pta" rows="5" style="margin-bottom:9px"></textarea>
+          <div class="cl" style="margin-bottom:5px">Negative prompt</div>
+          <textarea id="nbp-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed, watermark</textarea>
+        </div>
+      </div>
+      <div class="btnrow"><button class="big w" id="nbpBtn" onclick="generateNBP()">🍌 &nbsp; Generar con Nano Banana</button></div>
+    </div>
+
+    <!-- ═══════════════ WAVESPEED — EDICIÓN ═══════════════ -->
+    <div class="panel" id="p-ws-edit">
+      <div class="ph"><div class="ph-title">Edición WaveSpeed</div><div class="ph-sub">WaveSpeed · Corrige detalles</div></div>
+      <div class="card"><div class="ch"><div class="ct">Imágenes</div></div><div class="cb">
+        <div class="ugrid" style="grid-template-columns:1fr 1fr">
+          <div><div class="cl" style="margin-bottom:5px">Foto a editar</div>
+            <div class="uz" onclick="fi('fi-ws-edit')" id="z-ws-edit"><div class="uic">🖼</div><div class="uzlb">Foto generada</div></div>
+            <input type="file" id="fi-ws-edit" accept="image/*" onchange="loadImg(this,'z-ws-edit',null)"></div>
+          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
+            <div class="oz" id="z-ws-edit-out"><div class="oph"><span>◎</span>Resultado</div></div></div>
+        </div>
+        <div class="crow4" style="margin-bottom:11px">
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span style="color:var(--aw)">25%</span></div><div class="rw"><input type="range" class="w" min="5" max="60" value="25"></div></div>
+        </div>
+      </div></div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="prompt-toggle" id="pt-ws-edit" onclick="togglePrompt('ws-edit')">
+          <span class="pt-label">Prompt de edición</span><span class="pt-arr">▾</span>
+        </div>
+        <div class="prompt-body" id="pb-ws-edit">
+          <div class="prh"><div class="cl">Qué corregir</div>
+            <div class="pacts"><button class="gbtn" onclick="setPreset('face','ws-edit-pta')">Cara</button><button class="gbtn" onclick="setPreset('skin','ws-edit-pta')">Piel</button><button class="gbtn" onclick="setPreset('realism','ws-edit-pta')">Realismo</button></div>
           </div>
-          <div>
-            <div class="cl" style="margin-bottom:6px">Resultado</div>
-            <div class="oz" id="seedOut1"><div class="oph"><span>◎</span>Resultado aquí</div></div>
+          <textarea id="ws-edit-pta" rows="3" placeholder="Ej: fix the eyes, make them more natural..."></textarea>
+        </div>
+      </div>
+      <div class="btnrow"><button class="big w">✦ &nbsp; Editar con WaveSpeed</button></div>
+    </div>
+
+    <!-- ═══════════════ WAVESPEED — CARRUSEL CLÁSICO ═══════════════ -->
+    <div class="panel" id="p-ws-cold">
+      <div class="ph"><div class="ph-title">Carrusel clásico</div><div class="ph-sub">WaveSpeed · Variaciones con prompt</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div class="sup">
+          <div class="suz" onclick="fi('fi-ws-cold')" id="z-ws-cold"><div style="font-size:14px;opacity:0.15">+</div></div>
+          <input type="file" id="fi-ws-cold" accept="image/*" onchange="loadImg(this,'z-ws-cold',null)">
+          <div style="flex:1">
+            <div class="card" style="margin-bottom:0">
+              <div class="prompt-toggle" id="pt-ws-cold" onclick="togglePrompt('ws-cold')">
+                <span class="pt-label">Prompt (opcional)</span><span class="pt-arr">▾</span>
+              </div>
+              <div class="prompt-body" id="pb-ws-cold">
+                <textarea id="ws-cold-pta" rows="3" placeholder="Describe variaciones..."></textarea>
+              </div>
+            </div>
           </div>
         </div>
         <div class="crow4" style="margin-bottom:12px">
-          <div class="cg"><div class="cl">Ratio</div><select id="seedRatio"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select id="seedQuality"><option value="1K">1K</option><option value="2K" selected>2K</option><option value="4K">4K</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span id="seedStr" style="color:var(--a);font-family:'Space Mono'">35%</span></div><div class="rw"><input type="range" id="seedStrR" min="10" max="90" value="35" oninput="document.getElementById('seedStr').textContent=this.value+'%'"></div></div>
+          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
         </div>
-        <div class="cl" style="margin-bottom:6px">Prompt (opcional)</div>
-        <textarea id="seedPrompt" rows="3" style="margin-bottom:10px" placeholder="Pose, ropa y entorno. Sin rasgos físicos. Deja vacío para usar el prompt por defecto..."></textarea>
-        <div class="cl" style="margin-bottom:6px">Negative prompt</div>
-        <textarea id="seedNegative" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
+        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
       </div></div>
-      <div class="btnrow"><button class="big b" id="seedBtn" onclick="generateSeedream()">◈ &nbsp; Generar con Seedream 4.5</button></div>
+      <div class="btnrow"><button class="big w">◫ &nbsp; Generar carrusel WaveSpeed</button></div>
     </div>
 
+    <!-- ═══════════════ WAVESPEED — CARRUSEL NUEVO ═══════════════ -->
+    <div class="panel" id="p-ws-cnew">
+      <div class="ph"><div class="ph-title">Carrusel nuevo</div><div class="ph-sub">WaveSpeed · Variaciones automáticas</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div class="sup">
+          <div class="suz" onclick="fi('fi-ws-cnew')" id="z-ws-cnew"><div style="font-size:14px;opacity:0.15">+</div></div>
+          <input type="file" id="fi-ws-cnew" accept="image/*" onchange="loadImg(this,'z-ws-cnew',null)">
+          <div style="font-size:11px;color:var(--dm);line-height:1.85;padding-top:4px">
+            Variaciones automáticas sin prompt — misma persona, pequeños cambios de pose, encuadre o luz.</div>
+        </div>
+        <div class="crow4" style="margin-bottom:12px">
+          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option><option>6 fotos</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
+        </div>
+        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
+      </div></div>
+      <div class="btnrow"><button class="big w">▦ &nbsp; Generar carrusel WaveSpeed</button></div>
+    </div>
+
+    <!-- ═══════════════ SEEDREAM ═══════════════ -->
+    <div class="panel" id="p-seedream">
+      <div class="ph"><div class="ph-title">Seedream 4.5</div><div class="ph-sub">WaveSpeed · Image to image</div></div>
+      <div class="card"><div class="ch"><div class="ct">Imágenes</div></div><div class="cb">
+        <div class="ugrid">
+          <div><div class="cl" style="margin-bottom:5px">Foto maestra</div>
+            <div class="uz" onclick="fi('fi-sd-m')" id="z-sd-m"><div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
+            <input type="file" id="fi-sd-m" accept="image/*" onchange="loadImg(this,'z-sd-m','sdMaster')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Foto referencia</div>
+            <div class="uz" onclick="fi('fi-sd-r')" id="z-sd-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose y escena</div></div>
+            <input type="file" id="fi-sd-r" accept="image/*" onchange="loadImg(this,'z-sd-r','sdRef')"></div>
+          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
+            <div class="oz" id="z-sd-out"><div class="oph"><span>◎</span>Resultado</div></div></div>
+        </div>
+        <div class="crow4">
+          <div class="cg"><div class="cl">Ratio</div><select id="sdRatio"><option value="4:5" selected>4:5</option><option value="9:16">9:16</option><option value="1:1">1:1</option></select></div>
+          <div class="cg"><div class="cl">Calidad</div><select id="sdQual"><option value="1K">1K</option><option value="2K" selected>2K</option><option value="4K">4K</option></select></div>
+          <div class="cg"><div class="cl">Fuerza: <span id="sdStrV" style="color:var(--a2)">35%</span></div><div class="rw"><input type="range" id="sdStr" min="10" max="90" value="35" oninput="document.getElementById('sdStrV').textContent=this.value+'%'"></div></div>
+        </div>
+      </div></div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="prompt-toggle" id="pt-sd" onclick="togglePrompt('sd')">
+          <span class="pt-label">Prompt (opcional)</span><span class="pt-arr">▾</span>
+        </div>
+        <div class="prompt-body" id="pb-sd">
+          <textarea id="sd-pta" rows="3" placeholder="Pose, ropa y entorno. Sin rasgos físicos..."></textarea>
+          <div class="cl" style="margin:8px 0 5px">Negative</div>
+          <textarea id="sd-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
+        </div>
+      </div>
+      <div class="btnrow"><button class="big p" id="sdBtn" onclick="generateSeedream()">◈ &nbsp; Generar con Seedream 4.5</button></div>
+    </div>
+
+    <!-- ═══════════════ WAN ═══════════════ -->
     <div class="panel" id="p-wan">
-      <div class="card"><div class="ch"><div class="ct">Wan 2.6 — Image to Video</div></div><div class="cb">
-        <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
-          <div class="vuz" onclick="document.getElementById('fi-wan').click()" id="z-wan"><div style="font-size:16px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:4px">Foto base</div></div>
+      <div class="ph"><div class="ph-title">Wan 2.6</div><div class="ph-sub">WaveSpeed · Image to video</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:13px">
+          <div class="vuz" onclick="fi('fi-wan')" id="z-wan"><div style="font-size:14px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:3px">Foto base</div></div>
           <input type="file" id="fi-wan" accept="image/*" onchange="loadImg(this,'z-wan','wan')">
           <div style="flex:1">
             <div class="crow4">
-              <div class="cg"><div class="cl">Duración</div><select id="wanDuration"><option>3s</option><option selected>5s</option><option>8s</option></select></div>
-              <div class="cg"><div class="cl">Resolución</div><select id="wanResolution"><option>720p</option><option selected>1080p</option></select></div>
+              <div class="cg"><div class="cl">Duración</div><select id="wanDur"><option>3s</option><option selected>5s</option><option>8s</option></select></div>
+              <div class="cg"><div class="cl">Resolución</div><select id="wanRes"><option>720p</option><option selected>1080p</option></select></div>
               <div class="cg"><div class="cl">Calidad</div><select><option selected>Standard</option><option>High</option></select></div>
             </div>
-            <div class="cl" style="margin-bottom:6px;margin-top:10px">Motion prompt</div>
-            <textarea id="wanPrompt" rows="3" placeholder="Ej: subtle hair movement, gentle smile, soft breeze"></textarea>
+            <div class="card" style="margin-top:10px;margin-bottom:0">
+              <div class="prompt-toggle" id="pt-wan" onclick="togglePrompt('wan')">
+                <span class="pt-label">Motion prompt</span><span class="pt-arr">▾</span>
+              </div>
+              <div class="prompt-body" id="pb-wan">
+                <textarea id="wan-pta" rows="3" placeholder="Ej: subtle hair movement, gentle smile..."></textarea>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="oz" style="aspect-ratio:16/9" id="wanOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div>
       </div></div>
-      <div class="card" style="margin-top:0"><div class="cb"><div class="oz" style="aspect-ratio:16/9" id="wanOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div></div></div>
-      <div class="btnrow"><button class="big b" id="wanBtn" onclick="generateWan()">◉ &nbsp; Generar vídeo con Wan 2.6</button></div>
+      <div class="btnrow"><button class="big p" id="wanBtn" onclick="generateWan()">◉ &nbsp; Generar vídeo con Wan 2.6</button></div>
     </div>
 
+    <!-- ═══════════════ KLING ═══════════════ -->
     <div class="panel" id="p-kling">
-      <div class="card"><div class="ch"><div class="ct">Kling 2.5 — Foto a vídeo</div></div><div class="cb">
-        <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
-          <div class="vuz" onclick="document.getElementById('fi-kling').click()" id="z-kling"><div style="font-size:16px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:4px">Foto base</div></div>
+      <div class="ph"><div class="ph-title">Kling 2.5</div><div class="ph-sub">WaveSpeed · Image to video</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:13px">
+          <div class="vuz" onclick="fi('fi-kling')" id="z-kling"><div style="font-size:14px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:3px">Foto base</div></div>
           <input type="file" id="fi-kling" accept="image/*" onchange="loadImg(this,'z-kling','kling')">
           <div style="flex:1">
             <div class="crow4">
-              <div class="cg"><div class="cl">Duración</div><select id="klingDuration"><option>5s</option><option selected>10s</option></select></div>
+              <div class="cg"><div class="cl">Duración</div><select id="klingDur"><option>5s</option><option selected>10s</option></select></div>
               <div class="cg"><div class="cl">Modo</div><select id="klingMode"><option selected>Standard</option><option>Pro</option></select></div>
-              <div class="cg"><div class="cl">Calidad</div><select><option selected>Standard</option><option>High</option></select></div>
             </div>
-            <div class="cl" style="margin-bottom:6px;margin-top:10px">Prompt</div>
-            <textarea id="klingPrompt" rows="3" placeholder="Describe el movimiento y la acción..."></textarea>
+            <div class="card" style="margin-top:10px;margin-bottom:0">
+              <div class="prompt-toggle" id="pt-kling" onclick="togglePrompt('kling')">
+                <span class="pt-label">Prompt de movimiento</span><span class="pt-arr">▾</span>
+              </div>
+              <div class="prompt-body" id="pb-kling">
+                <textarea id="kling-pta" rows="3" placeholder="Describe el movimiento..."></textarea>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="oz" style="aspect-ratio:16/9" id="klingOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div>
       </div></div>
-      <div class="card" style="margin-top:0"><div class="cb"><div class="oz" style="aspect-ratio:16/9" id="klingOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div></div></div>
-      <div class="btnrow"><button class="big b" id="klingBtn" onclick="generateKling()">▶ &nbsp; Generar con Kling 2.5</button></div>
+      <div class="btnrow"><button class="big g" id="klingBtn" onclick="generateKling()">▶ &nbsp; Generar con Kling 2.5</button></div>
     </div>
 
+    <!-- ═══════════════ Z IMAGE ═══════════════ -->
     <div class="panel" id="p-zimage">
-      <div class="card"><div class="ch"><div class="ct">Z Image</div></div><div class="cb">
-        <div class="crow4" style="margin-bottom:12px">
+      <div class="ph"><div class="ph-title">Z Image</div><div class="ph-sub">WaveSpeed · Generación de imagen</div></div>
+      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
+        <div class="crow4" style="margin-bottom:11px">
           <div class="cg"><div class="cl">Ratio</div><select><option selected>4:5</option><option>9:16</option><option>1:1</option></select></div>
           <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
           <div class="cg"><div class="cl">Cantidad</div><select><option selected>1</option><option>2</option><option>4</option></select></div>
         </div>
-        <div class="cl" style="margin-bottom:6px">Prompt</div>
-        <textarea rows="4" style="margin-bottom:10px" placeholder="Describe la escena..."></textarea>
-        <div class="cl" style="margin-bottom:6px">Negative prompt</div>
-        <textarea rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
       </div></div>
-      <div class="btnrow"><button class="big b" onclick="notify('Conecta tu WaveSpeed API key')">◐ &nbsp; Generar con Z Image</button></div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="prompt-toggle" id="pt-zi" onclick="togglePrompt('zi')">
+          <span class="pt-label">Prompt</span><span class="pt-arr">▾</span>
+        </div>
+        <div class="prompt-body" id="pb-zi">
+          <textarea id="zi-pta" rows="4" style="margin-bottom:8px" placeholder="Describe la escena..."></textarea>
+          <div class="cl" style="margin-bottom:5px">Negative</div>
+          <textarea id="zi-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
+        </div>
+      </div>
+      <div class="btnrow"><button class="big p">◐ &nbsp; Generar con Z Image</button></div>
     </div>
 
+    <!-- ═══════════════ HISTORIAL ═══════════════ -->
+    <div class="panel" id="p-history">
+      <div class="ph"><div class="ph-title">Historial</div><div class="ph-sub">Todo lo generado en esta sesión</div></div>
+      <div class="hist-filters">
+        <div class="hf active" onclick="filterHist('all',this)">Todo</div>
+        <div class="hf" onclick="filterHist('gemini',this)">Gemini</div>
+        <div class="hf" onclick="filterHist('wavespeed',this)">WaveSpeed</div>
+        <div class="hf" onclick="filterHist('video',this)">Vídeo</div>
+      </div>
+      <div class="hist-count" id="histCount">0 elementos</div>
+      <div class="hist-grid" id="histGrid">
+        <div class="hist-empty" style="grid-column:1/-1">
+          <div class="icon">◎</div>
+          <p>Aquí aparecerán las imágenes<br>y vídeos que generes</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ LORA — ENTRENAR ═══════════════ -->
     <div class="panel" id="p-lora-train">
-      <div class="card"><div class="ch"><div class="ct">Entrenar LoRA</div></div><div class="cb">
-        <div class="crow" style="margin-bottom:14px">
-          <div class="cg"><div class="cl">Nombre</div><input type="text" placeholder="ej. lucia-v1" style="background:var(--gl);border:1px solid var(--bd);color:var(--tx);font-family:'Outfit',sans-serif;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%"></div>
+      <div class="ph"><div class="ph-title">Entrenar LoRA</div><div class="ph-sub">Modelo personalizado por personaje</div></div>
+      <div class="card"><div class="ch"><div class="ct">Datos</div></div><div class="cb">
+        <div class="crow4" style="margin-bottom:13px">
+          <div class="cg"><div class="cl">Nombre</div><input type="text" placeholder="lucia-v1" style="background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-family:'Geist Mono',monospace;font-size:12px;padding:8px 10px;border-radius:var(--rs);width:100%"></div>
           <div class="cg"><div class="cl">Plataforma</div><select><option selected>Google Vertex AI</option><option>Fal.ai</option></select></div>
           <div class="cg"><div class="cl">Steps</div><select><option>1000</option><option selected>1500</option><option>2000</option></select></div>
         </div>
-        <div style="border:1px dashed var(--bd);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='rgba(167,139,250,0.4)'" onmouseout="this.style.borderColor='var(--bd)'">
+        <div style="border:1px dashed var(--bd);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='rgba(77,159,255,0.4)'" onmouseout="this.style.borderColor='var(--bd)'">
           <div style="font-size:22px;opacity:0.1;margin-bottom:7px">📁</div>
-          <div style="font-size:11px;color:var(--dm)">Arrastra las fotos de entrenamiento<br><span style="font-size:10px">20–30 fotos · variedad de ángulos y expresiones</span></div>
+          <div style="font-size:11px;color:var(--dm)">Arrastra las fotos de entrenamiento<br><span style="font-size:10px">20–30 fotos · variedad de ángulos</span></div>
         </div>
       </div></div>
-      <div class="btnrow"><button class="big" onclick="notify('Configura tu Google API key para entrenar')">⬆ &nbsp; Iniciar entrenamiento</button></div>
+      <div class="btnrow"><button class="big g">⬆ &nbsp; Iniciar entrenamiento</button></div>
     </div>
 
+    <!-- ═══════════════ LORA — MANAGE ═══════════════ -->
     <div class="panel" id="p-lora-manage">
-      <div class="card"><div class="ch"><div class="ct">Mis LoRAs</div></div><div class="cb">
-        <div class="lgrid">
-          <div class="lcard"><div class="ln">LoRA — v1</div><div class="lm">Google Vertex AI · 1500 steps</div><div class="ls none">Sin entrenar</div></div>
-          <div class="lcard empty"><div style="font-size:18px;opacity:0.1">+</div><div>Nuevo LoRA</div></div>
-        </div>
-      </div></div>
+      <div class="ph"><div class="ph-title">Mis LoRAs</div><div class="ph-sub">Modelos entrenados</div></div>
+      <div class="lgrid">
+        <div class="lcard"><div class="ln">LoRA — v1</div><div class="lm">Google Vertex AI · 1500 steps</div><div class="ls none">Sin entrenar</div></div>
+        <div class="lcard empty"><div style="font-size:16px;opacity:0.1">+</div><div>Nuevo LoRA</div></div>
+      </div>
     </div>
 
   </div>
@@ -416,9 +854,27 @@ input[type="file"]{display:none;}
 <div class="notif" id="notif"></div>
 
 <script>
-const CONFIG={loginUser:"admin",loginPassword:"mill0nar1osbet365",defaultWaveSpeedKey:""};
-let masterData=null,refData=null,resultData=null,wanData=null,klingData=null,editData=null,seedMasterData=null,seedRefData=null;
+// ── CONFIG
+const CONFIG={
+  loginUser:"admin",
+  loginPassword:"mill0nar1osbet365",
+  defaultGoogleKey:"",
+  defaultWsKey:""
+};
+
+// ── STATE
 let openTab=null;
+const state={
+  genMaster:null,genRef:null,genResult:null,
+  nbpMaster:null,nbpRef:null,nbpResult:null,
+  sdMaster:null,sdRef:null,
+  wan:null,kling:null,
+  editImg:null,editResult:null
+};
+let history=[];
+let histFilter='all';
+let selectedHistItem=null;
+
 const DEFAULT_PROMPT=`Image 1: portrait of the subject (identity reference).
 Image 2: target photo (pose, outfit and setting reference).
 
@@ -426,277 +882,427 @@ Replace the person in Image 2 completely with the woman from Image 1. Keep face,
 
 REALISM: Natural skin pores, real hair texture, remove plastic AI look. Shot on Sony A7R 85mm f/1.8, natural imperfections, DSLR quality, not AI generated.`;
 
-window.onload=async()=>{
+// ── INIT
+window.onload=()=>{
   if(sessionStorage.getItem('authOk')==='1') unlockApp();
-  const wk=localStorage.getItem('wsKey')||CONFIG.defaultWaveSpeedKey;
+  const gk=localStorage.getItem('googleKey')||CONFIG.defaultGoogleKey;
+  const wk=localStorage.getItem('wsKey')||CONFIG.defaultWsKey;
+  const gcp=localStorage.getItem('gcpProject')||'';
+  if(gk) document.getElementById('googleKey').value=gk;
   if(wk) document.getElementById('wsKey').value=wk;
-  await checkBackend();
-  if(wk || backendAvailable) setApiOn();
-  loadDP();
+  if(gcp) document.getElementById('gcpProject').value=gcp;
+  if(gk||wk){setApiOn();}
+  loadDP('gen-pta');loadDP('nbp-pta');
   loadTemplatePrompts();
   showPanel('p-gen');
 };
 
+// ── AUTH
 function login(){
   const u=document.getElementById('authUser').value.trim();
   const p=document.getElementById('authPass').value;
-  if(u===CONFIG.loginUser&&p===CONFIG.loginPassword){sessionStorage.setItem('authOk','1');unlockApp();}
-  else{document.getElementById('authErr').classList.add('show');document.getElementById('authPass').value='';}
+  if(u===CONFIG.loginUser&&p===CONFIG.loginPassword){
+    sessionStorage.setItem('authOk','1');unlockApp();
+  }else{
+    document.getElementById('authErr').classList.add('show');
+    document.getElementById('authPass').value='';
+  }
 }
-function unlockApp(){document.getElementById('authModal').style.display='none';document.getElementById('appRoot').classList.remove('locked');}
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('authModal').style.display!=='none')login();});
+function unlockApp(){
+  document.getElementById('authModal').style.display='none';
+  document.getElementById('appRoot').classList.remove('locked');
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&document.getElementById('authModal').style.display!=='none')login();
+});
 
+// ── KEYS
 function saveKeys(){
+  const gk=document.getElementById('googleKey').value.trim();
   const wk=document.getElementById('wsKey').value.trim();
+  const gcp=document.getElementById('gcpProject').value.trim();
+  if(gk)localStorage.setItem('googleKey',gk);else localStorage.removeItem('googleKey');
   if(wk)localStorage.setItem('wsKey',wk);else localStorage.removeItem('wsKey');
-  document.getElementById('apiModal').style.display='none';
-  if(wk || backendAvailable) setApiOn();
+  if(gcp)localStorage.setItem('gcpProject',gcp);else localStorage.removeItem('gcpProject');
+  document.getElementById('apiModal').classList.remove('show');
+  if(gk||wk)setApiOn();
   notify('✓ Configuración guardada');
 }
-function skipModal(){document.getElementById('apiModal').style.display='none';}
+function skipModal(){document.getElementById('apiModal').classList.remove('show');}
 function setApiOn(){document.getElementById('led').classList.add('on');document.getElementById('apilbl').textContent='APIs conectadas';}
 
-function loadTemplatePrompts(){
-  const s=document.getElementById('seedPrompt');const w=document.getElementById('wanPrompt');const k=document.getElementById('klingPrompt');
-  if(s&&!s.value.trim())s.value='Hyperrealistic editorial portrait, clean composition, premium fashion photography, natural skin texture, soft contrast, realistic lighting.';
-  if(w&&!w.value.trim())w.value='subtle body movement, natural walking motion, slight breeze in hair and clothes, cinematic realism';
-  if(k&&!k.value.trim())k.value='cinematic motion, realistic camera move, natural body movement, premium fashion shot';
-}
-
+// ── TABS
 function toggleTab(n,e){
-  e.stopPropagation();
-  const drop=document.getElementById('td'+n);const btn=document.getElementById('tb'+n);
+  if(e&&e.stopPropagation)e.stopPropagation();
+  const nums=[1,2,3,4];
+  const drop=document.getElementById('td'+n);
+  if(!drop){closeAllTabs();return;}
   const isOpen=drop.classList.contains('show');
   closeAllTabs();
-  if(!isOpen){drop.classList.add('show');btn.classList.add('open');openTab=n;}
+  if(!isOpen){drop.classList.add('show');document.getElementById('tb'+n).classList.add('open');}
 }
-function closeAllTabs(){[1,2,3].forEach(n=>{document.getElementById('td'+n).classList.remove('show');document.getElementById('tb'+n).classList.remove('open');});openTab=null;}
+function closeAllTabs(){
+  [1,2,3,4].forEach(n=>{
+    const d=document.getElementById('td'+n);if(d)d.classList.remove('show');
+    const b=document.getElementById('tb'+n);if(b)b.classList.remove('open');
+  });
+}
 document.addEventListener('click',()=>closeAllTabs());
 
 function goTo(tabN,label,panelId,e){
-  e.stopPropagation();
+  if(e&&e.stopPropagation)e.stopPropagation();
   document.getElementById('tl'+tabN).textContent=label;
-  [1,2,3].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
+  [1,2,3,4].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
   document.getElementById('tb'+tabN).classList.add('active');
-  document.querySelectorAll('#td'+tabN+' .tmi').forEach(m=>m.classList.remove('s1','s2','s3'));
-  const sel=tabN===1?'s1':tabN===2?'s2':'s3';
-  event.target.closest('.tmi').classList.add(sel);
-  closeAllTabs();showPanel(panelId);
+  const drop=document.getElementById('td'+tabN);
+  if(drop){drop.querySelectorAll('.tmi').forEach(m=>m.classList.remove('s1','s2','s3','s4','s5'));}
+  if(e&&e.target){const mi=e.target.closest('.tmi');if(mi){const cls='s'+tabN;mi.classList.add(cls);}}
+  closeAllTabs();
+  showPanel(panelId);
 }
-function showPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const p=document.getElementById(id);if(p)p.classList.add('active');}
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const p=document.getElementById(id);if(p)p.classList.add('active');
+}
 
+// ── IMAGES
+function fi(id){document.getElementById(id).click();}
 function loadImg(input,zid,key){
   const file=input.files[0];if(!file)return;
   const r=new FileReader();
   r.onload=e=>{
-    const z=document.getElementById(zid);let img=z.querySelector('img');
+    const z=document.getElementById(zid);
+    let img=z.querySelector('img');
     if(!img){img=document.createElement('img');z.appendChild(img);}
     img.src=e.target.result;
     z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
-    if(key==='master'){masterData=e.target.result;detectModel();}
-    if(key==='ref'){refData=e.target.result;detectModel();}
-    if(key==='wan')wanData=e.target.result;
-    if(key==='kling')klingData=e.target.result;
-    if(key==='seedMaster')seedMasterData=e.target.result;
-    if(key==='seedRef')seedRefData=e.target.result;
+    if(key)state[key]=e.target.result;
   };
   r.readAsDataURL(file);
 }
 
-function detectModel(){
-  const lbl=document.getElementById('amlbl');
-  if(lbl) lbl.textContent='Gemini 2.5 Flash Image';
+// ── PROMPTS
+function loadDP(taId){const t=document.getElementById(taId);if(t)t.value=DEFAULT_PROMPT;}
+function clearTA(taId){const t=document.getElementById(taId);if(t)t.value='';}
+function setPreset(type,taId){
+  const p={
+    face:'Fix the face and eyes. Make them more natural. Correct any asymmetry. Keep everything else identical.',
+    skin:'Enhance skin realism. Add natural pores and imperfections. Remove plastic look. Keep face structure identical.',
+    realism:'Make the image more photorealistic. Remove AI look. Natural skin texture, real hair strands. Shot on Sony A7R 85mm f/1.8.'
+  };
+  const t=document.getElementById(taId);if(t)t.value=p[type];
 }
-function onModelChange(){detectModel();}
-function getGoogleModel(){
-  return 'gemini-2.5-flash-image';
+function loadTemplatePrompts(){
+  const w=document.getElementById('wan-pta');
+  const k=document.getElementById('kling-pta');
+  if(w&&!w.value)w.value='subtle body movement, natural walking motion, slight breeze in hair and clothes, cinematic realism';
+  if(k&&!k.value)k.value='cinematic motion, realistic camera move, natural body movement, premium fashion shot';
 }
 
-function loadDP(){const t=document.getElementById('pta');if(t)t.value=DEFAULT_PROMPT;}
-function setP(type){
-  const p={face:'Fix the face and eyes. Make them more natural. Correct any asymmetry. Keep everything else identical.',skin:'Enhance skin realism. Add natural pores and imperfections. Remove plastic look. Keep face structure identical.',realism:'Make the image more photorealistic. Remove AI look. Natural skin texture, real hair strands. Shot on Sony A7R 85mm f/1.8.'};
-  document.getElementById('epta').value=p[type];
+// ── COLLAPSIBLE PROMPTS
+function togglePrompt(id){
+  const toggle=document.getElementById('pt-'+id);
+  const body=document.getElementById('pb-'+id);
+  if(!toggle||!body)return;
+  const isOpen=toggle.classList.contains('open');
+  toggle.classList.toggle('open',!isOpen);
+  body.classList.toggle('open',!isOpen);
+  const hint=document.getElementById('ph-'+id);
+  if(hint)hint.textContent=isOpen?'Toca para ver':'';
 }
 
+// ── MODEL LABEL
+function updateModelLbl(){
+  const v=document.getElementById('genModel').value;
+  const lbl=document.getElementById('genModelLbl');
+  if(v==='pro')lbl.textContent='Gemini Pro';
+  else if(v==='flash')lbl.textContent='Gemini Flash';
+  else lbl.textContent='Auto';
+}
+
+// ── COPY TO EDIT / CAROUSEL
+function sendToEdit(src){
+  const data=src==='gen'?state.genResult:state.nbpResult;
+  if(!data)return;
+  state.editImg=data;
+  const zg=document.getElementById('z-edit');
+  const zw=document.getElementById('z-ws-edit');
+  [zg,zw].forEach(z=>{
+    if(!z)return;
+    let img=z.querySelector('img');
+    if(!img){img=document.createElement('img');z.appendChild(img);}
+    img.src=data;
+    z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
+  });
+  notify('Foto enviada a Edición');
+}
+function sendToCarousel(src){
+  const data=src==='gen'?state.genResult:state.nbpResult;
+  if(!data)return;
+  ['z-cold','z-cnew','z-ws-cold','z-ws-cnew'].forEach(id=>{
+    const z=document.getElementById(id);if(!z)return;
+    let img=z.querySelector('img');
+    if(!img){img=document.createElement('img');z.appendChild(img);}
+    img.src=data;
+    z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
+  });
+  notify('Foto enviada a los módulos de carrusel');
+}
+
+// ── HISTORY
+function addToHistory(url,type,label){
+  const item={url,type,label,ts:Date.now()};
+  history.unshift(item);
+  renderHistory();
+}
+function renderHistory(){
+  const grid=document.getElementById('histGrid');
+  const filtered=histFilter==='all'?history:history.filter(h=>h.type===histFilter);
+  document.getElementById('histCount').textContent=filtered.length+' elemento'+(filtered.length!==1?'s':'');
+  if(!filtered.length){
+    grid.innerHTML='<div class="hist-empty" style="grid-column:1/-1"><div class="icon">◎</div><p>No hay elementos en esta categoría</p></div>';
+    return;
+  }
+  grid.innerHTML=filtered.map((item,i)=>`
+    <div class="hist-item" onclick="openHistItem(${history.indexOf(item)})">
+      <img src="${item.url}" alt="">
+      <div class="hist-tag">${item.type}</div>
+      <div class="hist-meta">${item.label}</div>
+    </div>`).join('');
+}
+function filterHist(f,el){
+  histFilter=f;
+  document.querySelectorAll('.hf').forEach(h=>h.classList.remove('active'));
+  el.classList.add('active');
+  renderHistory();
+}
+function openHistItem(idx){
+  selectedHistItem=history[idx];
+  document.getElementById('histModalImg').src=selectedHistItem.url;
+  document.getElementById('histModalTitle').textContent=selectedHistItem.label;
+  document.getElementById('histModalMeta').textContent=selectedHistItem.type+' · '+new Date(selectedHistItem.ts).toLocaleTimeString();
+  document.getElementById('histModal').classList.add('show');
+}
+function dlHistItem(){
+  if(!selectedHistItem)return;
+  const a=document.createElement('a');a.href=selectedHistItem.url;a.download='result_'+Date.now()+'.jpg';a.click();
+}
+document.getElementById('histModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('histModal'))document.getElementById('histModal').classList.remove('show');
+});
+
+// ── DOWNLOAD
+function dlResult(key){
+  const data=state[key];if(!data)return;
+  const a=document.createElement('a');a.href=data;a.download='result_'+Date.now()+'.jpg';a.click();
+}
+
+// ── HELPERS
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function setLoading(id,txt){const el=document.getElementById(id);if(el)el.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">'+txt+'</div></div>';}
+function setImg(id,url,key){
+  const el=document.getElementById(id);
+  if(el)el.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult(\''+key+'\')">↓ Guardar</div><div class="oact" onclick="sendToEdit(\''+key+'\')">→ Editar</div><div class="oact" onclick="sendToCarousel(\''+key+'\')">▦ Carrusel</div></div>';
+  if(key)state[key]=url;
+}
+function setVideo(id,url){const el=document.getElementById(id);if(el)el.innerHTML='<video src="'+url+'" controls autoplay loop muted style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"></video>';}
+function setErr(id,msg){const el=document.getElementById(id);if(el)el.innerHTML='<div style="padding:14px;text-align:center;font-size:11px;line-height:1.8;color:#fca5a5">'+esc(msg)+'</div>';}
+function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3200);}
+
+// ── GEMINI
+function getGeminiModel(){
+  const v=document.getElementById('genModel').value;
+  if(v==='flash')return 'gemini-2.0-flash-preview-image-generation';
+  return 'gemini-2.0-flash-exp';
+}
 function dataUriPart(uri){
-  const m=(uri||'').match(/^data:(.*?);base64,(.*)$/);if(!m)throw new Error('Imagen no válida');
+  const m=(uri||'').match(/^data:(.*?);base64,(.*)$/);
+  if(!m)throw new Error('Imagen no válida');
   return{inlineData:{mimeType:m[1],data:m[2]}};
 }
 function findInlineDataPart(data){return(data?.candidates?.[0]?.content?.parts||[]).find(p=>p.inlineData)||null;}
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-let backendAvailable=false;
-async function checkBackend(){
-  try{
-    const r=await fetch('/api/google/check',{signal:AbortSignal.timeout(3000)});
-    const data=await r.json();
-    backendAvailable=Boolean(r.ok && data?.ok);
-    if(backendAvailable){
-      document.getElementById('apilbl').textContent='Google por Railway';
-      document.getElementById('led').classList.add('on');
-      const status=document.getElementById('googleBackendStatus');
-      if(status) status.value='Google conectado por Railway';
-    }else{
-      const status=document.getElementById('googleBackendStatus');
-      if(status) status.value='Google no configurado';
-    }
-  }catch(e){
-    backendAvailable=false;
-    const status=document.getElementById('googleBackendStatus');
-    if(status) status.value='Google no disponible';
+async function callGemini(parts,ratio,quality){
+  const gKey=(localStorage.getItem('googleKey')||'').trim();
+  const model=getGeminiModel();
+  const payload={contents:[{parts}],generationConfig:{responseModalities:["TEXT","IMAGE"],imageConfig:{aspectRatio:ratio,imageSize:quality.toUpperCase()}}};
+  // Try local backend first
+  let backendOk=false;
+  try{const r=await fetch('http://localhost:3000/ping',{signal:AbortSignal.timeout(1000)});backendOk=r.ok;}catch(e){}
+  if(backendOk){
+    const res=await fetch('http://localhost:3000/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,payload})});
+    const data=await res.json();if(data.error)throw new Error(data.error);return data;
   }
-}
-async function callGemini(parts,_p,_l,_gKey,ratio,quality){
-  const model=getGoogleModel();
-  if(!backendAvailable) throw new Error('Google no está configurado en Railway.');
-  const res=await fetch('/api/google/generate',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model,parts,ratio,quality})
-  });
+  if(!gKey)throw new Error('Configura tu Gemini API key en Configurar API');
+  const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent?key='+gKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   const data=await res.json();
-  if(!res.ok || data?.ok===false) throw new Error(data?.error||'Error en Google backend');
+  if(!res.ok)throw new Error(data?.error?.message||'Error en Gemini API');
   return data;
 }
 
-async function generate(){
-  if(!masterData||!refData){notify('⚠ Sube las dos fotos');return;}
-  if(!backendAvailable){notify('⚠ Google no está configurado en Railway');document.getElementById('apiModal').style.display='flex';return;}
+async function generateGemini(){
+  if(!state.genMaster||!state.genRef){notify('⚠ Sube las dos fotos');return;}
   const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='Generando...';
-  const out=document.getElementById('z-out');
-  out.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">Generando con Google Cloud...</div></div><div class="oacts"><div class="oact">Esperando...</div></div>';
+  setLoading('z-gen-out','Generando con Gemini...');
   try{
-    const prompt=document.getElementById('pta').value.trim();
-    const neg=document.getElementById('nta').value.trim();
-    const strength=document.getElementById('strR').value;
-    const ratio=document.getElementById('ratioSel').value;
-    const quality=document.getElementById('qualSel').value;
-    const parts=[{text:`${prompt}\n\nStrength: ${strength}%.\nNegative: ${neg}`},dataUriPart(masterData),dataUriPart(refData)];
-    const data=await callGemini(parts,null,null,null,ratio,quality);
-    const imageUrl=data?.images?.[0];
-    if(!imageUrl)throw new Error(data?.text||'No llegó ninguna imagen en la respuesta');
-    resultData=imageUrl;
-    out.innerHTML='<img src="'+resultData+'" alt="resultado" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult()">↓ Guardar</div><div class="oact" onclick="toEdit()">→ Editar</div><div class="oact" onclick="toCarousel()">▦ Carrusel</div></div>';
+    const prompt=document.getElementById('gen-pta').value.trim();
+    const neg=document.getElementById('gen-nta').value.trim();
+    const strength=document.getElementById('genStr').value;
+    const parts=[{text:prompt+'\n\nStrength: '+strength+'%.\nNegative: '+neg},dataUriPart(state.genMaster),dataUriPart(state.genRef)];
+    const data=await callGemini(parts,document.getElementById('genRatio').value,document.getElementById('genQual').value);
+    const part=findInlineDataPart(data);
+    if(!part?.data)throw new Error('No llegó ninguna imagen');
+    const url='data:'+(part.mimeType||'image/png')+';base64,'+part.data;
+    state.genResult=url;
+    setImg('z-gen-out',url,'genResult');
+    addToHistory(url,'gemini','Generación Gemini');
     notify('✓ Imagen generada');
-  }catch(err){
-    out.innerHTML='<div style="padding:14px;text-align:center;font-size:11px;line-height:1.9;color:#fca5a5">'+esc(err.message||String(err))+'</div><div class="oacts"><div class="oact" onclick="generate()">↺ Reintentar</div></div>';
-    notify('Error: '+err.message);
-  }finally{btn.disabled=false;btn.innerHTML='⚡ &nbsp; Generar';}
+  }catch(err){setErr('z-gen-out',err.message);notify('Error: '+err.message);}
+  finally{btn.disabled=false;btn.innerHTML='⚡ &nbsp; Generar con Gemini';}
 }
 
 async function generateEdit(){
-  const editEl=document.getElementById('z-ed');const editImg=editEl.querySelector('img');
-  if(!backendAvailable){notify('⚠ Google no está configurado en Railway');document.getElementById('apiModal').style.display='flex';return;}
-  if(!editImg?.src){notify('⚠ Sube la foto a editar');return;}
-  const prompt=document.getElementById('epta').value.trim();if(!prompt){notify('⚠ Describe qué quieres corregir');return;}
-  const out=document.getElementById('editOut');
-  out.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">Editando foto...</div></div>';
+  if(!state.editImg){notify('⚠ Sube la foto a editar');return;}
+  const prompt=document.getElementById('edit-pta').value.trim();
+  if(!prompt){notify('⚠ Describe qué quieres corregir');return;}
+  setLoading('z-edit-out','Editando...');
   try{
-    const parts=[{text:prompt},dataUriPart(editImg.src)];
-    const data=await callGemini(parts,null,null,gKey,'4:5','2k');
+    const parts=[{text:prompt},dataUriPart(state.editImg)];
+    const data=await callGemini(parts,'4:5','2k');
     const part=findInlineDataPart(data);
-    if(!part?.data)throw new Error('No llegó imagen editada');
+    if(!part?.data)throw new Error('Sin imagen editada');
     const url='data:'+(part.mimeType||'image/png')+';base64,'+part.data;
-    out.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)">';
+    state.editResult=url;
+    const el=document.getElementById('z-edit-out');
+    if(el)el.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult(\'editResult\')">↓ Guardar</div></div>';
+    addToHistory(url,'gemini','Edición Gemini');
     notify('✓ Edición completada');
-  }catch(err){
-    out.innerHTML='<div style="padding:14px;text-align:center;font-size:11px;color:#fca5a5">'+esc(err.message)+'</div>';
-    notify('Error edición: '+err.message);
-  }
+  }catch(err){setErr('z-edit-out',err.message);notify('Error edición: '+err.message);}
 }
 
-function toEdit(){
-  if(!resultData)return;
-  const z=document.getElementById('z-ed');let img=z.querySelector('img');
-  if(!img){img=document.createElement('img');z.appendChild(img);}
-  img.src=resultData;z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
-  document.getElementById('tl1').textContent='Edición';
-  [1,2,3].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
-  document.getElementById('tb1').classList.add('active');showPanel('p-edit');notify('Foto enviada a Edición');
-}
-function toCarousel(){
-  if(!resultData)return;
-  ['z-co','z-cn'].forEach(id=>{const z=document.getElementById(id);let img=z.querySelector('img');if(!img){img=document.createElement('img');z.appendChild(img);}img.src=resultData;z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');});
-  document.getElementById('tl1').textContent='Carrusel nuevo';
-  [1,2,3].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
-  document.getElementById('tb1').classList.add('active');showPanel('p-cnew');notify('Foto enviada a Carrusel');
-}
-
+// ── WAVESPEED POLL
 async function pollWS(taskId,apiKey,max=120){
   for(let i=0;i<max;i++){
     const res=await fetch('https://api.wavespeed.ai/api/v3/predictions/'+taskId+'/result',{headers:{'Authorization':'Bearer '+apiKey}});
-    const data=await res.json();if(!res.ok)throw new Error(data?.message||'Error consultando WaveSpeed');
-    const st=data?.data?.status;if(st==='completed')return data.data;if(st==='failed')throw new Error(data?.data?.error||'Tarea fallida');
-    await new Promise(r=>setTimeout(r,3000));
-  }throw new Error('Timeout esperando WaveSpeed');
-}
-function mapSeedSize(ratio,quality){const m={'4:5':{'1K':'1024*1280','2K':'2048*2560','4K':'4096*5120'},'9:16':{'1K':'1024*1820','2K':'2048*3640','4K':'4096*7280'},'1:1':{'1K':'1024*1024','2K':'2048*2048','4K':'4096*4096'}};return m[ratio]?.[quality]||'2048*2560';}
-function setLoading(id,txt){const el=document.getElementById(id);if(el)el.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">'+txt+'</div></div>';}
-function setImg(id,url){const el=document.getElementById(id);if(el)el.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)">';}
-function setVideo(id,url){const el=document.getElementById(id);if(el)el.innerHTML='<video src="'+url+'" controls autoplay loop muted style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"></video>';}
-function setErr(id,msg){const el=document.getElementById(id);if(el)el.innerHTML='<div style="padding:16px;text-align:center;font-size:11px;line-height:1.8;color:#fca5a5">'+esc(msg)+'</div>';}
-
-async function generateSeedream(){
-  const wk=(localStorage.getItem('wsKey')||'').trim();
-  if(!wk){notify('⚠ Configura tu WaveSpeed API key');document.getElementById('apiModal').style.display='flex';return;}
-  const seedMasterEl=document.getElementById('z-seed-m');const seedRefEl=document.getElementById('z-seed-r');
-  const seedMasterImg=seedMasterEl.querySelector('img');const seedRefImg=seedRefEl.querySelector('img');
-  if(!seedMasterImg?.src||!seedRefImg?.src){notify('⚠ Sube la foto maestra y la referencia');return;}
-  const btn=document.getElementById('seedBtn');btn.disabled=true;btn.textContent='Generando...';
-  setLoading('seedOut1','Generando con Seedream i2i...');
-  try{
-    const size=mapSeedSize(document.getElementById('seedRatio').value,document.getElementById('seedQuality').value);
-    const neg=document.getElementById('seedNegative').value.trim();
-    const strength=parseInt(document.getElementById('seedStrR').value,10)/100;
-    const userPrompt=document.getElementById('seedPrompt').value.trim();
-    const prompt=userPrompt||'Replace the person in the reference image with the identity from the master image. Keep pose, outfit, background and lighting from the reference exactly. Photorealistic, DSLR quality.';
-    const body={prompt:prompt+'\nNegative prompt: '+neg,image_url:seedRefImg.src,control_image_url:seedMasterImg.src,size,strength,enable_sync_mode:false};
-    const res=await fetch('https://api.wavespeed.ai/api/v3/bytedance/seedream-v4.5-i2i',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},body:JSON.stringify(body)});
     const data=await res.json();
-    if(!data?.data?.id)throw new Error(data?.message||'Error lanzando Seedream i2i');
+    if(!res.ok)throw new Error(data?.message||'Error WaveSpeed');
+    const st=data?.data?.status;
+    if(st==='completed')return data.data;
+    if(st==='failed')throw new Error(data?.data?.error||'Tarea fallida');
+    await new Promise(r=>setTimeout(r,3000));
+  }
+  throw new Error('Timeout WaveSpeed');
+}
+function getWsKey(){
+  const k=(localStorage.getItem('wsKey')||'').trim();
+  if(!k)throw new Error('Configura tu WaveSpeed API key');
+  return k;
+}
+function mapSeedSize(ratio,quality){
+  const m={'4:5':{'1K':'1024*1280','2K':'2048*2560','4K':'4096*5120'},'9:16':{'1K':'1024*1820','2K':'2048*3640','4K':'4096*7280'},'1:1':{'1K':'1024*1024','2K':'2048*2048','4K':'4096*4096'}};
+  return m[ratio]?.[quality]||'2048*2560';
+}
+
+async function generateNBP(){
+  if(!state.nbpMaster||!state.nbpRef){notify('⚠ Sube las dos fotos');return;}
+  const wk=getWsKey();
+  const btn=document.getElementById('nbpBtn');btn.disabled=true;btn.textContent='Generando...';
+  setLoading('z-nbp-out','Generando con Nano Banana...');
+  try{
+    const prompt=document.getElementById('nbp-pta').value.trim()||DEFAULT_PROMPT;
+    const neg=document.getElementById('nbp-nta').value.trim();
+    const strength=parseInt(document.getElementById('nbpStr').value,10)/100;
+    const size=mapSeedSize(document.getElementById('nbpRatio').value,document.getElementById('nbpQual').value);
+    const res=await fetch('https://api.wavespeed.ai/api/v3/wavespeed-ai/nano-banana-pro',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
+      body:JSON.stringify({prompt:prompt+'\nNegative: '+neg,image_url:state.nbpRef,control_image_url:state.nbpMaster,size,strength,enable_sync_mode:false})
+    });
+    const data=await res.json();
+    if(!data?.data?.id)throw new Error(data?.message||'Error lanzando NBP');
     const result=await pollWS(data.data.id,wk);
     const url=result?.outputs?.[0];if(!url)throw new Error('Sin resultado');
-    setImg('seedOut1',url);notify('✓ Seedream i2i completado');
-  }catch(err){setErr('seedOut1',err.message);notify('Error Seedream: '+err.message);}
+    state.nbpResult=url;
+    setImg('z-nbp-out',url,'nbpResult');
+    addToHistory(url,'wavespeed','Nano Banana Pro');
+    notify('✓ Nano Banana Pro completado');
+  }catch(err){setErr('z-nbp-out',err.message);notify('Error NBP: '+err.message);}
+  finally{btn.disabled=false;btn.innerHTML='🍌 &nbsp; Generar con Nano Banana';}
+}
+
+async function generateSeedream(){
+  if(!state.sdMaster||!state.sdRef){notify('⚠ Sube las dos fotos');return;}
+  const wk=getWsKey();
+  const btn=document.getElementById('sdBtn');btn.disabled=true;btn.textContent='Generando...';
+  setLoading('z-sd-out','Generando con Seedream...');
+  try{
+    const prompt=document.getElementById('sd-pta').value.trim()||DEFAULT_PROMPT;
+    const neg=document.getElementById('sd-nta').value.trim();
+    const strength=parseInt(document.getElementById('sdStr').value,10)/100;
+    const size=mapSeedSize(document.getElementById('sdRatio').value,document.getElementById('sdQual').value);
+    const res=await fetch('https://api.wavespeed.ai/api/v3/bytedance/seedream-v4.5-i2i',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
+      body:JSON.stringify({prompt:prompt+'\nNegative prompt: '+neg,image_url:state.sdRef,control_image_url:state.sdMaster,size,strength,enable_sync_mode:false})
+    });
+    const data=await res.json();
+    if(!data?.data?.id)throw new Error(data?.message||'Error lanzando Seedream');
+    const result=await pollWS(data.data.id,wk);
+    const url=result?.outputs?.[0];if(!url)throw new Error('Sin resultado');
+    setImg('z-sd-out',url,'sdResult');
+    addToHistory(url,'wavespeed','Seedream 4.5');
+    notify('✓ Seedream completado');
+  }catch(err){setErr('z-sd-out',err.message);notify('Error Seedream: '+err.message);}
   finally{btn.disabled=false;btn.innerHTML='◈ &nbsp; Generar con Seedream 4.5';}
 }
 
 async function generateWan(){
-  const wk=(localStorage.getItem('wsKey')||'').trim();
-  if(!wk){notify('⚠ Configura tu WaveSpeed API key');document.getElementById('apiModal').style.display='flex';return;}
-  if(!wanData){notify('⚠ Sube la foto base');return;}
-  const prompt=document.getElementById('wanPrompt').value.trim();if(!prompt){notify('⚠ Escribe el motion prompt');return;}
-  const btn=document.getElementById('wanBtn');btn.disabled=true;btn.textContent='Generando...';setLoading('wanOut','Generando vídeo con Wan 2.6...');
+  if(!state.wan){notify('⚠ Sube la foto base');return;}
+  const prompt=document.getElementById('wan-pta').value.trim();
+  if(!prompt){notify('⚠ Escribe el motion prompt');return;}
+  const wk=getWsKey();
+  const btn=document.getElementById('wanBtn');btn.disabled=true;btn.textContent='Generando...';
+  setLoading('wanOut','Generando vídeo con Wan 2.6...');
   try{
-    const duration=parseInt(document.getElementById('wanDuration').value,10);
-    const resolution=document.getElementById('wanResolution').value;
-    const res=await fetch('https://api.wavespeed.ai/api/v3/wavespeed-ai/wan-2.6/image-to-video',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},body:JSON.stringify({image:wanData,prompt,resolution,duration,negative_prompt:'text, watermark, distortion, flicker, blur',seed:-1,enhance_prompt:true})});
-    const data=await res.json();if(!res.ok)throw new Error(data?.message||'Error lanzando Wan 2.6');
-    const result=await pollWS(data.data.id,wk);const url=result?.outputs?.[0];if(!url)throw new Error('Wan no devolvió vídeo');
-    setVideo('wanOut',url);notify('✓ Vídeo Wan 2.6 listo');
-  }catch(err){setErr('wanOut',err.message);notify('Error Wan 2.6: '+err.message);}
+    const duration=parseInt(document.getElementById('wanDur').value,10);
+    const resolution=document.getElementById('wanRes').value;
+    const res=await fetch('https://api.wavespeed.ai/api/v3/wavespeed-ai/wan-2.6/image-to-video',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
+      body:JSON.stringify({image:state.wan,prompt,resolution,duration,negative_prompt:'text, watermark, distortion, flicker',seed:-1,enhance_prompt:true})
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(data?.message||'Error Wan');
+    const result=await pollWS(data.data.id,wk);
+    const url=result?.outputs?.[0];if(!url)throw new Error('Sin vídeo');
+    setVideo('wanOut',url);
+    addToHistory(url,'video','Wan 2.6');
+    notify('✓ Vídeo Wan listo');
+  }catch(err){setErr('wanOut',err.message);notify('Error Wan: '+err.message);}
   finally{btn.disabled=false;btn.innerHTML='◉ &nbsp; Generar vídeo con Wan 2.6';}
 }
 
 async function generateKling(){
-  const wk=(localStorage.getItem('wsKey')||'').trim();
-  if(!wk){notify('⚠ Configura tu WaveSpeed API key');document.getElementById('apiModal').style.display='flex';return;}
-  if(!klingData){notify('⚠ Sube la foto base');return;}
-  const prompt=document.getElementById('klingPrompt').value.trim();if(!prompt){notify('⚠ Escribe el prompt de movimiento');return;}
-  const btn=document.getElementById('klingBtn');btn.disabled=true;btn.textContent='Generando...';setLoading('klingOut','Generando vídeo con Kling...');
+  if(!state.kling){notify('⚠ Sube la foto base');return;}
+  const prompt=document.getElementById('kling-pta').value.trim();
+  if(!prompt){notify('⚠ Escribe el prompt');return;}
+  const wk=getWsKey();
+  const btn=document.getElementById('klingBtn');btn.disabled=true;btn.textContent='Generando...';
+  setLoading('klingOut','Generando vídeo con Kling...');
   try{
-    const duration=parseInt(document.getElementById('klingDuration').value,10);
+    const duration=parseInt(document.getElementById('klingDur').value,10);
     const guidance=document.getElementById('klingMode').value==='Pro'?0.75:0.5;
-    const res=await fetch('https://api.wavespeed.ai/api/v3/kwaivgi/kling-v2.5-turbo-pro/image-to-video',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},body:JSON.stringify({image:klingData,prompt,duration,guidance_scale:guidance,negative_prompt:'text, watermark, distortion, jitter'})});
-    const data=await res.json();if(!res.ok)throw new Error(data?.message||'Error lanzando Kling');
-    const result=await pollWS(data.data.id,wk);const url=result?.outputs?.[0];if(!url)throw new Error('Kling no devolvió vídeo');
-    setVideo('klingOut',url);notify('✓ Vídeo Kling listo');
+    const res=await fetch('https://api.wavespeed.ai/api/v3/kwaivgi/kling-v2.5-turbo-pro/image-to-video',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
+      body:JSON.stringify({image:state.kling,prompt,duration,guidance_scale:guidance,negative_prompt:'text, watermark, distortion'})
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(data?.message||'Error Kling');
+    const result=await pollWS(data.data.id,wk);
+    const url=result?.outputs?.[0];if(!url)throw new Error('Sin vídeo');
+    setVideo('klingOut',url);
+    addToHistory(url,'video','Kling 2.5');
+    notify('✓ Vídeo Kling listo');
   }catch(err){setErr('klingOut',err.message);notify('Error Kling: '+err.message);}
   finally{btn.disabled=false;btn.innerHTML='▶ &nbsp; Generar con Kling 2.5';}
 }
-
-function dlResult(){if(!resultData)return;const a=document.createElement('a');a.href=resultData;a.download='result_'+Date.now()+'.jpg';a.click();}
-function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3200);}
 </script>
 </body>
 </html>
