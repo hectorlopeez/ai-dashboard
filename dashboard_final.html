@@ -90,40 +90,22 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .ct{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dm);}
 .cb{padding:0 16px 16px;}
 
-/* ── UPLOAD ZONES — responsive ── */
+/* ── UPLOAD ZONES ── */
 .ugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.5vw,14px);margin-bottom:14px;}
-.uz{
-  aspect-ratio:4/5;
-  border:1px dashed var(--bd);border-radius:var(--rs);
-  background:rgba(77,159,255,0.02);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;
-  width:100%;
-}
+.uz{aspect-ratio:4/5;border:1px dashed var(--bd);border-radius:var(--rs);background:rgba(77,159,255,0.02);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;width:100%;}
 .uz:hover{border-color:rgba(77,159,255,0.45);background:rgba(77,159,255,0.05);}
 .uz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:var(--rs);}
 .uzlb{font-size:clamp(8px,1vw,10px);color:var(--dm);text-align:center;letter-spacing:0.8px;text-transform:uppercase;line-height:1.6;}
 .uic{font-size:clamp(16px,2.5vw,22px);margin-bottom:clamp(4px,0.8vw,8px);opacity:0.15;}
-.zb{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);
-  border:1px solid var(--bd);font-size:9px;font-weight:500;padding:2px 8px;border-radius:20px;
-  letter-spacing:1.5px;text-transform:uppercase;z-index:2;color:var(--a);}
+.zb{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);border:1px solid var(--bd);font-size:9px;font-weight:500;padding:2px 8px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;z-index:2;color:var(--a);}
 .zb.b{color:var(--a2);}
 .zb.w{color:var(--aw);}
-.oz{
-  aspect-ratio:4/5;
-  border:1px solid var(--bd);border-radius:var(--rs);
-  background:rgba(77,159,255,0.02);display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;width:100%;
-}
+.oz{aspect-ratio:4/5;border:1px solid var(--bd);border-radius:var(--rs);background:rgba(77,159,255,0.02);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;width:100%;}
 .oph{text-align:center;color:var(--dm);font-size:10px;line-height:1.8;}
 .oph span{font-size:clamp(18px,3vw,26px);opacity:0.07;display:block;margin-bottom:5px;}
-.oacts{position:absolute;bottom:8px;left:8px;right:8px;display:flex;gap:5px;
-  opacity:0;transition:opacity 0.15s;z-index:3;}
+.oacts{position:absolute;bottom:8px;left:8px;right:8px;display:flex;gap:5px;opacity:0;transition:opacity 0.15s;z-index:3;}
 .oz:hover .oacts{opacity:1;}
-.oact{flex:1;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);
-  border:1px solid var(--bd);color:var(--md);
-  font-family:'Geist Mono',monospace;font-size:10px;
-  padding:6px 2px;border-radius:6px;cursor:pointer;text-align:center;transition:all 0.12s;}
+.oact{flex:1;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);border:1px solid var(--bd);color:var(--md);font-family:'Geist Mono',monospace;font-size:10px;padding:6px 2px;border-radius:6px;cursor:pointer;text-align:center;transition:all 0.12s;}
 .oact:hover{background:var(--a);color:#000;border-color:var(--a);}
 .oact.w:hover{background:var(--aw);border-color:var(--aw);}
 
@@ -134,18 +116,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 @media(max-width:600px){.crow4{grid-template-columns:repeat(2,1fr);}.crow3{grid-template-columns:repeat(2,1fr);}}
 .cg{display:flex;flex-direction:column;gap:5px;}
 .cl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dm);}
-select{background:var(--s2);border:1px solid var(--bd);color:var(--tx);
-  font-family:'Geist Mono',monospace;font-size:12px;padding:8px 10px;
-  border-radius:var(--rs);width:100%;appearance:none;cursor:pointer;transition:border-color 0.13s;}
+select{background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-family:'Geist Mono',monospace;font-size:12px;padding:8px 10px;border-radius:var(--rs);width:100%;appearance:none;cursor:pointer;transition:border-color 0.13s;}
 select:focus{outline:none;border-color:rgba(77,159,255,0.5);}
 .rw{display:flex;align-items:center;gap:8px;margin-top:5px;}
 input[type="range"]{flex:1;appearance:none;height:3px;background:var(--bd);border-radius:2px;outline:none;cursor:pointer;}
 input[type="range"]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:50%;background:var(--a);border:2px solid var(--bg);cursor:pointer;box-shadow:0 0 7px rgba(77,159,255,0.5);}
 input[type="range"].w::-webkit-slider-thumb{background:var(--aw);box-shadow:0 0 7px rgba(255,159,77,0.5);}
 
-.amod{display:flex;align-items:center;gap:8px;padding:9px 12px;
-  background:rgba(77,159,255,0.05);border:1px solid rgba(77,159,255,0.15);
-  border-radius:var(--rs);margin-bottom:11px;font-size:11px;color:var(--md);}
+.amod{display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(77,159,255,0.05);border:1px solid rgba(77,159,255,0.15);border-radius:var(--rs);margin-bottom:11px;font-size:11px;color:var(--md);}
 .amod strong{color:var(--a);}
 .amod.w{background:rgba(255,159,77,0.05);border-color:rgba(255,159,77,0.15);}
 .amod.w strong{color:var(--aw);}
@@ -153,46 +131,26 @@ input[type="range"].w::-webkit-slider-thumb{background:var(--aw);box-shadow:0 0 
 .adot.w{background:var(--aw);}
 
 /* ── COLLAPSIBLE PROMPT ── */
-.prompt-toggle{
-  display:flex;align-items:center;gap:8px;
-  padding:9px 12px;cursor:pointer;
-  background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);
-  margin-bottom:0;transition:all 0.13s;user-select:none;
-}
+.prompt-toggle{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);margin-bottom:0;transition:all 0.13s;user-select:none;}
 .prompt-toggle:hover{border-color:var(--bd2);}
 .prompt-toggle.open{border-radius:var(--rs) var(--rs) 0 0;border-bottom-color:transparent;}
 .pt-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dm);flex:1;}
 .pt-arr{font-size:9px;color:var(--dm);transition:transform 0.15s;}
 .prompt-toggle.open .pt-arr{transform:rotate(180deg);}
 .pt-hint{font-size:9px;color:var(--dm);opacity:0.6;}
-
-.prompt-body{
-  background:var(--s2);border:1px solid var(--bd);border-top:none;
-  border-radius:0 0 var(--rs) var(--rs);
-  padding:12px;
-  display:none;margin-bottom:0;
-}
+.prompt-body{background:var(--s2);border:1px solid var(--bd);border-top:none;border-radius:0 0 var(--rs) var(--rs);padding:12px;display:none;margin-bottom:0;}
 .prompt-body.open{display:block;}
-
-textarea{background:var(--s1);border:1px solid var(--bd);color:var(--tx);
-  font-family:'Geist Mono',monospace;font-size:11px;line-height:1.65;
-  padding:10px 12px;border-radius:var(--rs);width:100%;resize:vertical;transition:border-color 0.13s;}
+textarea{background:var(--s1);border:1px solid var(--bd);color:var(--tx);font-family:'Geist Mono',monospace;font-size:11px;line-height:1.65;padding:10px 12px;border-radius:var(--rs);width:100%;resize:vertical;transition:border-color 0.13s;}
 textarea:focus{outline:none;border-color:rgba(77,159,255,0.4);}
 textarea::placeholder{color:var(--dm);}
 .prh{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
 .pacts{display:flex;gap:4px;}
-.gbtn{background:var(--s2);border:1px solid var(--bd);color:var(--dm);
-  font-family:'Geist Mono',monospace;font-size:10px;padding:4px 10px;
-  border-radius:20px;cursor:pointer;transition:all 0.13s;}
+.gbtn{background:var(--s2);border:1px solid var(--bd);color:var(--dm);font-family:'Geist Mono',monospace;font-size:10px;padding:4px 10px;border-radius:20px;cursor:pointer;transition:all 0.13s;}
 .gbtn:hover{border-color:var(--bd2);color:var(--md);}
 
 /* ── BIG BTN ── */
 .btnrow{display:flex;gap:10px;margin-top:12px;}
-.big{flex:1;padding:12px 16px;
-  background:linear-gradient(135deg,rgba(77,159,255,0.18),rgba(77,159,255,0.07));
-  border:1px solid rgba(77,159,255,0.32);border-radius:var(--rs);
-  color:var(--a);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
+.big{flex:1;padding:12px 16px;background:linear-gradient(135deg,rgba(77,159,255,0.18),rgba(77,159,255,0.07));border:1px solid rgba(77,159,255,0.32);border-radius:var(--rs);color:var(--a);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
 .big:hover{box-shadow:0 0 22px rgba(77,159,255,0.18);transform:translateY(-1px);}
 .big:active{transform:translateY(0);}
 .big:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
@@ -203,140 +161,57 @@ textarea::placeholder{color:var(--dm);}
 .big.g{background:linear-gradient(135deg,rgba(61,214,163,0.18),rgba(61,214,163,0.07));border-color:rgba(61,214,163,0.32);color:var(--a3);}
 .big.g:hover{box-shadow:0 0 22px rgba(61,214,163,0.15);}
 
-/* SPINNER */
+/* SPINNER & OTHERS */
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 .spin{width:26px;height:26px;border:2px solid var(--bd);border-top-color:var(--a);border-radius:50%;animation:spin 0.8s linear infinite;}
 .gst{font-size:10px;color:var(--dm);animation:blink 1.5s ease-in-out infinite;margin-top:6px;}
 
-/* CAROUSEL */
-.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1.2vw,10px);margin-bottom:13px;}
-.cs{aspect-ratio:4/5;border-radius:var(--rs);background:var(--s2);border:1px solid var(--bd);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-size:clamp(12px,2vw,18px);font-weight:800;color:rgba(255,255,255,0.03);
-  position:relative;overflow:hidden;}
-.cs img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-
-/* SMALL UPLOAD */
-.sup{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px;}
-.suz{width:clamp(50px,7vw,68px);height:clamp(62px,8.8vw,85px);flex-shrink:0;
-  border:1px dashed var(--bd);border-radius:var(--rs);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  background:rgba(77,159,255,0.02);transition:border-color 0.13s;position:relative;overflow:hidden;}
-.suz:hover{border-color:rgba(77,159,255,0.4);}
-.suz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-.vuz{width:clamp(56px,7.5vw,72px);height:clamp(70px,9.5vw,90px);flex-shrink:0;
-  border:1px dashed var(--bd);border-radius:var(--rs);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;background:rgba(77,159,255,0.02);transition:border-color 0.13s;
-  position:relative;overflow:hidden;}
-.vuz:hover{border-color:rgba(77,159,255,0.4);}
-.vuz img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-
-/* LORA */
-.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:13px;}
-.lcard{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:13px;cursor:pointer;transition:all 0.15s;}
-.lcard:hover{border-color:rgba(77,159,255,0.3);background:var(--s2);}
-.lcard.empty{border-style:dashed;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:var(--dm);font-size:11px;min-height:78px;}
-.ln{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;margin-bottom:3px;}
-.lm{font-size:10px;color:var(--dm);line-height:1.6;}
-.ls{display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:2px 7px;border-radius:20px;margin-top:5px;}
-.ls.none{background:var(--s2);color:var(--dm);}
-
-/* ── HISTORIAL ── */
+/* HISTORIAL */
 .hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(100px,15vw,140px),1fr));gap:10px;margin-bottom:16px;}
-.hist-item{aspect-ratio:4/5;border-radius:var(--rs);background:var(--s2);border:1px solid var(--bd);
-  position:relative;overflow:hidden;cursor:pointer;transition:all 0.15s;}
+.hist-item{aspect-ratio:4/5;border-radius:var(--rs);background:var(--s2);border:1px solid var(--bd);position:relative;overflow:hidden;cursor:pointer;transition:all 0.15s;}
 .hist-item:hover{border-color:rgba(77,159,255,0.4);transform:translateY(-2px);}
 .hist-item img{width:100%;height:100%;object-fit:cover;}
-.hist-meta{position:absolute;bottom:0;left:0;right:0;
-  background:linear-gradient(transparent,rgba(0,0,0,0.75));
-  padding:20px 8px 8px;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:0.5px;}
-.hist-tag{position:absolute;top:6px;left:6px;background:rgba(0,0,0,0.75);
-  border:1px solid rgba(255,255,255,0.1);font-size:8px;padding:2px 6px;
-  border-radius:20px;color:var(--dm);}
-.hist-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:60px 20px;text-align:center;color:var(--dm);}
-.hist-empty .icon{font-size:36px;opacity:0.15;margin-bottom:12px;}
-.hist-empty p{font-size:11px;line-height:1.7;}
-.hist-filters{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
-.hf{padding:5px 12px;border-radius:20px;border:1px solid var(--bd);background:var(--s2);
-  font-size:10px;color:var(--dm);cursor:pointer;transition:all 0.13s;font-family:'Syne',sans-serif;}
-.hf:hover{border-color:var(--bd2);color:var(--md);}
-.hf.active{border-color:var(--a);color:var(--a);background:rgba(77,159,255,0.08);}
-.hist-count{font-size:10px;color:var(--dm);margin-bottom:14px;}
+.hist-meta{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.75));padding:20px 8px 8px;font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:0.5px;}
+.hist-tag{position:absolute;top:6px;left:6px;background:rgba(0,0,0,0.75);border:1px solid rgba(255,255,255,0.1);font-size:8px;padding:2px 6px;border-radius:20px;color:var(--dm);}
 
-/* MODAL HIST */
-.hist-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);
-  z-index:300;display:none;align-items:center;justify-content:center;}
-.hist-modal-bg.show{display:flex;}
-.hist-modal{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
-  padding:0;width:min(480px,92vw);overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.6);}
-.hist-modal-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
-.hist-modal-body{padding:16px;}
-.hist-modal-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px;}
-.hist-modal-meta{font-size:10px;color:var(--dm);margin-bottom:12px;line-height:1.7;}
-.hist-modal-actions{display:flex;gap:8px;}
-
-/* MODAL API */
-.mbg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:300;
-  display:none;align-items:center;justify-content:center;}
+/* MODALS */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:300;display:none;align-items:center;justify-content:center;}
 .mbg.show{display:flex;}
-.modal{background:rgba(7,11,20,0.99);border:1px solid var(--bd);border-radius:18px;
-  padding:28px;width:min(400px,92vw);box-shadow:0 40px 80px rgba(0,0,0,0.7);}
+.modal{background:rgba(7,11,20,0.99);border:1px solid var(--bd);border-radius:18px;padding:28px;width:min(400px,92vw);box-shadow:0 40px 80px rgba(0,0,0,0.7);}
 .mt{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;}
 .ms{font-size:11px;color:var(--dm);margin-bottom:20px;line-height:1.7;}
 .mf{margin-bottom:11px;}
 .fl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dm);margin-bottom:5px;}
-input[type="password"],input[type="text"]{background:rgba(255,255,255,0.04);border:1px solid var(--bd);
-  color:var(--tx);font-family:'Geist Mono',monospace;font-size:12px;padding:9px 12px;
-  border-radius:var(--rs);width:100%;transition:border-color 0.13s;}
+input[type="password"],input[type="text"]{background:rgba(255,255,255,0.04);border:1px solid var(--bd);color:var(--tx);font-family:'Geist Mono',monospace;font-size:12px;padding:9px 12px;border-radius:var(--rs);width:100%;transition:border-color 0.13s;}
 input:focus{outline:none;border-color:rgba(77,159,255,0.5);}
-.mbtn{width:100%;margin-top:16px;padding:11px;
-  background:linear-gradient(135deg,rgba(77,159,255,0.24),rgba(77,159,255,0.1));
-  border:1px solid rgba(77,159,255,0.35);border-radius:var(--rs);color:var(--a);
-  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
+.mbtn{width:100%;margin-top:16px;padding:11px;background:linear-gradient(135deg,rgba(77,159,255,0.24),rgba(77,159,255,0.1));border:1px solid rgba(77,159,255,0.35);border-radius:var(--rs);color:var(--a);font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
 .mbtn:hover{box-shadow:0 0 20px rgba(77,159,255,0.2);}
-.mskip{text-align:center;margin-top:10px;font-size:11px;color:var(--dm);cursor:pointer;}
-.mskip:hover{color:var(--md);}
 
 /* AUTH */
-.authbg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at 20% 10%,rgba(77,159,255,0.15),transparent 55%),
-  radial-gradient(ellipse at 80% 90%,rgba(123,111,255,0.12),transparent 50%),
-  linear-gradient(180deg,rgba(3,6,13,0.97),rgba(5,8,15,0.99));z-index:1200;}
-.authcard{width:min(360px,92vw);background:rgba(9,13,23,0.98);
-  border:1px solid rgba(77,159,255,0.18);border-radius:22px;padding:30px;
-  box-shadow:0 28px 70px rgba(0,0,0,0.6);}
-.apill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;
-  border:1px solid rgba(77,159,255,0.22);background:rgba(77,159,255,0.07);
-  color:#a8d4ff;font-size:9px;font-weight:600;letter-spacing:1px;
-  font-family:'Syne',sans-serif;text-transform:uppercase;margin-bottom:16px;}
+.authbg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 20% 10%,rgba(77,159,255,0.15),transparent 55%),radial-gradient(ellipse at 80% 90%,rgba(123,111,255,0.12),transparent 50%),linear-gradient(180deg,rgba(3,6,13,0.97),rgba(5,8,15,0.99));z-index:1200;}
+.authcard{width:min(360px,92vw);background:rgba(9,13,23,0.98);border:1px solid rgba(77,159,255,0.18);border-radius:22px;padding:30px;box-shadow:0 28px 70px rgba(0,0,0,0.6);}
+.apill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;border:1px solid rgba(77,159,255,0.22);background:rgba(77,159,255,0.07);color:#a8d4ff;font-size:9px;font-weight:600;letter-spacing:1px;font-family:'Syne',sans-serif;text-transform:uppercase;margin-bottom:16px;}
 .apill-dot{width:6px;height:6px;border-radius:50%;background:var(--a);box-shadow:0 0 10px var(--a);}
 .authcard h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin:0 0 5px;}
 .authcard p{font-size:11px;color:var(--dm);margin:0 0 20px;line-height:1.7;}
-.authrow{display:grid;gap:11px;}
 .autherr{display:none;margin-top:8px;color:#fca5a5;font-size:11px;}
 .autherr.show{display:block;}
 .app.locked{filter:blur(8px);pointer-events:none;user-select:none;}
-
 input[type="file"]{display:none;}
-.notif{position:fixed;bottom:20px;right:20px;background:var(--s1);border:1px solid var(--bd);
-  border-radius:var(--rs);padding:9px 16px;font-size:12px;z-index:400;
-  transform:translateY(10px);opacity:0;transition:all 0.22s;box-shadow:0 8px 28px rgba(0,0,0,0.5);}
+.notif{position:fixed;bottom:20px;right:20px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rs);padding:9px 16px;font-size:12px;z-index:400;transform:translateY(10px);opacity:0;transition:all 0.22s;box-shadow:0 8px 28px rgba(0,0,0,0.5);}
 .notif.show{transform:translateY(0);opacity:1;}
 </style>
 </head>
 <body>
 
-<!-- AUTH -->
 <div class="authbg" id="authModal">
   <div class="authcard">
     <div class="apill"><span class="apill-dot"></span>Acceso privado</div>
     <h2>AI Studio</h2>
     <p>Introduce tus credenciales para acceder.</p>
-    <div class="authrow">
-      <div><div class="fl">Usuario</div><input type="text" id="authUser" placeholder="usuario" autocomplete="username"></div>
+    <div class="authrow" style="display:grid; gap:11px;">
+      <div><div class="fl">Usuario</div><input type="text" id="authUser" placeholder="usuario"></div>
       <div><div class="fl">Contraseña</div><input type="password" id="authPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
     </div>
     <button class="mbtn" onclick="login()">Entrar →</button>
@@ -344,33 +219,16 @@ input[type="file"]{display:none;}
   </div>
 </div>
 
-<!-- API MODAL -->
 <div class="mbg" id="apiModal">
   <div class="modal">
     <div class="mt">Configurar APIs</div>
     <div class="ms">Se guardan localmente. Solo hay que hacerlo una vez.</div>
-    <div class="mf"><div class="fl">Google Gemini API Key</div><input type="password" id="googleKey" placeholder="AIzaSy...">
-      <div style="font-size:9px;color:var(--dm);margin-top:4px">aistudio.google.com → Get API key</div></div>
+    <div class="mf"><div class="fl">Google Gemini API Key</div><input type="password" id="googleKey" placeholder="AIzaSy..."></div>
     <div class="mf"><div class="fl">WaveSpeed API Key</div><input type="password" id="wsKey" placeholder="ws-xxxxxxxx"></div>
-    <div class="mf"><div class="fl">Google Cloud Project ID (opcional)</div><input type="text" id="gcpProject" placeholder="mi-proyecto-123456">
-      <div style="font-size:9px;color:var(--dm);margin-top:4px;line-height:1.6">Necesario para Nano Banana Pro y Nano Banana 2 vía Vertex AI</div></div>
+    <div class="mf"><div class="fl">Google Cloud Project ID</div><input type="text" id="gcpProject" placeholder="mi-proyecto-123456"></div>
+    <div class="mf"><div class="fl">GCP Access Token (Opcional Vertex)</div><input type="password" id="gcpAccessToken" placeholder="ya29.A0..."></div>
     <button class="mbtn" onclick="saveKeys()">Guardar →</button>
-    <div class="mskip" onclick="skipModal()">Continuar sin configurar</div>
-  </div>
-</div>
-
-<!-- HIST DETAIL MODAL -->
-<div class="hist-modal-bg" id="histModal">
-  <div class="hist-modal">
-    <img id="histModalImg" src="" alt="" class="hist-modal-img">
-    <div class="hist-modal-body">
-      <div class="hist-modal-title" id="histModalTitle">—</div>
-      <div class="hist-modal-meta" id="histModalMeta">—</div>
-      <div class="hist-modal-actions">
-        <button class="big" style="font-size:10px;padding:9px" onclick="dlHistItem()">↓ Guardar</button>
-        <button class="big p" style="font-size:10px;padding:9px" onclick="document.getElementById('histModal').classList.remove('show')">✕ Cerrar</button>
-      </div>
-    </div>
+    <div class="mskip" onclick="skipModal()" style="text-align:center;margin-top:10px;font-size:11px;color:var(--dm);cursor:pointer;">Continuar sin configurar</div>
   </div>
 </div>
 
@@ -378,52 +236,21 @@ input[type="file"]{display:none;}
   <div class="topbar">
     <div class="logo">AI Studio</div>
     <div class="tabrow">
-
-      <!-- TAB 1: STUDIO (Gemini) -->
       <div class="tdw">
-        <button class="tbtn t1 active" id="tb1" onclick="toggleTab(1,event)">
-          <span class="tdot"></span><span id="tl1">Studio</span><span class="tarr">▾</span>
-        </button>
-        <div class="tdrop" id="td1">
-          <div class="tmi s1" onclick="goTo(1,'Studio','p-gen',event)"><span class="tmi-ic">⚡</span><span class="tmi-lb">Generación</span><span class="tmi-tg">gemini</span></div>
-          <div class="tmi" onclick="goTo(1,'Edición','p-edit',event)"><span class="tmi-ic">✦</span><span class="tmi-lb">Edición</span></div>
-          <div class="tdiv"></div>
-          <div class="tmi" onclick="goTo(1,'Carrusel clásico','p-cold',event)"><span class="tmi-ic">◫</span><span class="tmi-lb">Carrusel clásico</span></div>
-          <div class="tmi" onclick="goTo(1,'Carrusel nuevo','p-cnew',event)"><span class="tmi-ic">▦</span><span class="tmi-lb">Carrusel nuevo</span></div>
-        </div>
-      </div>
-
-      <!-- TAB 2: WAVESPEED IMAGE -->
-      <div class="tdw">
-        <button class="tbtn t2" id="tb2" onclick="toggleTab(2,event)">
-          <span class="tdot"></span><span id="tl2">WaveSpeed</span><span class="tarr">▾</span>
-        </button>
-        <div class="tdrop" id="td2">
-          <div class="tmi s2" onclick="goTo(2,'Seedream 4.5','p-seedream',event)"><span class="tmi-ic">◈</span><span class="tmi-lb">Seedream 4.5</span><span class="tmi-tg">i2i</span></div>
-          <div class="tmi" onclick="goTo(2,'Wan 2.6','p-wan',event)"><span class="tmi-ic">◉</span><span class="tmi-lb">Wan 2.6</span><span class="tmi-tg">vídeo</span></div>
-          <div class="tmi" onclick="goTo(2,'Kling 2.5','p-kling',event)"><span class="tmi-ic">▶</span><span class="tmi-lb">Kling 2.5</span><span class="tmi-tg">vídeo</span></div>
-          <div class="tmi" onclick="goTo(2,'Z Image','p-zimage',event)"><span class="tmi-ic">◐</span><span class="tmi-lb">Z Image</span></div>
-        </div>
-      </div>
-
-      <!-- TAB 3: HISTORIAL -->
-      <div class="tdw">
-        <button class="tbtn t3" id="tb3" onclick="goTo(3,'Historial','p-history',null);toggleTab(3,event||{stopPropagation:()=>{}})">
-          <span class="tdot"></span><span id="tl3">Historial</span>
+        <button class="tbtn t1 active" onclick="toggleTab(1,event)">
+          <span class="tdot"></span><span>Studio</span><span class="tarr">▾</span>
         </button>
       </div>
-
-      <!-- TAB 4: LORA -->
       <div class="tdw">
-        <button class="tbtn t4" id="tb4" onclick="toggleTab(4,event)">
-          <span class="tdot"></span><span id="tl4">LoRA</span><span class="tarr">▾</span>
+        <button class="tbtn t2" onclick="toggleTab(2,event)">
+          <span class="tdot"></span><span>WaveSpeed</span><span class="tarr">▾</span>
         </button>
-        <div class="tdrop" id="td4">
-          <div class="tmi" onclick="goTo(4,'Entrenar','p-lora-train',event)"><span class="tmi-ic">⬆</span><span class="tmi-lb">Entrenar</span></div>
-          <div class="tmi" onclick="goTo(4,'Mis LoRAs','p-lora-manage',event)"><span class="tmi-ic">☰</span><span class="tmi-lb">Mis LoRAs</span></div>
-        </div>
       </div>
-
+      <div class="tdw">
+        <button class="tbtn t3" onclick="goTo(3,'Historial','p-history',null)">
+          <span class="tdot"></span><span>Historial</span>
+        </button>
+      </div>
     </div>
     <div class="status-pill" onclick="document.getElementById('apiModal').classList.add('show')">
       <div class="led" id="led"></div><span id="apilbl">Configurar API</span>
@@ -431,900 +258,129 @@ input[type="file"]{display:none;}
   </div>
 
   <div class="content">
-
-    <!-- ═══════════════ STUDIO — GENERACIÓN (GEMINI) ═══════════════ -->
     <div class="panel active" id="p-gen">
-      <div class="ph"><div class="ph-title">Generación</div><div class="ph-sub">Nano Banana · Vertex AI · Foto maestra + referencia → imagen final</div></div>
+      <div class="ph"><div class="ph-title">Generación</div><div class="ph-sub">Nano Banana · Vertex AI</div></div>
       <div class="card"><div class="ch"><div class="ct">Imágenes de entrada</div></div><div class="cb">
         <div class="ugrid">
-          <div><div class="cl" style="margin-bottom:5px">Foto maestra</div>
-            <div class="uz" onclick="fi('fi-gen-m')" id="z-gen-m"><div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
-            <input type="file" id="fi-gen-m" accept="image/*" onchange="loadImg(this,'z-gen-m','genMaster')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Foto referencia</div>
-            <div class="uz" onclick="fi('fi-gen-r')" id="z-gen-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div></div>
-            <input type="file" id="fi-gen-r" accept="image/*" onchange="loadImg(this,'z-gen-r','genRef')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
-            <div class="oz" id="z-gen-out"><div class="oph" id="gen-out-ph"><span>◎</span>Resultado aquí</div>
-              <div class="oacts"><div class="oact" onclick="dlResult('genResult')">↓ Guardar</div><div class="oact" onclick="sendToEdit('gen')">→ Editar</div><div class="oact" onclick="sendToCarousel('gen')">▦ Carrusel</div></div>
-            </div></div>
+          <div><div class="cl">Foto maestra</div><div class="uz" onclick="fi('fi-gen-m')" id="z-gen-m"><div class="uic">👤</div></div><input type="file" id="fi-gen-m" onchange="loadImg(this,'z-gen-m','genMaster')"></div>
+          <div><div class="cl">Foto referencia</div><div class="uz" onclick="fi('fi-gen-r')" id="z-gen-r"><div class="uic">🖼</div></div><input type="file" id="fi-gen-r" onchange="loadImg(this,'z-gen-r','genRef')"></div>
+          <div><div class="cl">Resultado</div><div class="oz" id="z-gen-out"><div class="oph"><span>◎</span>Resultado aquí</div></div></div>
         </div>
       </div></div>
+      
       <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="amod">
-          <div class="adot"></div>Modelo: <strong id="genModelLbl">Gemini 2.0 Flash</strong>
-          <select id="genModel" style="margin-left:auto;width:auto;padding:5px 9px;font-size:11px;border-radius:20px" onchange="updateModelLbl()">
-            <option value="auto" selected>Auto</option><option value="pro">Gemini 2.0 Flash</option>
-          </select>
-        </div>
         <div class="crow4">
-          <div class="cg"><div class="cl">Ratio</div><select id="genRatio"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select id="genQual"><option value="1k">1K</option><option value="2k" selected>2K</option><option value="4k">4K</option></select></div>
-          <div class="cg"><div class="cl">Cantidad</div><select id="genCount"><option selected>1</option><option>2</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span id="genStrV" style="color:var(--a)">35%</span></div>
-            <div class="rw"><input type="range" id="genStr" min="10" max="90" value="35" oninput="document.getElementById('genStrV').textContent=this.value+'%'"></div></div>
+          <div class="cg"><div class="cl">Modelo</div><select id="genModel"><option value="imagegeneration@006">Nano Banana 2 (Imagen 3)</option></select></div>
+          <div class="cg"><div class="cl">Ratio</div><select id="genRatio"><option value="4:5">4:5</option><option value="1:1">1:1</option></select></div>
         </div>
+        <textarea id="gen-prompt" rows="3" placeholder="Prompt para la IA..."></textarea>
+        <button class="big" id="genBtn" onclick="generateBanana()">◎ Generar con Vertex AI</button>
       </div></div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="prompt-toggle" id="pt-gen" onclick="togglePrompt('gen')">
-          <span class="pt-label">Prompt</span>
-          <span class="pt-hint" id="ph-gen">Toca para ver</span>
-          <span class="pt-arr">▾</span>
-        </div>
-        <div class="prompt-body" id="pb-gen">
-          <div class="prh"><div class="cl">Prompt principal</div>
-            <div class="pacts"><button class="gbtn" onclick="loadDP('gen-pta')">↺ Default</button><button class="gbtn" onclick="clearTA('gen-pta')">✕</button></div>
-          </div>
-          <textarea id="gen-pta" rows="5" style="margin-bottom:9px"></textarea>
-          <div class="cl" style="margin-bottom:5px">Negative prompt</div>
-          <textarea id="gen-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed, watermark</textarea>
-        </div>
-      </div>
-      <div class="btnrow"><button class="big" id="genBtn" onclick="generateStudio()">🍌 &nbsp; Generar con Nano Banana</button></div>
     </div>
 
-    <!-- ═══════════════ STUDIO — EDICIÓN (GEMINI) ═══════════════ -->
-    <div class="panel" id="p-edit">
-      <div class="ph"><div class="ph-title">Edición</div><div class="ph-sub">Nano Banana · Vertex AI · Corrige detalles de la foto generada</div></div>
-      <div class="card"><div class="ch"><div class="ct">Imágenes</div></div><div class="cb">
-        <div class="ugrid" style="grid-template-columns:1fr 1fr">
-          <div><div class="cl" style="margin-bottom:5px">Foto a editar</div>
-            <div class="uz" onclick="fi('fi-edit')" id="z-edit"><div class="uic">🖼</div><div class="uzlb">Foto generada</div></div>
-            <input type="file" id="fi-edit" accept="image/*" onchange="loadImg(this,'z-edit','editImg')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
-            <div class="oz" id="z-edit-out"><div class="oph"><span>◎</span>Resultado</div>
-              <div class="oacts"><div class="oact" onclick="dlResult('editResult')">↓ Guardar</div></div>
-            </div></div>
-        </div>
-        <div class="crow4" style="margin-bottom:11px">
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span style="color:var(--a)">25%</span></div><div class="rw"><input type="range" min="5" max="60" value="25"></div></div>
-        </div>
-      </div></div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="prompt-toggle" id="pt-edit" onclick="togglePrompt('edit')">
-          <span class="pt-label">Prompt de edición</span>
-          <span class="pt-hint" id="ph-edit">Toca para ver</span>
-          <span class="pt-arr">▾</span>
-        </div>
-        <div class="prompt-body" id="pb-edit">
-          <div class="prh"><div class="cl">Qué corregir</div>
-            <div class="pacts"><button class="gbtn" onclick="setPreset('face','edit-pta')">Cara</button><button class="gbtn" onclick="setPreset('skin','edit-pta')">Piel</button><button class="gbtn" onclick="setPreset('realism','edit-pta')">Realismo</button></div>
-          </div>
-          <textarea id="edit-pta" rows="3" placeholder="Ej: fix the eyes, make them more natural..."></textarea>
-        </div>
-      </div>
-      <div class="btnrow"><button class="big p" onclick="generateStudioEdit()">🍌 &nbsp; Editar con Nano Banana</button></div>
-    </div>
-
-    <!-- ═══════════════ STUDIO — CARRUSEL CLÁSICO ═══════════════ -->
-    <div class="panel" id="p-cold">
-      <div class="ph"><div class="ph-title">Carrusel clásico</div><div class="ph-sub">Nano Banana · Vertex AI · Variaciones con prompt</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="sup">
-          <div class="suz" onclick="fi('fi-cold')" id="z-cold"><div style="font-size:14px;opacity:0.15">+</div></div>
-          <input type="file" id="fi-cold" accept="image/*" onchange="loadImg(this,'z-cold',null)">
-          <div style="flex:1">
-            <div class="card" style="margin-bottom:0">
-              <div class="prompt-toggle" id="pt-cold" onclick="togglePrompt('cold')">
-                <span class="pt-label">Prompt (opcional)</span><span class="pt-arr">▾</span>
-              </div>
-              <div class="prompt-body" id="pb-cold">
-                <textarea id="cold-pta" rows="3" placeholder="Describe variaciones... o deja vacío"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="crow4" style="margin-bottom:12px">
-          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-        </div>
-        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
-      </div></div>
-      <div class="btnrow"><button class="big p">◫ &nbsp; Generar carrusel</button></div>
-    </div>
-
-    <!-- ═══════════════ STUDIO — CARRUSEL NUEVO ═══════════════ -->
-    <div class="panel" id="p-cnew">
-      <div class="ph"><div class="ph-title">Carrusel nuevo</div><div class="ph-sub">Nano Banana · Vertex AI · Variaciones automáticas</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="sup">
-          <div class="suz" onclick="fi('fi-cnew')" id="z-cnew"><div style="font-size:14px;opacity:0.15">+</div></div>
-          <input type="file" id="fi-cnew" accept="image/*" onchange="loadImg(this,'z-cnew',null)">
-          <div style="font-size:11px;color:var(--dm);line-height:1.85;padding-top:4px">
-            Sube la foto generada. El sistema crea <strong style="color:var(--md)">variaciones automáticas</strong> — misma persona, pequeños cambios de pose, encuadre o luz.</div>
-        </div>
-        <div class="crow4" style="margin-bottom:12px">
-          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option><option>6 fotos</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-        </div>
-        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
-      </div></div>
-      <div class="btnrow"><button class="big">▦ &nbsp; Generar carrusel</button></div>
-    </div>
-
-    <!-- ═══════════════ WAVESPEED — NANO BANANA PRO ═══════════════ -->
-    <div class="panel" id="p-nbp">
-      <div class="ph"><div class="ph-title">Nano Banana Pro</div><div class="ph-sub">Vertex AI · Google Cloud · Image to image</div></div>
-      <div class="card"><div class="ch"><div class="ct">Imágenes de entrada</div></div><div class="cb">
-        <div class="ugrid">
-          <div><div class="cl" style="margin-bottom:5px">Foto maestra</div>
-            <div class="uz" onclick="fi('fi-nbp-m')" id="z-nbp-m"><div class="zb w">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
-            <input type="file" id="fi-nbp-m" accept="image/*" onchange="loadImg(this,'z-nbp-m','nbpMaster')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Foto referencia</div>
-            <div class="uz" onclick="fi('fi-nbp-r')" id="z-nbp-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose, outfit<br>y escena</div></div>
-            <input type="file" id="fi-nbp-r" accept="image/*" onchange="loadImg(this,'z-nbp-r','nbpRef')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
-            <div class="oz" id="z-nbp-out"><div class="oph"><span>◎</span>Resultado aquí</div>
-              <div class="oacts"><div class="oact w" onclick="dlResult('nbpResult')">↓ Guardar</div><div class="oact w" onclick="sendToEdit('nbp')">→ Editar</div><div class="oact w" onclick="sendToCarousel('nbp')">▦ Carrusel</div></div>
-            </div></div>
-        </div>
-      </div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="amod w"><div class="adot w"></div>Modelo: <strong>Nano Banana Pro · Vertex AI</strong>
-          <select style="margin-left:auto;width:auto;padding:5px 9px;font-size:11px;border-radius:20px">
-            <option>Nano Banana Pro</option><option>Nano Banana 2</option>
-          </select>
-        </div>
-        <div class="crow4">
-          <div class="cg"><div class="cl">Ratio</div><select id="nbpRatio"><option value="4:5" selected>4:5 Instagram</option><option value="9:16">9:16 Stories</option><option value="1:1">1:1 Square</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select id="nbpQual"><option value="1K">1K</option><option value="2K" selected>2K</option><option value="4K">4K</option></select></div>
-          <div class="cg"><div class="cl">Cantidad</div><select><option selected>1</option><option>2</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span id="nbpStrV" style="color:var(--aw)">35%</span></div>
-            <div class="rw"><input type="range" class="w" id="nbpStr" min="10" max="90" value="35" oninput="document.getElementById('nbpStrV').textContent=this.value+'%'"></div></div>
-        </div>
-      </div></div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="prompt-toggle" id="pt-nbp" onclick="togglePrompt('nbp')">
-          <span class="pt-label">Prompt</span>
-          <span class="pt-hint" id="ph-nbp">Toca para ver</span>
-          <span class="pt-arr">▾</span>
-        </div>
-        <div class="prompt-body" id="pb-nbp">
-          <div class="prh"><div class="cl">Prompt principal</div>
-            <div class="pacts"><button class="gbtn" onclick="loadDP('nbp-pta')">↺ Default</button><button class="gbtn" onclick="clearTA('nbp-pta')">✕</button></div>
-          </div>
-          <textarea id="nbp-pta" rows="5" style="margin-bottom:9px"></textarea>
-          <div class="cl" style="margin-bottom:5px">Negative prompt</div>
-          <textarea id="nbp-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed, watermark</textarea>
-        </div>
-      </div>
-      <div class="btnrow"><button class="big w" id="nbpBtn" onclick="generateNBP()">🍌 &nbsp; Generar con Nano Banana</button></div>
-    </div>
-
-    <!-- ═══════════════ WAVESPEED — EDICIÓN ═══════════════ -->
-    <div class="panel" id="p-ws-edit">
-      <div class="ph"><div class="ph-title">Edición WaveSpeed</div><div class="ph-sub">WaveSpeed · Corrige detalles</div></div>
-      <div class="card"><div class="ch"><div class="ct">Imágenes</div></div><div class="cb">
-        <div class="ugrid" style="grid-template-columns:1fr 1fr">
-          <div><div class="cl" style="margin-bottom:5px">Foto a editar</div>
-            <div class="uz" onclick="fi('fi-ws-edit')" id="z-ws-edit"><div class="uic">🖼</div><div class="uzlb">Foto generada</div></div>
-            <input type="file" id="fi-ws-edit" accept="image/*" onchange="loadImg(this,'z-ws-edit',null)"></div>
-          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
-            <div class="oz" id="z-ws-edit-out"><div class="oph"><span>◎</span>Resultado</div></div></div>
-        </div>
-        <div class="crow4" style="margin-bottom:11px">
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span style="color:var(--aw)">25%</span></div><div class="rw"><input type="range" class="w" min="5" max="60" value="25"></div></div>
-        </div>
-      </div></div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="prompt-toggle" id="pt-ws-edit" onclick="togglePrompt('ws-edit')">
-          <span class="pt-label">Prompt de edición</span><span class="pt-arr">▾</span>
-        </div>
-        <div class="prompt-body" id="pb-ws-edit">
-          <div class="prh"><div class="cl">Qué corregir</div>
-            <div class="pacts"><button class="gbtn" onclick="setPreset('face','ws-edit-pta')">Cara</button><button class="gbtn" onclick="setPreset('skin','ws-edit-pta')">Piel</button><button class="gbtn" onclick="setPreset('realism','ws-edit-pta')">Realismo</button></div>
-          </div>
-          <textarea id="ws-edit-pta" rows="3" placeholder="Ej: fix the eyes, make them more natural..."></textarea>
-        </div>
-      </div>
-      <div class="btnrow"><button class="big w">✦ &nbsp; Editar con WaveSpeed</button></div>
-    </div>
-
-    <!-- ═══════════════ WAVESPEED — CARRUSEL CLÁSICO ═══════════════ -->
-    <div class="panel" id="p-ws-cold">
-      <div class="ph"><div class="ph-title">Carrusel clásico</div><div class="ph-sub">WaveSpeed · Variaciones con prompt</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="sup">
-          <div class="suz" onclick="fi('fi-ws-cold')" id="z-ws-cold"><div style="font-size:14px;opacity:0.15">+</div></div>
-          <input type="file" id="fi-ws-cold" accept="image/*" onchange="loadImg(this,'z-ws-cold',null)">
-          <div style="flex:1">
-            <div class="card" style="margin-bottom:0">
-              <div class="prompt-toggle" id="pt-ws-cold" onclick="togglePrompt('ws-cold')">
-                <span class="pt-label">Prompt (opcional)</span><span class="pt-arr">▾</span>
-              </div>
-              <div class="prompt-body" id="pb-ws-cold">
-                <textarea id="ws-cold-pta" rows="3" placeholder="Describe variaciones..."></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="crow4" style="margin-bottom:12px">
-          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-        </div>
-        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
-      </div></div>
-      <div class="btnrow"><button class="big w">◫ &nbsp; Generar carrusel WaveSpeed</button></div>
-    </div>
-
-    <!-- ═══════════════ WAVESPEED — CARRUSEL NUEVO ═══════════════ -->
-    <div class="panel" id="p-ws-cnew">
-      <div class="ph"><div class="ph-title">Carrusel nuevo</div><div class="ph-sub">WaveSpeed · Variaciones automáticas</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="sup">
-          <div class="suz" onclick="fi('fi-ws-cnew')" id="z-ws-cnew"><div style="font-size:14px;opacity:0.15">+</div></div>
-          <input type="file" id="fi-ws-cnew" accept="image/*" onchange="loadImg(this,'z-ws-cnew',null)">
-          <div style="font-size:11px;color:var(--dm);line-height:1.85;padding-top:4px">
-            Variaciones automáticas sin prompt — misma persona, pequeños cambios de pose, encuadre o luz.</div>
-        </div>
-        <div class="crow4" style="margin-bottom:12px">
-          <div class="cg"><div class="cl">Cantidad</div><select><option>4 fotos</option><option>5 fotos</option><option>6 fotos</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-        </div>
-        <div class="cgrid"><div class="cs">01</div><div class="cs">02</div><div class="cs">03</div><div class="cs">04</div></div>
-      </div></div>
-      <div class="btnrow"><button class="big w">▦ &nbsp; Generar carrusel WaveSpeed</button></div>
-    </div>
-
-    <!-- ═══════════════ SEEDREAM ═══════════════ -->
-    <div class="panel" id="p-seedream">
-      <div class="ph"><div class="ph-title">Seedream 4.5</div><div class="ph-sub">WaveSpeed · Image to image</div></div>
-      <div class="card"><div class="ch"><div class="ct">Imágenes</div></div><div class="cb">
-        <div class="ugrid">
-          <div><div class="cl" style="margin-bottom:5px">Foto maestra</div>
-            <div class="uz" onclick="fi('fi-sd-m')" id="z-sd-m"><div class="zb">ID</div><div class="uic">👤</div><div class="uzlb">Identidad<br>base</div></div>
-            <input type="file" id="fi-sd-m" accept="image/*" onchange="loadImg(this,'z-sd-m','sdMaster')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Foto referencia</div>
-            <div class="uz" onclick="fi('fi-sd-r')" id="z-sd-r"><div class="zb b">POSE</div><div class="uic">🖼</div><div class="uzlb">Pose y escena</div></div>
-            <input type="file" id="fi-sd-r" accept="image/*" onchange="loadImg(this,'z-sd-r','sdRef')"></div>
-          <div><div class="cl" style="margin-bottom:5px">Resultado</div>
-            <div class="oz" id="z-sd-out"><div class="oph"><span>◎</span>Resultado</div></div></div>
-        </div>
-        <div class="crow4">
-          <div class="cg"><div class="cl">Ratio</div><select id="sdRatio"><option value="4:5" selected>4:5</option><option value="9:16">9:16</option><option value="1:1">1:1</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select id="sdQual"><option value="1K">1K</option><option value="2K" selected>2K</option><option value="4K">4K</option></select></div>
-          <div class="cg"><div class="cl">Fuerza: <span id="sdStrV" style="color:var(--a2)">35%</span></div><div class="rw"><input type="range" id="sdStr" min="10" max="90" value="35" oninput="document.getElementById('sdStrV').textContent=this.value+'%'"></div></div>
-        </div>
-      </div></div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="prompt-toggle" id="pt-sd" onclick="togglePrompt('sd')">
-          <span class="pt-label">Prompt (opcional)</span><span class="pt-arr">▾</span>
-        </div>
-        <div class="prompt-body" id="pb-sd">
-          <textarea id="sd-pta" rows="3" placeholder="Pose, ropa y entorno. Sin rasgos físicos..."></textarea>
-          <div class="cl" style="margin:8px 0 5px">Negative</div>
-          <textarea id="sd-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
-        </div>
-      </div>
-      <div class="btnrow"><button class="big p" id="sdBtn" onclick="generateSeedream()">◈ &nbsp; Generar con Seedream 4.5</button></div>
-    </div>
-
-    <!-- ═══════════════ WAN ═══════════════ -->
-    <div class="panel" id="p-wan">
-      <div class="ph"><div class="ph-title">Wan 2.6</div><div class="ph-sub">WaveSpeed · Image to video</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:13px">
-          <div class="vuz" onclick="fi('fi-wan')" id="z-wan"><div style="font-size:14px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:3px">Foto base</div></div>
-          <input type="file" id="fi-wan" accept="image/*" onchange="loadImg(this,'z-wan','wan')">
-          <div style="flex:1">
-            <div class="crow4">
-              <div class="cg"><div class="cl">Duración</div><select id="wanDur"><option>3s</option><option selected>5s</option><option>8s</option></select></div>
-              <div class="cg"><div class="cl">Resolución</div><select id="wanRes"><option>720p</option><option selected>1080p</option></select></div>
-              <div class="cg"><div class="cl">Calidad</div><select><option selected>Standard</option><option>High</option></select></div>
-            </div>
-            <div class="card" style="margin-top:10px;margin-bottom:0">
-              <div class="prompt-toggle" id="pt-wan" onclick="togglePrompt('wan')">
-                <span class="pt-label">Motion prompt</span><span class="pt-arr">▾</span>
-              </div>
-              <div class="prompt-body" id="pb-wan">
-                <textarea id="wan-pta" rows="3" placeholder="Ej: subtle hair movement, gentle smile..."></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="oz" style="aspect-ratio:16/9" id="wanOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div>
-      </div></div>
-      <div class="btnrow"><button class="big p" id="wanBtn" onclick="generateWan()">◉ &nbsp; Generar vídeo con Wan 2.6</button></div>
-    </div>
-
-    <!-- ═══════════════ KLING ═══════════════ -->
-    <div class="panel" id="p-kling">
-      <div class="ph"><div class="ph-title">Kling 2.5</div><div class="ph-sub">WaveSpeed · Image to video</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:13px">
-          <div class="vuz" onclick="fi('fi-kling')" id="z-kling"><div style="font-size:14px;opacity:0.15">🎬</div><div style="font-size:9px;color:var(--dm);margin-top:3px">Foto base</div></div>
-          <input type="file" id="fi-kling" accept="image/*" onchange="loadImg(this,'z-kling','kling')">
-          <div style="flex:1">
-            <div class="crow4">
-              <div class="cg"><div class="cl">Duración</div><select id="klingDur"><option>5s</option><option selected>10s</option></select></div>
-              <div class="cg"><div class="cl">Modo</div><select id="klingMode"><option selected>Standard</option><option>Pro</option></select></div>
-            </div>
-            <div class="card" style="margin-top:10px;margin-bottom:0">
-              <div class="prompt-toggle" id="pt-kling" onclick="togglePrompt('kling')">
-                <span class="pt-label">Prompt de movimiento</span><span class="pt-arr">▾</span>
-              </div>
-              <div class="prompt-body" id="pb-kling">
-                <textarea id="kling-pta" rows="3" placeholder="Describe el movimiento..."></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="oz" style="aspect-ratio:16/9" id="klingOut"><div class="oph"><span>◎</span>Vídeo aquí</div></div>
-      </div></div>
-      <div class="btnrow"><button class="big g" id="klingBtn" onclick="generateKling()">▶ &nbsp; Generar con Kling 2.5</button></div>
-    </div>
-
-    <!-- ═══════════════ Z IMAGE ═══════════════ -->
-    <div class="panel" id="p-zimage">
-      <div class="ph"><div class="ph-title">Z Image</div><div class="ph-sub">WaveSpeed · Generación de imagen</div></div>
-      <div class="card"><div class="ch"><div class="ct">Configuración</div></div><div class="cb">
-        <div class="crow4" style="margin-bottom:11px">
-          <div class="cg"><div class="cl">Ratio</div><select><option selected>4:5</option><option>9:16</option><option>1:1</option></select></div>
-          <div class="cg"><div class="cl">Calidad</div><select><option>1K</option><option selected>2K</option><option>4K</option></select></div>
-          <div class="cg"><div class="cl">Cantidad</div><select><option selected>1</option><option>2</option><option>4</option></select></div>
-        </div>
-      </div></div>
-      <div class="card" style="margin-bottom:12px">
-        <div class="prompt-toggle" id="pt-zi" onclick="togglePrompt('zi')">
-          <span class="pt-label">Prompt</span><span class="pt-arr">▾</span>
-        </div>
-        <div class="prompt-body" id="pb-zi">
-          <textarea id="zi-pta" rows="4" style="margin-bottom:8px" placeholder="Describe la escena..."></textarea>
-          <div class="cl" style="margin-bottom:5px">Negative</div>
-          <textarea id="zi-nta" rows="2">airbrushed, studio lighting, perfect skin, plastic, CGI, cartoon, blurry, deformed</textarea>
-        </div>
-      </div>
-      <div class="btnrow"><button class="big p">◐ &nbsp; Generar con Z Image</button></div>
-    </div>
-
-    <!-- ═══════════════ HISTORIAL ═══════════════ -->
     <div class="panel" id="p-history">
-      <div class="ph"><div class="ph-title">Historial</div><div class="ph-sub">Todo lo generado en esta sesión</div></div>
-      <div class="hist-filters">
-        <div class="hf active" onclick="filterHist('all',this)">Todo</div>
-        <div class="hf" onclick="filterHist('gemini',this)">Gemini</div>
-        <div class="hf" onclick="filterHist('wavespeed',this)">WaveSpeed</div>
-        <div class="hf" onclick="filterHist('video',this)">Vídeo</div>
-      </div>
-      <div class="hist-count" id="histCount">0 elementos</div>
-      <div class="hist-grid" id="histGrid">
-        <div class="hist-empty" style="grid-column:1/-1">
-          <div class="icon">◎</div>
-          <p>Aquí aparecerán las imágenes<br>y vídeos que generes</p>
-        </div>
-      </div>
+      <div class="ph"><div class="ph-title">Historial</div><div class="ph-sub">Tus creaciones locales</div></div>
+      <div class="hist-grid" id="histGrid"></div>
     </div>
-
-    <!-- ═══════════════ LORA — ENTRENAR ═══════════════ -->
-    <div class="panel" id="p-lora-train">
-      <div class="ph"><div class="ph-title">Entrenar LoRA</div><div class="ph-sub">Modelo personalizado por personaje</div></div>
-      <div class="card"><div class="ch"><div class="ct">Datos</div></div><div class="cb">
-        <div class="crow4" style="margin-bottom:13px">
-          <div class="cg"><div class="cl">Nombre</div><input type="text" placeholder="lucia-v1" style="background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-family:'Geist Mono',monospace;font-size:12px;padding:8px 10px;border-radius:var(--rs);width:100%"></div>
-          <div class="cg"><div class="cl">Plataforma</div><select><option selected>Google Vertex AI</option><option>Fal.ai</option></select></div>
-          <div class="cg"><div class="cl">Steps</div><select><option>1000</option><option selected>1500</option><option>2000</option></select></div>
-        </div>
-        <div style="border:1px dashed var(--bd);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='rgba(77,159,255,0.4)'" onmouseout="this.style.borderColor='var(--bd)'">
-          <div style="font-size:22px;opacity:0.1;margin-bottom:7px">📁</div>
-          <div style="font-size:11px;color:var(--dm)">Arrastra las fotos de entrenamiento<br><span style="font-size:10px">20–30 fotos · variedad de ángulos</span></div>
-        </div>
-      </div></div>
-      <div class="btnrow"><button class="big g">⬆ &nbsp; Iniciar entrenamiento</button></div>
-    </div>
-
-    <!-- ═══════════════ LORA — MANAGE ═══════════════ -->
-    <div class="panel" id="p-lora-manage">
-      <div class="ph"><div class="ph-title">Mis LoRAs</div><div class="ph-sub">Modelos entrenados</div></div>
-      <div class="lgrid">
-        <div class="lcard"><div class="ln">LoRA — v1</div><div class="lm">Google Vertex AI · 1500 steps</div><div class="ls none">Sin entrenar</div></div>
-        <div class="lcard empty"><div style="font-size:16px;opacity:0.1">+</div><div>Nuevo LoRA</div></div>
-      </div>
-    </div>
-
   </div>
 </div>
 
-<div class="notif" id="notif"></div>
+<div id="notif" class="notif"></div>
 
 <script>
-// ── CONFIG
-const CONFIG={
-  loginUser:"admin",
-  loginPassword:"mill0nar1osbet365",
-  defaultGoogleKey:"",
-  defaultWsKey:""
-};
+const state = { genMaster:null, genRef:null, genResult:null, history: [] };
 
-// ── STATE
-let openTab=null;
-const state={
-  genMaster:null,genRef:null,genResult:null,
-  nbpMaster:null,nbpRef:null,nbpResult:null,
-  sdMaster:null,sdRef:null,
-  wan:null,kling:null,
-  editImg:null,editResult:null
-};
-let history=[];
-let histFilter='all';
-let selectedHistItem=null;
-
-const DEFAULT_PROMPT=`Image 1: portrait of the subject (identity reference).
-Image 2: target photo (pose, outfit and setting reference).
-
-Replace the person in Image 2 completely with the woman from Image 1. Keep face, hair and identity of Image 1 100% identical. Keep outfit, pose, background and lighting of Image 2 exactly.
-
-REALISM: Natural skin pores, real hair texture, remove plastic AI look. Shot on Sony A7R 85mm f/1.8, natural imperfections, DSLR quality, not AI generated.`;
-
-// ── INIT
-window.onload=()=>{
-  if(sessionStorage.getItem('authOk')==='1') unlockApp();
-  const gk=localStorage.getItem('googleKey')||CONFIG.defaultGoogleKey;
-  const wk=localStorage.getItem('wsKey')||CONFIG.defaultWsKey;
-  const gcp=localStorage.getItem('gcpProject')||'';
-  if(gk) document.getElementById('googleKey').value=gk;
-  if(wk) document.getElementById('wsKey').value=wk;
-  if(gcp) document.getElementById('gcpProject').value=gcp;
-  if(gk||wk){setApiOn();}
-  loadDP('gen-pta');loadDP('nbp-pta');
-  loadTemplatePrompts();
-  showPanel('p-gen');
-};
-
-// ── AUTH
 function login(){
-  const u=document.getElementById('authUser').value.trim();
-  const p=document.getElementById('authPass').value;
-  if(u===CONFIG.loginUser&&p===CONFIG.loginPassword){
-    sessionStorage.setItem('authOk','1');unlockApp();
-  }else{
-    document.getElementById('authErr').classList.add('show');
-    document.getElementById('authPass').value='';
-  }
+  if(document.getElementById('authUser').value==='usuario' && document.getElementById('authPass').value==='password'){
+    document.getElementById('authModal').style.display='none';
+    document.getElementById('appRoot').classList.remove('locked');
+  } else { document.getElementById('authErr').classList.add('show'); }
 }
-function unlockApp(){
-  document.getElementById('authModal').style.display='none';
-  document.getElementById('appRoot').classList.remove('locked');
-}
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&document.getElementById('authModal').style.display!=='none')login();
-});
 
-// ── KEYS
-function saveKeys(){
-  const gk=document.getElementById('googleKey').value.trim();
-  const wk=document.getElementById('wsKey').value.trim();
-  const gcp=document.getElementById('gcpProject').value.trim();
-  if(gk)localStorage.setItem('googleKey',gk);else localStorage.removeItem('googleKey');
-  if(wk)localStorage.setItem('wsKey',wk);else localStorage.removeItem('wsKey');
-  if(gcp)localStorage.setItem('gcpProject',gcp);else localStorage.removeItem('gcpProject');
-  document.getElementById('apiModal').classList.remove('show');
-  if(gk||wk)setApiOn();
-  notify('✓ Configuración guardada');
+function notify(msg){
+  const n=document.getElementById('notif'); n.textContent=msg; n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),3000);
 }
-function skipModal(){document.getElementById('apiModal').classList.remove('show');}
-function setApiOn(){document.getElementById('led').classList.add('on');document.getElementById('apilbl').textContent='APIs conectadas';}
 
-// ── TABS
-function toggleTab(n,e){
-  if(e&&e.stopPropagation)e.stopPropagation();
-  const nums=[1,2,3,4];
-  const drop=document.getElementById('td'+n);
-  if(!drop){closeAllTabs();return;}
-  const isOpen=drop.classList.contains('show');
-  closeAllTabs();
-  if(!isOpen){drop.classList.add('show');document.getElementById('tb'+n).classList.add('open');}
-}
-function closeAllTabs(){
-  [1,2,3,4].forEach(n=>{
-    const d=document.getElementById('td'+n);if(d)d.classList.remove('show');
-    const b=document.getElementById('tb'+n);if(b)b.classList.remove('open');
-  });
-}
-document.addEventListener('click',()=>closeAllTabs());
+function fi(id){ document.getElementById(id).click(); }
 
-function goTo(tabN,label,panelId,e){
-  if(e&&e.stopPropagation)e.stopPropagation();
-  document.getElementById('tl'+tabN).textContent=label;
-  [1,2,3,4].forEach(n=>document.getElementById('tb'+n).classList.remove('active'));
-  document.getElementById('tb'+tabN).classList.add('active');
-  const drop=document.getElementById('td'+tabN);
-  if(drop){drop.querySelectorAll('.tmi').forEach(m=>m.classList.remove('s1','s2','s3','s4','s5'));}
-  if(e&&e.target){const mi=e.target.closest('.tmi');if(mi){const cls='s'+tabN;mi.classList.add(cls);}}
-  closeAllTabs();
-  showPanel(panelId);
+function loadImg(input, zoneId, stateKey){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    state[stateKey] = e.target.result;
+    document.getElementById(zoneId).innerHTML = `<img src="${e.target.result}">`;
+  };
+  reader.readAsDataURL(file);
 }
-function showPanel(id){
+
+function toggleTab(n, e){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  const p=document.getElementById(id);if(p)p.classList.add('active');
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  if(n===1) document.getElementById('p-gen').classList.add('active');
+  if(n===3) document.getElementById('p-history').classList.add('active');
 }
 
-// ── IMAGES
-function fi(id){document.getElementById(id).click();}
-function loadImg(input,zid,key){
-  const file=input.files[0];if(!file)return;
-  const r=new FileReader();
-  r.onload=e=>{
-    const z=document.getElementById(zid);
-    let img=z.querySelector('img');
-    if(!img){img=document.createElement('img');z.appendChild(img);}
-    img.src=e.target.result;
-    z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
-    if(key)state[key]=e.target.result;
-  };
-  r.readAsDataURL(file);
+function saveKeys(){
+  localStorage.setItem('g-key', document.getElementById('googleKey').value);
+  localStorage.setItem('ws-key', document.getElementById('wsKey').value);
+  localStorage.setItem('gcp-id', document.getElementById('gcpProject').value);
+  localStorage.setItem('gcp-token', document.getElementById('gcpAccessToken').value);
+  document.getElementById('apiModal').classList.remove('show');
+  notify('Configuración guardada');
 }
 
-// ── PROMPTS
-function loadDP(taId){const t=document.getElementById(taId);if(t)t.value=DEFAULT_PROMPT;}
-function clearTA(taId){const t=document.getElementById(taId);if(t)t.value='';}
-function setPreset(type,taId){
-  const p={
-    face:'Fix the face and eyes. Make them more natural. Correct any asymmetry. Keep everything else identical.',
-    skin:'Enhance skin realism. Add natural pores and imperfections. Remove plastic look. Keep face structure identical.',
-    realism:'Make the image more photorealistic. Remove AI look. Natural skin texture, real hair strands. Shot on Sony A7R 85mm f/1.8.'
-  };
-  const t=document.getElementById(taId);if(t)t.value=p[type];
-}
-function loadTemplatePrompts(){
-  const w=document.getElementById('wan-pta');
-  const k=document.getElementById('kling-pta');
-  if(w&&!w.value)w.value='subtle body movement, natural walking motion, slight breeze in hair and clothes, cinematic realism';
-  if(k&&!k.value)k.value='cinematic motion, realistic camera move, natural body movement, premium fashion shot';
-}
+// ── FUNCIÓN CORREGIDA PARA VERTEX AI ──
+async function generateBanana() {
+  const projectId = localStorage.getItem('gcp-id');
+  const accessToken = localStorage.getItem('gcp-token');
+  const prompt = document.getElementById('gen-prompt').value.trim();
+  const model = document.getElementById('genModel').value;
+  const ratio = document.getElementById('genRatio').value;
+  const btn = document.getElementById('genBtn');
 
-// ── COLLAPSIBLE PROMPTS
-function togglePrompt(id){
-  const toggle=document.getElementById('pt-'+id);
-  const body=document.getElementById('pb-'+id);
-  if(!toggle||!body)return;
-  const isOpen=toggle.classList.contains('open');
-  toggle.classList.toggle('open',!isOpen);
-  body.classList.toggle('open',!isOpen);
-  const hint=document.getElementById('ph-'+id);
-  if(hint)hint.textContent=isOpen?'Toca para ver':'';
-}
-
-// ── MODEL LABEL
-function updateModelLbl(){
-  const v=document.getElementById('genModel').value;
-  document.getElementById('genModelLbl').textContent=v==='nb2'?'Nano Banana 2':'Nano Banana Pro';
-}
-function getNBPModel(sel){
-  if(sel&&sel.value&&sel.value.includes('2')) return 'publishers/wavespeed-ai/models/nano-banana-2';
-  return 'publishers/wavespeed-ai/models/nano-banana-pro';
-}
-
-// ── COPY TO EDIT / CAROUSEL
-function sendToEdit(src){
-  const data=src==='gen'?state.genResult:state.nbpResult;
-  if(!data)return;
-  state.editImg=data;
-  const zg=document.getElementById('z-edit');
-  const zw=document.getElementById('z-ws-edit');
-  [zg,zw].forEach(z=>{
-    if(!z)return;
-    let img=z.querySelector('img');
-    if(!img){img=document.createElement('img');z.appendChild(img);}
-    img.src=data;
-    z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
-  });
-  notify('Foto enviada a Edición');
-}
-function sendToCarousel(src){
-  const data=src==='gen'?state.genResult:state.nbpResult;
-  if(!data)return;
-  ['z-cold','z-cnew','z-ws-cold','z-ws-cnew'].forEach(id=>{
-    const z=document.getElementById(id);if(!z)return;
-    let img=z.querySelector('img');
-    if(!img){img=document.createElement('img');z.appendChild(img);}
-    img.src=data;
-    z.querySelectorAll('.uic,.uzlb').forEach(el=>el.style.display='none');
-  });
-  notify('Foto enviada a los módulos de carrusel');
-}
-
-// ── HISTORY
-function addToHistory(url,type,label){
-  const item={url,type,label,ts:Date.now()};
-  history.unshift(item);
-  renderHistory();
-}
-function renderHistory(){
-  const grid=document.getElementById('histGrid');
-  const filtered=histFilter==='all'?history:history.filter(h=>h.type===histFilter);
-  document.getElementById('histCount').textContent=filtered.length+' elemento'+(filtered.length!==1?'s':'');
-  if(!filtered.length){
-    grid.innerHTML='<div class="hist-empty" style="grid-column:1/-1"><div class="icon">◎</div><p>No hay elementos en esta categoría</p></div>';
+  if (!projectId || !accessToken) {
+    notify('❌ Configura el Project ID y Access Token en el modal de API');
     return;
   }
-  grid.innerHTML=filtered.map((item,i)=>`
-    <div class="hist-item" onclick="openHistItem(${history.indexOf(item)})">
-      <img src="${item.url}" alt="">
-      <div class="hist-tag">${item.type}</div>
-      <div class="hist-meta">${item.label}</div>
-    </div>`).join('');
-}
-function filterHist(f,el){
-  histFilter=f;
-  document.querySelectorAll('.hf').forEach(h=>h.classList.remove('active'));
-  el.classList.add('active');
-  renderHistory();
-}
-function openHistItem(idx){
-  selectedHistItem=history[idx];
-  document.getElementById('histModalImg').src=selectedHistItem.url;
-  document.getElementById('histModalTitle').textContent=selectedHistItem.label;
-  document.getElementById('histModalMeta').textContent=selectedHistItem.type+' · '+new Date(selectedHistItem.ts).toLocaleTimeString();
-  document.getElementById('histModal').classList.add('show');
-}
-function dlHistItem(){
-  if(!selectedHistItem)return;
-  const a=document.createElement('a');a.href=selectedHistItem.url;a.download='result_'+Date.now()+'.jpg';a.click();
-}
-document.getElementById('histModal').addEventListener('click',e=>{
-  if(e.target===document.getElementById('histModal'))document.getElementById('histModal').classList.remove('show');
-});
+  if (!prompt) { notify('⚠ Escribe un prompt'); return; }
 
-// ── DOWNLOAD
-function dlResult(key){
-  const data=state[key];if(!data)return;
-  const a=document.createElement('a');a.href=data;a.download='result_'+Date.now()+'.jpg';a.click();
-}
+  btn.disabled = true; btn.textContent = '⚡ Generando...';
+  document.getElementById('z-gen-out').innerHTML = '<div class="spin"></div>';
 
-// ── HELPERS
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function setLoading(id,txt){const el=document.getElementById(id);if(el)el.innerHTML='<div style="text-align:center"><div class="spin"></div><div class="gst">'+txt+'</div></div>';}
-function setImg(id,url,key){
-  const el=document.getElementById(id);
-  if(el)el.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult(\''+key+'\')">↓ Guardar</div><div class="oact" onclick="sendToEdit(\''+key+'\')">→ Editar</div><div class="oact" onclick="sendToCarousel(\''+key+'\')">▦ Carrusel</div></div>';
-  if(key)state[key]=url;
-}
-function setVideo(id,url){const el=document.getElementById(id);if(el)el.innerHTML='<video src="'+url+'" controls autoplay loop muted style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"></video>';}
-function setErr(id,msg){const el=document.getElementById(id);if(el)el.innerHTML='<div style="padding:14px;text-align:center;font-size:11px;line-height:1.8;color:#fca5a5">'+esc(msg)+'</div>';}
-function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3200);}
+  const region = "us-central1";
+  const url = `https://${region}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${region}/publishers/google/models/${model}:predict`;
 
-// ── GEMINI
-function getGeminiModel(){
-  const v=document.getElementById('genModel').value;
-  if(v==='flash')return 'imagen-3.0-generate-002';
-  return 'imagen-3.0-generate-002';
-}
-function dataUriPart(uri){
-  const m=(uri||'').match(/^data:(.*?);base64,(.*)$/);
-  if(!m)throw new Error('Imagen no válida');
-  return{inlineData:{mimeType:m[1],data:m[2]}};
-}
-function findInlineDataPart(data){return(data?.candidates?.[0]?.content?.parts||[]).find(p=>p.inlineData)||null;}
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        instances: [{ prompt: prompt }],
+        parameters: { sampleCount: 1, aspectRatio: ratio, outputOptions: { mimeType: "image/jpeg" } }
+      })
+    });
 
-async function callGemini(parts,ratio,quality){
-  const gKey=(localStorage.getItem('googleKey')||'').trim();
-  // Gemini 2.0 Flash image generation via AI Studio API
-  if(!gKey) throw new Error('Configura tu Gemini API key en Configurar API (aistudio.google.com)');
-  const model='gemini-2.0-flash-preview-image-generation';
-  const payload={
-    contents:[{parts}],
-    generationConfig:{responseModalities:['TEXT','IMAGE']}
-  };
-  const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent?key='+gKey,
-    {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  const data=await res.json();
-  if(!res.ok) throw new Error(data?.error?.message||'Error en Gemini API');
-  return data;
-}
-
-async function callVertexNBP(masterData,refData,prompt,neg,strength,size,modelSel){
-  // Vertex AI — Nano Banana via Google Cloud
-  const gKey=(localStorage.getItem('googleKey')||'').trim();
-  const gcpProject=(localStorage.getItem('gcpProject')||'').trim();
-  if(!gcpProject) throw new Error('Configura tu Google Cloud Project ID para usar Nano Banana');
-  if(!gKey) throw new Error('Configura tu Gemini API key para autenticar con Google Cloud');
-  const location='us-central1';
-  const model=getNBPModel(modelSel);
-  const url='https://'+location+'-aiplatform.googleapis.com/v1/projects/'+gcpProject+'/locations/'+location+'/'+model+':predict';
-  const payload={
-    instances:[{
-      prompt:prompt+'\nNegative: '+neg,
-      image:{bytesBase64Encoded:masterData.split(',')[1]},
-      referenceImage:{bytesBase64Encoded:refData.split(',')[1]},
-      strength:strength
-    }],
-    parameters:{sampleCount:1,aspectRatio:size}
-  };
-  // Try local backend first (handles auth)
-  let backendOk=false;
-  try{const r=await fetch('http://localhost:3000/ping',{signal:AbortSignal.timeout(1000)});backendOk=r.ok;}catch(e){}
-  if(backendOk){
-    const res=await fetch('http://localhost:3000/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:model,payload,useVertex:true,project:gcpProject,location})});
-    const data=await res.json();if(data.error)throw new Error(data.error);return data;
+    const data = await res.json();
+    if (data.predictions && data.predictions[0]) {
+      const b64 = data.predictions[0].bytesBase64Encoded;
+      state.genResult = `data:image/jpeg;base64,${b64}`;
+      document.getElementById('z-gen-out').innerHTML = `<img src="${state.genResult}">`;
+      notify('✅ Éxito');
+      // Guardar en historial
+      state.history.push({img: state.genResult, date: new Date().toLocaleTimeString()});
+    } else {
+      throw new Error(data.error?.message || 'Error en Vertex AI');
+    }
+  } catch (err) {
+    notify('❌ ' + err.message);
+    document.getElementById('z-gen-out').innerHTML = `<div style="font-size:10px;color:red;padding:10px;">${err.message}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = '◎ Generar con Vertex AI';
   }
-  // Direct call with API key (Vertex AI via API key — needs key to have Vertex AI permissions)
-  const res=await fetch(url+'?key='+gKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  const data=await res.json();
-  if(!res.ok) throw new Error(data?.error?.message||'Error Vertex AI / Nano Banana');
-  return data;
-}
-
-async function generateStudio(){
-  if(!state.genMaster||!state.genRef){notify('⚠ Sube las dos fotos');return;}
-  const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='Generando...';
-  setLoading('z-gen-out','Generando con Nano Banana · Vertex AI...');
-  try{
-    const prompt=document.getElementById('gen-pta').value.trim()||DEFAULT_PROMPT;
-    const neg=document.getElementById('gen-nta').value.trim();
-    const strength=parseInt(document.getElementById('genStr').value,10)/100;
-    const modelSel=document.getElementById('genModel');
-    const ratio=document.getElementById('genRatio').value;
-    const data=await callVertexNBP(state.genMaster,state.genRef,prompt,neg,strength,ratio,modelSel);
-    const b64=data?.predictions?.[0]?.bytesBase64Encoded;
-    if(!b64) throw new Error(data?.error?.message||'Sin imagen en la respuesta de Vertex AI. Comprueba tu Project ID y que Vertex AI API esté activada.');
-    const url='data:image/png;base64,'+b64;
-    state.genResult=url;
-    setImg('z-gen-out',url,'genResult');
-    addToHistory(url,'gemini','Nano Banana · Studio');
-    notify('✓ Imagen generada con Nano Banana');
-  }catch(err){setErr('z-gen-out',err.message);notify('Error: '+err.message);}
-  finally{btn.disabled=false;btn.innerHTML='🍌 &nbsp; Generar con Nano Banana';}
-}
-
-async function generateStudioEdit(){
-  if(!state.editImg){notify('⚠ Sube la foto a editar');return;}
-  const prompt=document.getElementById('edit-pta').value.trim();
-  if(!prompt){notify('⚠ Describe qué quieres corregir');return;}
-  setLoading('z-edit-out','Editando con Nano Banana...');
-  try{
-    const modelSel=document.getElementById('genModel');
-    const data=await callVertexNBP(state.editImg,state.editImg,prompt,'',0.3,'4:5',modelSel);
-    const b64=data?.predictions?.[0]?.bytesBase64Encoded;
-    if(!b64) throw new Error(data?.error?.message||'Sin imagen editada');
-    const url='data:image/png;base64,'+b64;
-    state.editResult=url;
-    const el=document.getElementById('z-edit-out');
-    if(el)el.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)"><div class="oacts"><div class="oact" onclick="dlResult(\'editResult\')">↓ Guardar</div></div>';
-    addToHistory(url,'gemini','Edición · Nano Banana');
-    notify('✓ Edición completada');
-  }catch(err){setErr('z-edit-out',err.message);notify('Error edición: '+err.message);}
-}
-
-// ── WAVESPEED POLL
-async function pollWS(taskId,apiKey,max=120){
-  for(let i=0;i<max;i++){
-    const res=await fetch('https://api.wavespeed.ai/api/v3/predictions/'+taskId+'/result',{headers:{'Authorization':'Bearer '+apiKey}});
-    const data=await res.json();
-    if(!res.ok)throw new Error(data?.message||'Error WaveSpeed');
-    const st=data?.data?.status;
-    if(st==='completed')return data.data;
-    if(st==='failed')throw new Error(data?.data?.error||'Tarea fallida');
-    await new Promise(r=>setTimeout(r,3000));
-  }
-  throw new Error('Timeout WaveSpeed');
-}
-function getWsKey(){
-  const k=(localStorage.getItem('wsKey')||'').trim();
-  if(!k)throw new Error('Configura tu WaveSpeed API key');
-  return k;
-}
-function mapSeedSize(ratio,quality){
-  const m={'4:5':{'1K':'1024*1280','2K':'2048*2560','4K':'4096*5120'},'9:16':{'1K':'1024*1820','2K':'2048*3640','4K':'4096*7280'},'1:1':{'1K':'1024*1024','2K':'2048*2048','4K':'4096*4096'}};
-  return m[ratio]?.[quality]||'2048*2560';
-}
-
-async function generateNBP(){
-  if(!state.nbpMaster||!state.nbpRef){notify('⚠ Sube las dos fotos');return;}
-  const btn=document.getElementById('nbpBtn');btn.disabled=true;btn.textContent='Generando...';
-  setLoading('z-nbp-out','Generando con Nano Banana (Vertex AI)...');
-  try{
-    const prompt=document.getElementById('nbp-pta').value.trim()||DEFAULT_PROMPT;
-    const neg=document.getElementById('nbp-nta').value.trim();
-    const strength=parseInt(document.getElementById('nbpStr').value,10)/100;
-    const modelSel=document.querySelector('#p-nbp select');
-    const ratio=document.getElementById('nbpRatio').value;
-    const data=await callVertexNBP(state.nbpMaster,state.nbpRef,prompt,neg,strength,ratio,modelSel);
-    // Vertex AI Nano Banana returns base64 in predictions[0].bytesBase64Encoded
-    const b64=data?.predictions?.[0]?.bytesBase64Encoded;
-    if(!b64) throw new Error(data?.error?.message||'Sin imagen en la respuesta de Vertex AI');
-    const url='data:image/png;base64,'+b64;
-    state.nbpResult=url;
-    setImg('z-nbp-out',url,'nbpResult');
-    addToHistory(url,'gemini','Nano Banana Pro');
-    notify('✓ Nano Banana Pro completado');
-  }catch(err){setErr('z-nbp-out',err.message);notify('Error NBP: '+err.message);}
-  finally{btn.disabled=false;btn.innerHTML='🍌 &nbsp; Generar con Nano Banana';}
-}
-
-async function generateSeedream(){
-  if(!state.sdMaster||!state.sdRef){notify('⚠ Sube las dos fotos');return;}
-  const wk=getWsKey();
-  const btn=document.getElementById('sdBtn');btn.disabled=true;btn.textContent='Generando...';
-  setLoading('z-sd-out','Generando con Seedream...');
-  try{
-    const prompt=document.getElementById('sd-pta').value.trim()||DEFAULT_PROMPT;
-    const neg=document.getElementById('sd-nta').value.trim();
-    const strength=parseInt(document.getElementById('sdStr').value,10)/100;
-    const size=mapSeedSize(document.getElementById('sdRatio').value,document.getElementById('sdQual').value);
-    const res=await fetch('https://api.wavespeed.ai/api/v3/bytedance/seedream-v4.5-i2i',{
-      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
-      body:JSON.stringify({prompt:prompt+'\nNegative prompt: '+neg,image_url:state.sdRef,control_image_url:state.sdMaster,size,strength,enable_sync_mode:false})
-    });
-    const data=await res.json();
-    if(!data?.data?.id)throw new Error(data?.message||'Error lanzando Seedream');
-    const result=await pollWS(data.data.id,wk);
-    const url=result?.outputs?.[0];if(!url)throw new Error('Sin resultado');
-    setImg('z-sd-out',url,'sdResult');
-    addToHistory(url,'wavespeed','Seedream 4.5');
-    notify('✓ Seedream completado');
-  }catch(err){setErr('z-sd-out',err.message);notify('Error Seedream: '+err.message);}
-  finally{btn.disabled=false;btn.innerHTML='◈ &nbsp; Generar con Seedream 4.5';}
-}
-
-async function generateWan(){
-  if(!state.wan){notify('⚠ Sube la foto base');return;}
-  const prompt=document.getElementById('wan-pta').value.trim();
-  if(!prompt){notify('⚠ Escribe el motion prompt');return;}
-  const wk=getWsKey();
-  const btn=document.getElementById('wanBtn');btn.disabled=true;btn.textContent='Generando...';
-  setLoading('wanOut','Generando vídeo con Wan 2.6...');
-  try{
-    const duration=parseInt(document.getElementById('wanDur').value,10);
-    const resolution=document.getElementById('wanRes').value;
-    const res=await fetch('https://api.wavespeed.ai/api/v3/wavespeed-ai/wan-2.6/image-to-video',{
-      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
-      body:JSON.stringify({image:state.wan,prompt,resolution,duration,negative_prompt:'text, watermark, distortion, flicker',seed:-1,enhance_prompt:true})
-    });
-    const data=await res.json();
-    if(!res.ok)throw new Error(data?.message||'Error Wan');
-    const result=await pollWS(data.data.id,wk);
-    const url=result?.outputs?.[0];if(!url)throw new Error('Sin vídeo');
-    setVideo('wanOut',url);
-    addToHistory(url,'video','Wan 2.6');
-    notify('✓ Vídeo Wan listo');
-  }catch(err){setErr('wanOut',err.message);notify('Error Wan: '+err.message);}
-  finally{btn.disabled=false;btn.innerHTML='◉ &nbsp; Generar vídeo con Wan 2.6';}
-}
-
-async function generateKling(){
-  if(!state.kling){notify('⚠ Sube la foto base');return;}
-  const prompt=document.getElementById('kling-pta').value.trim();
-  if(!prompt){notify('⚠ Escribe el prompt');return;}
-  const wk=getWsKey();
-  const btn=document.getElementById('klingBtn');btn.disabled=true;btn.textContent='Generando...';
-  setLoading('klingOut','Generando vídeo con Kling...');
-  try{
-    const duration=parseInt(document.getElementById('klingDur').value,10);
-    const guidance=document.getElementById('klingMode').value==='Pro'?0.75:0.5;
-    const res=await fetch('https://api.wavespeed.ai/api/v3/kwaivgi/kling-v2.5-turbo-pro/image-to-video',{
-      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+wk},
-      body:JSON.stringify({image:state.kling,prompt,duration,guidance_scale:guidance,negative_prompt:'text, watermark, distortion'})
-    });
-    const data=await res.json();
-    if(!res.ok)throw new Error(data?.message||'Error Kling');
-    const result=await pollWS(data.data.id,wk);
-    const url=result?.outputs?.[0];if(!url)throw new Error('Sin vídeo');
-    setVideo('klingOut',url);
-    addToHistory(url,'video','Kling 2.5');
-    notify('✓ Vídeo Kling listo');
-  }catch(err){setErr('klingOut',err.message);notify('Error Kling: '+err.message);}
-  finally{btn.disabled=false;btn.innerHTML='▶ &nbsp; Generar con Kling 2.5';}
 }
 </script>
 </body>
